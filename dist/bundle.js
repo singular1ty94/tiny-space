@@ -1031,7 +1031,7 @@ var upgradeLevels = [{
 
 var citizenGrowth = [{
     level: 2,
-    tick: 0.1
+    tick: 0.4
 }, {
     level: 3,
     tick: 0.5
@@ -1041,6 +1041,17 @@ var citizenGrowth = [{
 }, {
     level: 5,
     tick: 1.7
+}];
+
+var PIRATE_BASIC = {
+    attack: 3,
+    defense: 0,
+    accuracy: 0.3
+};
+
+var pirates = [{
+    citizens: 25,
+    pirates: [PIRATE_BASIC]
 }];
 
 var Game = function (_React$Component) {
@@ -1057,25 +1068,58 @@ var Game = function (_React$Component) {
             commoditiesPerTick: 0.1,
             citizensPerTick: 0.005,
             level: 1,
-            logs: []
+            logs: [],
+            attacks: [],
+            underAttack: null
         };
 
         _this.getNextUpgradeCost = _this.getNextUpgradeCost.bind(_this);
         _this.upgrade = _this.upgrade.bind(_this);
+        _this.updateGame = _this.updateGame.bind(_this);
         return _this;
     }
 
     _createClass(Game, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
+            setInterval(this.updateGame, tick);
+        }
+    }, {
+        key: 'updateGame',
+        value: function updateGame() {
             var _this2 = this;
 
-            setInterval(function () {
-                _this2.setState({
-                    commodities: _this2.state.commodities + _this2.state.commoditiesPerTick,
-                    citizens: _this2.state.citizens + _this2.state.citizensPerTick
+            var pirateAttack = pirates.filter(function (pirate) {
+                return _this2.state.citizens >= pirate.citizens && !_this2.state.attacks.includes(pirate);
+            });
+            if (pirateAttack.length > 0) {
+                console.log('Getting attacked by pirates', pirateAttack);
+                pirateAttack = pirateAttack.sort(function (a, b) {
+                    return b.citizens - a.citizens;
+                })[0];
+                this.setState({
+                    logs: [].concat(_toConsumableArray(this.state.logs), ['Pirate attack!!']),
+                    attacks: [].concat(_toConsumableArray(this.state.attacks), [pirateAttack]),
+                    underAttack: pirateAttack
                 });
-            }, tick);
+            }
+
+            if (this.state.underAttack) {
+                this.state.underAttack.pirates.map(function (pirate) {
+                    var doesHit = Math.random() <= pirate.accuracy;
+                    if (doesHit) {
+                        _this2.setState({
+                            citizens: _this2.state.citizens - pirate.attack,
+                            logs: [].concat(_toConsumableArray(_this2.state.logs), [pirate.attack + ' citizens died!!!'])
+                        });
+                    }
+                });
+            }
+
+            this.setState({
+                commodities: this.state.commodities + this.state.commoditiesPerTick,
+                citizens: this.state.citizens + this.state.citizensPerTick
+            });
         }
     }, {
         key: 'upgrade',

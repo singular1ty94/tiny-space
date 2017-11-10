@@ -28,7 +28,7 @@ const upgradeLevels = [
 const citizenGrowth = [
     {
         level: 2,
-        tick: 0.1   
+        tick: 0.4
     },{
         level: 3,
         tick: 0.5   
@@ -41,6 +41,21 @@ const citizenGrowth = [
     }
 ]
 
+const PIRATE_BASIC = {
+    attack: 3,
+    defense: 0,
+    accuracy: 0.3
+}
+
+const pirates = [
+    {
+        citizens: 25,
+        pirates: [
+            PIRATE_BASIC
+        ]
+    }
+]
+
 class Game extends React.Component {
     constructor(){
         super()
@@ -50,20 +65,50 @@ class Game extends React.Component {
             commoditiesPerTick: 0.1,
             citizensPerTick: 0.005,
             level: 1,
-            logs: []
+            logs: [],
+            attacks: [],
+            underAttack: null
         }
 
         this.getNextUpgradeCost = this.getNextUpgradeCost.bind(this)
         this.upgrade = this.upgrade.bind(this)
+        this.updateGame = this.updateGame.bind(this)
     }
 
     componentDidMount() {
-        setInterval(() => {
+        setInterval(this.updateGame, tick)
+    }
+
+    updateGame() {
+        let pirateAttack = pirates.filter((pirate) => 
+            this.state.citizens >= pirate.citizens &&
+            !this.state.attacks.includes(pirate)
+        )
+        if (pirateAttack.length > 0){
+            pirateAttack = pirateAttack.sort((a, b) => b.citizens - a.citizens)[0]
             this.setState({
-                commodities: (this.state.commodities + this.state.commoditiesPerTick),
-                citizens: (this.state.citizens + this.state.citizensPerTick)
+                logs: [...this.state.logs, 'Pirate attack!!'],
+                attacks: [...this.state.attacks, pirateAttack],
+                underAttack: pirateAttack
             })
-        }, tick)
+        }
+
+        if (this.state.underAttack) {
+            this.state.underAttack.pirates.map((pirate) => {
+                const doesHit = (Math.random() <= pirate.accuracy)
+                if(doesHit) {
+                    this.setState({
+                        citizens: this.state.citizens - pirate.attack,
+                        logs: [...this.state.logs, `${pirate.attack} citizens died!!!`]
+                    })
+                }
+            })
+        }
+
+        this.setState({
+            commodities: (this.state.commodities + this.state.commoditiesPerTick),
+            citizens: (this.state.citizens + this.state.citizensPerTick)
+        })
     }
 
     upgrade() {

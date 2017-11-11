@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { PIRATE_LV_1, PIRATE_LV_2, pirates } from './pirates';
+
 const tick = 250
 
 const upgradeLevels = [
@@ -31,28 +33,25 @@ const citizenGrowth = [
         tick: 0.4
     },{
         level: 3,
-        tick: 0.5   
+        tick: 0.6   
     },{
         level: 4,
-        tick: 1   
+        tick: 1.1   
     },{
         level: 5,
         tick: 1.7  
     }
 ]
 
-const PIRATE_BASIC = {
-    attack: 3,
-    defense: 0,
-    accuracy: 0.3
-}
-
-const pirates = [
+const defenceLevels = [
     {
-        citizens: 25,
-        pirates: [
-            PIRATE_BASIC
-        ]
+        level: 2,
+        accuracy: 0.4,
+        attack: 3
+    },{
+        level: 3,
+        accuracy: 0.7,
+        attack: 6
     }
 ]
 
@@ -67,7 +66,9 @@ class Game extends React.Component {
             level: 1,
             logs: [],
             attacks: [],
-            underAttack: null
+            underAttack: null,
+            defenseAttack: 1,
+            defenseAccuracy: 0.25
         }
 
         this.getNextUpgradeCost = this.getNextUpgradeCost.bind(this)
@@ -82,25 +83,44 @@ class Game extends React.Component {
     updateGame() {
         let pirateAttack = pirates.filter((pirate) => 
             this.state.citizens >= pirate.citizens &&
-            !this.state.attacks.includes(pirate)
+            !this.state.attacks.includes(pirate) &&
+            !this.state.underAttack
         )
         if (pirateAttack.length > 0){
             pirateAttack = pirateAttack.sort((a, b) => b.citizens - a.citizens)[0]
             this.setState({
                 logs: [...this.state.logs, 'Pirate attack!!'],
                 attacks: [...this.state.attacks, pirateAttack],
-                underAttack: pirateAttack
+                underAttack: pirateAttack.pirates
             })
         }
 
         if (this.state.underAttack) {
-            this.state.underAttack.pirates.map((pirate) => {
+            this.state.underAttack.map((pirate, index) => {
+                console.log('Pirate makes a swoop!')
+
                 const doesHit = (Math.random() <= pirate.accuracy)
                 if(doesHit) {
                     this.setState({
                         citizens: this.state.citizens - pirate.attack,
                         logs: [...this.state.logs, `${pirate.attack} citizens died!!!`]
                     })
+                }
+
+                const fightBack = (Math.random() <= this.state.defenseAccuracy)
+                if(fightBack) {
+                    let pirateShip = {...pirate}
+                    pirateShip.defense -= this.state.defenseAttack
+
+                    if (pirateShip.defense <= 0) {
+                        let newPiratesArray = [...this.state.underAttack]
+                        console.log('Pirates array', newPiratesArray)
+                        newPiratesArray.splice(index, index + 1)
+                        this.setState({
+                            underAttack: newPiratesArray.length > 0 ? newPiratesArray : null,
+                            logs: [...this.state.logs, `Pirate ship was destroyed!!`]
+                        })
+                    } 
                 }
             })
         }

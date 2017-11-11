@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 15);
+/******/ 	return __webpack_require__(__webpack_require__.s = 16);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -427,9 +427,9 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(26);
+  module.exports = __webpack_require__(27);
 } else {
-  module.exports = __webpack_require__(25);
+  module.exports = __webpack_require__(26);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
@@ -699,7 +699,7 @@ module.exports = ExecutionEnvironment;
  * 
  */
 
-var isTextNode = __webpack_require__(21);
+var isTextNode = __webpack_require__(22);
 
 /*eslint-disable no-bitwise */
 
@@ -886,7 +886,7 @@ module.exports = shallowEqual;
 if (process.env.NODE_ENV !== 'production') {
   var invariant = __webpack_require__(5);
   var warning = __webpack_require__(6);
-  var ReactPropTypesSecret = __webpack_require__(22);
+  var ReactPropTypesSecret = __webpack_require__(23);
   var loggedTypeFailures = {};
 }
 
@@ -941,6 +941,27 @@ module.exports = checkPropTypes;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var PIRATE_LV_1 = exports.PIRATE_LV_1 = { attack: 7, defense: 0, accuracy: 0.3 };
+var PIRATE_LV_2 = exports.PIRATE_LV_2 = { attack: 8, defense: 2, accuracy: 0.45 };
+
+var PIRATES = exports.PIRATES = [{
+    citizens: 25,
+    pirates: [PIRATE_LV_1, PIRATE_LV_1]
+}, {
+    citizens: 40,
+    pirates: [PIRATE_LV_2, PIRATE_LV_2, PIRATE_LV_1, PIRATE_LV_1]
+}];
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
 function checkDCE() {
@@ -975,19 +996,21 @@ if (process.env.NODE_ENV === 'production') {
   // DCE check should happen before ReactDOM bundle executes so that
   // DevTools can report bad minification during injection.
   checkDCE();
-  module.exports = __webpack_require__(24);
+  module.exports = __webpack_require__(25);
 } else {
-  module.exports = __webpack_require__(23);
+  module.exports = __webpack_require__(24);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -995,9 +1018,11 @@ var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(14);
+var _reactDom = __webpack_require__(15);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _pirates = __webpack_require__(14);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1034,24 +1059,23 @@ var citizenGrowth = [{
     tick: 0.4
 }, {
     level: 3,
-    tick: 0.5
+    tick: 0.6
 }, {
     level: 4,
-    tick: 1
+    tick: 1.1
 }, {
     level: 5,
     tick: 1.7
 }];
 
-var PIRATE_BASIC = {
-    attack: 3,
-    defense: 0,
-    accuracy: 0.3
-};
-
-var pirates = [{
-    citizens: 25,
-    pirates: [PIRATE_BASIC]
+var defenceLevels = [{
+    level: 2,
+    accuracy: 0.4,
+    attack: 3
+}, {
+    level: 3,
+    accuracy: 0.7,
+    attack: 6
 }];
 
 var Game = function (_React$Component) {
@@ -1070,7 +1094,9 @@ var Game = function (_React$Component) {
             level: 1,
             logs: [],
             attacks: [],
-            underAttack: null
+            underAttack: null,
+            defenseAttack: 1,
+            defenseAccuracy: 0.25
         };
 
         _this.getNextUpgradeCost = _this.getNextUpgradeCost.bind(_this);
@@ -1089,29 +1115,48 @@ var Game = function (_React$Component) {
         value: function updateGame() {
             var _this2 = this;
 
-            var pirateAttack = pirates.filter(function (pirate) {
-                return _this2.state.citizens >= pirate.citizens && !_this2.state.attacks.includes(pirate);
+            var pirateAttack = _pirates.pirates.filter(function (pirate) {
+                return _this2.state.citizens >= pirate.citizens && !_this2.state.attacks.includes(pirate) && !_this2.state.underAttack;
             });
             if (pirateAttack.length > 0) {
-                console.log('Getting attacked by pirates', pirateAttack);
                 pirateAttack = pirateAttack.sort(function (a, b) {
                     return b.citizens - a.citizens;
                 })[0];
                 this.setState({
                     logs: [].concat(_toConsumableArray(this.state.logs), ['Pirate attack!!']),
                     attacks: [].concat(_toConsumableArray(this.state.attacks), [pirateAttack]),
-                    underAttack: pirateAttack
+                    underAttack: pirateAttack.pirates
                 });
             }
 
             if (this.state.underAttack) {
-                this.state.underAttack.pirates.map(function (pirate) {
+                this.state.underAttack.map(function (pirate, index) {
+                    console.log('Pirate makes a swoop!');
+
                     var doesHit = Math.random() <= pirate.accuracy;
                     if (doesHit) {
                         _this2.setState({
                             citizens: _this2.state.citizens - pirate.attack,
                             logs: [].concat(_toConsumableArray(_this2.state.logs), [pirate.attack + ' citizens died!!!'])
                         });
+                    }
+
+                    var fightBack = Math.random() <= _this2.state.defenseAccuracy;
+                    if (fightBack) {
+                        var pirateShip = _extends({}, pirate);
+                        pirateShip.defense -= _this2.state.defenseAttack;
+
+                        if (pirateShip.defense <= 0) {
+                            var newPiratesArray = [].concat(_toConsumableArray(_this2.state.underAttack));
+                            console.log('Pirates array', newPiratesArray);
+                            newPiratesArray.splice(index, index + 1);
+                            _this2.setState({
+                                underAttack: newPiratesArray.length > 0 ? newPiratesArray : null,
+                                logs: [].concat(_toConsumableArray(_this2.state.logs), ['Pirate ship was destroyed!!'])
+                            });
+                        } else {
+                            console.log('Ship was only damaged!');
+                        }
                     }
                 });
             }
@@ -1219,7 +1264,7 @@ var Game = function (_React$Component) {
 _reactDom2.default.render(_react2.default.createElement(Game, null), document.getElementById('root'));
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1254,7 +1299,7 @@ function camelize(string) {
 module.exports = camelize;
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1269,7 +1314,7 @@ module.exports = camelize;
 
 
 
-var camelize = __webpack_require__(16);
+var camelize = __webpack_require__(17);
 
 var msPattern = /^-ms-/;
 
@@ -1297,7 +1342,7 @@ function camelizeStyleName(string) {
 module.exports = camelizeStyleName;
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1333,7 +1378,7 @@ function hyphenate(string) {
 module.exports = hyphenate;
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1348,7 +1393,7 @@ module.exports = hyphenate;
 
 
 
-var hyphenate = __webpack_require__(18);
+var hyphenate = __webpack_require__(19);
 
 var msPattern = /^ms-/;
 
@@ -1375,7 +1420,7 @@ function hyphenateStyleName(string) {
 module.exports = hyphenateStyleName;
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1403,7 +1448,7 @@ function isNode(object) {
 module.exports = isNode;
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1418,7 +1463,7 @@ module.exports = isNode;
  * @typechecks
  */
 
-var isNode = __webpack_require__(20);
+var isNode = __webpack_require__(21);
 
 /**
  * @param {*} object The object to check.
@@ -1431,7 +1476,7 @@ function isTextNode(object) {
 module.exports = isTextNode;
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1450,7 +1495,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1482,8 +1527,8 @@ var containsNode = __webpack_require__(9);
 var focusNode = __webpack_require__(10);
 var emptyObject = __webpack_require__(2);
 var checkPropTypes = __webpack_require__(13);
-var hyphenateStyleName = __webpack_require__(19);
-var camelizeStyleName = __webpack_require__(17);
+var hyphenateStyleName = __webpack_require__(20);
+var camelizeStyleName = __webpack_require__(18);
 
 /**
  * WARNING: DO NOT manually require this module.
@@ -16816,7 +16861,7 @@ module.exports = reactDom;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17050,7 +17095,7 @@ Z.injectIntoDevTools({findFiberByHostInstance:pb,bundleType:0,version:"16.1.0",r
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18401,7 +18446,7 @@ module.exports = react;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

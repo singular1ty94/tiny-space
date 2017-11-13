@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 16);
+/******/ 	return __webpack_require__(__webpack_require__.s = 18);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -427,9 +427,9 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(27);
+  module.exports = __webpack_require__(29);
 } else {
-  module.exports = __webpack_require__(26);
+  module.exports = __webpack_require__(28);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
@@ -699,7 +699,7 @@ module.exports = ExecutionEnvironment;
  * 
  */
 
-var isTextNode = __webpack_require__(22);
+var isTextNode = __webpack_require__(24);
 
 /*eslint-disable no-bitwise */
 
@@ -886,7 +886,7 @@ module.exports = shallowEqual;
 if (process.env.NODE_ENV !== 'production') {
   var invariant = __webpack_require__(5);
   var warning = __webpack_require__(6);
-  var ReactPropTypesSecret = __webpack_require__(23);
+  var ReactPropTypesSecret = __webpack_require__(25);
   var loggedTypeFailures = {};
 }
 
@@ -946,19 +946,50 @@ module.exports = checkPropTypes;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var PIRATE_LV_1 = exports.PIRATE_LV_1 = { attack: 7, defense: 0, accuracy: 0.3 };
-var PIRATE_LV_2 = exports.PIRATE_LV_2 = { attack: 8, defense: 2, accuracy: 0.45 };
+var PIRATE_LV_1 = exports.PIRATE_LV_1 = { attack: 3, defense: 0, accuracy: 0.3 };
+var PIRATE_LV_2 = exports.PIRATE_LV_2 = { attack: 6, defense: 2, accuracy: 0.45 };
 
-var PIRATES = exports.PIRATES = [{
+var pirates = exports.pirates = [{
     citizens: 25,
     pirates: [PIRATE_LV_1, PIRATE_LV_1]
 }, {
-    citizens: 40,
+    citizens: 55,
     pirates: [PIRATE_LV_2, PIRATE_LV_2, PIRATE_LV_1, PIRATE_LV_1]
 }];
 
 /***/ }),
 /* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.planetsGenerator = planetsGenerator;
+
+var _helpers = __webpack_require__(17);
+
+var planetNameFront = ['Betelgeuse', 'Saturn', 'Polaris', 'Maroon', 'Dustiin', 'Solarus', 'Sycarus', 'Lupin', 'Neptuna', 'Horizon', 'Zygg', 'Ares', 'Mercina'];
+
+var planetNameBack = ['Five', 'Major', 'Minor', 'Seven', 'Nine', 'Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon'];
+
+function planetsGenerator(numPlanets) {
+    var defaultPlanets = [];
+    for (var i = 0; i < numPlanets; i++) {
+        defaultPlanets.push({
+            name: planetNameFront[(0, _helpers.getRandom)(0, planetNameFront.length - 1)] + ' ' + planetNameBack[(0, _helpers.getRandom)(0, planetNameBack.length - 1)],
+            population: 50000 * (0, _helpers.getRandom)(1, 20),
+            threshold: i * (0, _helpers.getRandom)(3, 5) * 1000 + i * 200,
+            imageUrl: 'Planet' + (0, _helpers.getRandom)(1, 14) + '.png'
+        });
+    }
+    return defaultPlanets;
+}
+
+/***/ }),
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -996,15 +1027,30 @@ if (process.env.NODE_ENV === 'production') {
   // DCE check should happen before ReactDOM bundle executes so that
   // DevTools can report bad minification during injection.
   checkDCE();
-  module.exports = __webpack_require__(25);
+  module.exports = __webpack_require__(27);
 } else {
-  module.exports = __webpack_require__(24);
+  module.exports = __webpack_require__(26);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 16 */
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.getRandom = getRandom;
+function getRandom(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+/***/ }),
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1018,11 +1064,13 @@ var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(15);
+var _reactDom = __webpack_require__(16);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _pirates = __webpack_require__(14);
+
+var _planets = __webpack_require__(15);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1038,11 +1086,11 @@ var tick = 250;
 
 var upgradeLevels = [{
     level: 2,
-    cost: 1000,
+    cost: 500,
     tick: 0.5
 }, {
     level: 3,
-    cost: 4500,
+    cost: 1500,
     tick: 0.80
 }, {
     level: 4,
@@ -1071,11 +1119,13 @@ var citizenGrowth = [{
 var defenceLevels = [{
     level: 2,
     accuracy: 0.4,
-    attack: 3
+    attack: 3,
+    cost: 15
 }, {
     level: 3,
     accuracy: 0.7,
-    attack: 6
+    attack: 6,
+    cost: 50
 }];
 
 var Game = function (_React$Component) {
@@ -1089,23 +1139,36 @@ var Game = function (_React$Component) {
         _this.state = {
             commodities: 1000,
             citizens: 7,
-            commoditiesPerTick: 0.1,
+            commoditiesPerTick: 0.25,
             citizensPerTick: 0.005,
             level: 1,
             logs: [],
             attacks: [],
             underAttack: null,
             defenseAttack: 1,
-            defenseAccuracy: 0.25
+            defenseAccuracy: 0.25,
+            planets: (0, _planets.planetsGenerator)(20),
+            planetsVisited: []
         };
 
         _this.getNextUpgradeCost = _this.getNextUpgradeCost.bind(_this);
         _this.upgrade = _this.upgrade.bind(_this);
+        _this.upgradeDefense = _this.upgradeDefense.bind(_this);
         _this.updateGame = _this.updateGame.bind(_this);
+        _this.checkForPlanetVisits = _this.checkForPlanetVisits.bind(_this);
         return _this;
     }
 
     _createClass(Game, [{
+        key: 'checkForPlanetVisits',
+        value: function checkForPlanetVisits() {
+            var _this2 = this;
+
+            return this.state.planets.filter(function (planet) {
+                return !_this2.state.planetsVisited.includes(planet) && _this2.state.commodities >= planet.threshold;
+            });
+        }
+    }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
             setInterval(this.updateGame, tick);
@@ -1113,10 +1176,10 @@ var Game = function (_React$Component) {
     }, {
         key: 'updateGame',
         value: function updateGame() {
-            var _this2 = this;
+            var _this3 = this;
 
             var pirateAttack = _pirates.pirates.filter(function (pirate) {
-                return _this2.state.citizens >= pirate.citizens && !_this2.state.attacks.includes(pirate) && !_this2.state.underAttack;
+                return _this3.state.citizens >= pirate.citizens && !_this3.state.attacks.includes(pirate) && !_this3.state.underAttack;
             });
             if (pirateAttack.length > 0) {
                 pirateAttack = pirateAttack.sort(function (a, b) {
@@ -1131,37 +1194,40 @@ var Game = function (_React$Component) {
 
             if (this.state.underAttack) {
                 this.state.underAttack.map(function (pirate, index) {
-                    console.log('Pirate makes a swoop!');
-
                     var doesHit = Math.random() <= pirate.accuracy;
                     if (doesHit) {
-                        _this2.setState({
-                            citizens: _this2.state.citizens - pirate.attack,
-                            logs: [].concat(_toConsumableArray(_this2.state.logs), [pirate.attack + ' citizens died!!!'])
+                        _this3.setState({
+                            citizens: _this3.state.citizens - pirate.attack,
+                            logs: [].concat(_toConsumableArray(_this3.state.logs), [pirate.attack + ' citizens died!!!'])
                         });
                     }
 
-                    var fightBack = Math.random() <= _this2.state.defenseAccuracy;
+                    var fightBack = Math.random() <= _this3.state.defenseAccuracy;
                     if (fightBack) {
                         var pirateShip = _extends({}, pirate);
-                        pirateShip.defense -= _this2.state.defenseAttack;
+                        pirateShip.defense -= _this3.state.defenseAttack;
+
+                        var newPiratesArray = [].concat(_toConsumableArray(_this3.state.underAttack));
 
                         if (pirateShip.defense <= 0) {
-                            var newPiratesArray = [].concat(_toConsumableArray(_this2.state.underAttack));
-                            console.log('Pirates array', newPiratesArray);
                             newPiratesArray.splice(index, index + 1);
-                            _this2.setState({
+                            _this3.setState({
                                 underAttack: newPiratesArray.length > 0 ? newPiratesArray : null,
-                                logs: [].concat(_toConsumableArray(_this2.state.logs), ['Pirate ship was destroyed!!'])
+                                logs: [].concat(_toConsumableArray(_this3.state.logs), ['Pirate ship was destroyed!!'])
                             });
                         } else {
-                            console.log('Ship was only damaged!');
+                            newPiratesArray[index] = pirateShip;
+                            _this3.setState({
+                                underAttack: newPiratesArray,
+                                logs: [].concat(_toConsumableArray(_this3.state.logs), ['Contact made with enemy ship!'])
+                            });
                         }
                     }
                 });
             }
 
             this.setState({
+                planetsVisited: [].concat(_toConsumableArray(this.state.planetsVisited), _toConsumableArray(this.checkForPlanetVisits())),
                 commodities: this.state.commodities + this.state.commoditiesPerTick,
                 citizens: this.state.citizens + this.state.citizensPerTick
             });
@@ -1169,12 +1235,12 @@ var Game = function (_React$Component) {
     }, {
         key: 'upgrade',
         value: function upgrade() {
-            var _this3 = this;
+            var _this4 = this;
 
             var upgrade = this.getNextUpgradeCost();
             if (this.state.commodities >= upgrade.cost) {
                 var citizenTick = citizenGrowth.filter(function (c) {
-                    return c.level === _this3.state.level + 1;
+                    return c.level === _this4.state.level + 1;
                 });
                 this.setState({
                     commodities: this.state.commodities - upgrade.cost,
@@ -1189,18 +1255,53 @@ var Game = function (_React$Component) {
             }
         }
     }, {
+        key: 'upgradeDefense',
+        value: function upgradeDefense() {
+            var upgradeDef = this.getNextDraftCost();
+            if (this.state.citizens >= upgradeDef.cost) {
+                this.setState({
+                    citizens: this.state.citizens - upgradeDef.cost,
+                    defenseAttack: upgradeDef.attack,
+                    defenseAccuracy: upgradeDef.accuracy
+                });
+            } else {
+                this.setState({
+                    logs: [].concat(_toConsumableArray(this.state.logs), ['Cannot afford to draft that many citizens!'])
+                });
+            }
+        }
+    }, {
         key: 'getNextUpgradeCost',
         value: function getNextUpgradeCost() {
-            var _this4 = this;
+            var _this5 = this;
 
             return upgradeLevels.filter(function (upgrade) {
-                return upgrade.level === _this4.state.level + 1;
+                return upgrade.level === _this5.state.level + 1;
             })[0];
+        }
+    }, {
+        key: 'getNextDraftCost',
+        value: function getNextDraftCost() {
+            var _this6 = this;
+
+            return defenceLevels.filter(function (defense) {
+                return defense.level === _this6.state.level + 1;
+            })[0];
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate() {
+            if (this.state.logs.length >= 5) {
+                this.setState({
+                    logs: this.state.logs.reverse().slice(0, 4).reverse()
+                });
+            }
         }
     }, {
         key: 'render',
         value: function render() {
             var upgrade = this.getNextUpgradeCost();
+            var upgradeDefense = this.getNextDraftCost();
             return _react2.default.createElement(
                 'div',
                 null,
@@ -1238,9 +1339,27 @@ var Game = function (_React$Component) {
                 ),
                 _react2.default.createElement('br', null),
                 _react2.default.createElement(
+                    'span',
+                    null,
+                    'Upgrade Station'
+                ),
+                _react2.default.createElement(
                     'button',
                     { onClick: this.upgrade },
+                    '$',
                     upgrade.cost
+                ),
+                _react2.default.createElement('br', null),
+                _react2.default.createElement(
+                    'span',
+                    null,
+                    'Upgrade Defense'
+                ),
+                _react2.default.createElement(
+                    'button',
+                    { onClick: this.upgradeDefense },
+                    upgradeDefense.cost,
+                    ' citizens'
                 ),
                 _react2.default.createElement('br', null),
                 _react2.default.createElement(
@@ -1253,7 +1372,40 @@ var Game = function (_React$Component) {
                             x
                         );
                     })
-                )
+                ),
+                _react2.default.createElement('br', null),
+                _react2.default.createElement('br', null),
+                _react2.default.createElement(
+                    'h4',
+                    null,
+                    'Planets Visited'
+                ),
+                this.state.planetsVisited && this.state.planetsVisited.map(function (x, i) {
+                    return _react2.default.createElement(
+                        'p',
+                        { key: i },
+                        x.name,
+                        ' - arrived! They have ',
+                        x.population,
+                        ' citizens.'
+                    );
+                }),
+                _react2.default.createElement('br', null),
+                _react2.default.createElement('br', null),
+                _react2.default.createElement(
+                    'h4',
+                    null,
+                    'Potential Planets'
+                ),
+                this.state.planets.map(function (x, i) {
+                    return _react2.default.createElement(
+                        'p',
+                        { key: i },
+                        x.name,
+                        ' - arrives at ',
+                        x.threshold
+                    );
+                })
             );
         }
     }]);
@@ -1264,7 +1416,7 @@ var Game = function (_React$Component) {
 _reactDom2.default.render(_react2.default.createElement(Game, null), document.getElementById('root'));
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1299,7 +1451,7 @@ function camelize(string) {
 module.exports = camelize;
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1314,7 +1466,7 @@ module.exports = camelize;
 
 
 
-var camelize = __webpack_require__(17);
+var camelize = __webpack_require__(19);
 
 var msPattern = /^-ms-/;
 
@@ -1342,7 +1494,7 @@ function camelizeStyleName(string) {
 module.exports = camelizeStyleName;
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1378,7 +1530,7 @@ function hyphenate(string) {
 module.exports = hyphenate;
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1393,7 +1545,7 @@ module.exports = hyphenate;
 
 
 
-var hyphenate = __webpack_require__(19);
+var hyphenate = __webpack_require__(21);
 
 var msPattern = /^ms-/;
 
@@ -1420,7 +1572,7 @@ function hyphenateStyleName(string) {
 module.exports = hyphenateStyleName;
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1448,7 +1600,7 @@ function isNode(object) {
 module.exports = isNode;
 
 /***/ }),
-/* 22 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1463,7 +1615,7 @@ module.exports = isNode;
  * @typechecks
  */
 
-var isNode = __webpack_require__(21);
+var isNode = __webpack_require__(23);
 
 /**
  * @param {*} object The object to check.
@@ -1476,7 +1628,7 @@ function isTextNode(object) {
 module.exports = isTextNode;
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1495,7 +1647,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 24 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1527,8 +1679,8 @@ var containsNode = __webpack_require__(9);
 var focusNode = __webpack_require__(10);
 var emptyObject = __webpack_require__(2);
 var checkPropTypes = __webpack_require__(13);
-var hyphenateStyleName = __webpack_require__(20);
-var camelizeStyleName = __webpack_require__(18);
+var hyphenateStyleName = __webpack_require__(22);
+var camelizeStyleName = __webpack_require__(20);
 
 /**
  * WARNING: DO NOT manually require this module.
@@ -16861,7 +17013,7 @@ module.exports = reactDom;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 25 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17095,7 +17247,7 @@ Z.injectIntoDevTools({findFiberByHostInstance:pb,bundleType:0,version:"16.1.0",r
 
 
 /***/ }),
-/* 26 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18446,7 +18598,7 @@ module.exports = react;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 27 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

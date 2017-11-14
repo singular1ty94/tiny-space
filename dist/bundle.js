@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 18);
+/******/ 	return __webpack_require__(__webpack_require__.s = 20);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -427,9 +427,9 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(29);
+  module.exports = __webpack_require__(31);
 } else {
-  module.exports = __webpack_require__(28);
+  module.exports = __webpack_require__(30);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
@@ -699,7 +699,7 @@ module.exports = ExecutionEnvironment;
  * 
  */
 
-var isTextNode = __webpack_require__(24);
+var isTextNode = __webpack_require__(26);
 
 /*eslint-disable no-bitwise */
 
@@ -886,7 +886,7 @@ module.exports = shallowEqual;
 if (process.env.NODE_ENV !== 'production') {
   var invariant = __webpack_require__(5);
   var warning = __webpack_require__(6);
-  var ReactPropTypesSecret = __webpack_require__(25);
+  var ReactPropTypesSecret = __webpack_require__(27);
   var loggedTypeFailures = {};
 }
 
@@ -946,6 +946,106 @@ module.exports = checkPropTypes;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+var SPACE_FARM = {
+    name: 'Space Farm',
+    cost: 250,
+    benefit: 0.2,
+    type: 'COMMODITY_GAIN',
+    description: 'Grow fresh produce for sale on the galactic market and increase your commodities gained.'
+};
+
+var MEDIUM_SPACE_FARM = {
+    name: 'Medium Space Farm',
+    cost: 750,
+    benefit: 0.4,
+    type: 'COMMODITY_GAIN',
+    description: 'Expand your agricultural yields with larger farms and gain more commodities.'
+};
+
+var SATELLITE_RELAY = {
+    name: 'Satellite Relay',
+    cost: 500,
+    benefit: 0.2,
+    type: 'DEFENSE_ACCURACY',
+    description: 'Early-warning detection systems help you accurately defeat enemies.'
+};
+
+var LOW_RING_APARTMENTS = {
+    name: 'Lower Ring Apartments',
+    cost: 300,
+    benefit: 0.5,
+    type: 'CITIZEN_GAIN',
+    description: 'More room to live means more citizens will emigrate to your habitat.'
+};
+
+var addons = exports.addons = [SPACE_FARM, MEDIUM_SPACE_FARM, SATELLITE_RELAY, LOW_RING_APARTMENTS];
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var tick = exports.tick = 250;
+
+var upgradeLevels = exports.upgradeLevels = [{
+    level: 2,
+    cost: 500,
+    tick: 1
+}, {
+    level: 3,
+    cost: 1500,
+    tick: 2.2
+}, {
+    level: 4,
+    cost: 12000,
+    tick: 3.7
+}, {
+    level: 5,
+    cost: 37000,
+    tick: 5.75
+}];
+
+var citizenGrowth = exports.citizenGrowth = [{
+    level: 2,
+    tick: 0.6
+}, {
+    level: 3,
+    tick: 1.2
+}, {
+    level: 4,
+    tick: 3.6
+}, {
+    level: 5,
+    tick: 7.7
+}];
+
+var defenseLevels = exports.defenseLevels = [{
+    level: 2,
+    accuracy: 0.4,
+    attack: 3,
+    cost: 15
+}, {
+    level: 3,
+    accuracy: 0.7,
+    attack: 6,
+    cost: 50
+}];
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 var PIRATE_LV_1 = exports.PIRATE_LV_1 = { attack: 3, defense: 0, accuracy: 0.3 };
 var PIRATE_LV_2 = exports.PIRATE_LV_2 = { attack: 6, defense: 2, accuracy: 0.45 };
 
@@ -958,7 +1058,7 @@ var pirates = exports.pirates = [{
 }];
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -969,7 +1069,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.planetsGenerator = planetsGenerator;
 
-var _helpers = __webpack_require__(17);
+var _helpers = __webpack_require__(19);
 
 var planetNameFront = ['Betelgeuse', 'Saturn', 'Polaris', 'Maroon', 'Dustiin', 'Solarus', 'Sycarus', 'Lupin', 'Neptuna', 'Horizon', 'Zygg', 'Ares', 'Mercina'];
 
@@ -989,7 +1089,7 @@ function planetsGenerator(numPlanets) {
 }
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1027,15 +1127,15 @@ if (process.env.NODE_ENV === 'production') {
   // DCE check should happen before ReactDOM bundle executes so that
   // DevTools can report bad minification during injection.
   checkDCE();
-  module.exports = __webpack_require__(27);
+  module.exports = __webpack_require__(29);
 } else {
-  module.exports = __webpack_require__(26);
+  module.exports = __webpack_require__(28);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1050,7 +1150,7 @@ function getRandom(min, max) {
 }
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1064,13 +1164,17 @@ var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(16);
+var _reactDom = __webpack_require__(18);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _pirates = __webpack_require__(14);
+var _pirates = __webpack_require__(16);
 
-var _planets = __webpack_require__(15);
+var _planets = __webpack_require__(17);
+
+var _addons = __webpack_require__(14);
+
+var _config = __webpack_require__(15);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1081,52 +1185,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var tick = 250;
-
-var upgradeLevels = [{
-    level: 2,
-    cost: 500,
-    tick: 0.5
-}, {
-    level: 3,
-    cost: 1500,
-    tick: 0.80
-}, {
-    level: 4,
-    cost: 12000,
-    tick: 1.30
-}, {
-    level: 5,
-    cost: 37000,
-    tick: 1.75
-}];
-
-var citizenGrowth = [{
-    level: 2,
-    tick: 0.4
-}, {
-    level: 3,
-    tick: 0.6
-}, {
-    level: 4,
-    tick: 1.1
-}, {
-    level: 5,
-    tick: 1.7
-}];
-
-var defenceLevels = [{
-    level: 2,
-    accuracy: 0.4,
-    attack: 3,
-    cost: 15
-}, {
-    level: 3,
-    accuracy: 0.7,
-    attack: 6,
-    cost: 50
-}];
 
 var Game = function (_React$Component) {
     _inherits(Game, _React$Component);
@@ -1140,15 +1198,17 @@ var Game = function (_React$Component) {
             commodities: 1000,
             citizens: 7,
             commoditiesPerTick: 0.25,
-            citizensPerTick: 0.005,
+            citizensPerTick: 0.05,
             level: 1,
             logs: [],
             attacks: [],
             underAttack: null,
             defenseAttack: 1,
+            defenseLevel: 1,
             defenseAccuracy: 0.25,
             planets: (0, _planets.planetsGenerator)(20),
-            planetsVisited: []
+            planetsVisited: [],
+            addonsBuilt: []
         };
 
         _this.getNextUpgradeCost = _this.getNextUpgradeCost.bind(_this);
@@ -1156,10 +1216,44 @@ var Game = function (_React$Component) {
         _this.upgradeDefense = _this.upgradeDefense.bind(_this);
         _this.updateGame = _this.updateGame.bind(_this);
         _this.checkForPlanetVisits = _this.checkForPlanetVisits.bind(_this);
+        _this.buildAddon = _this.buildAddon.bind(_this);
         return _this;
     }
 
     _createClass(Game, [{
+        key: 'buildAddon',
+        value: function buildAddon(addon) {
+            if (this.state.commodities >= addon.cost) {
+                var commoditiesPerTick = this.state.commoditiesPerTick;
+                var defenseAccuracy = this.state.defenseAccuracy;
+                var citizensPerTick = this.state.citizensPerTick;
+                switch (addon.type) {
+                    case 'COMMODITY_GAIN':
+                        commoditiesPerTick = this.state.commoditiesPerTick + addon.benefit;
+                        break;
+                    case 'DEFENSE_ACCURACY':
+                        defenseAccuracy = this.state.defenseAccuracy + addon.benefit;
+                        break;
+                    case 'CITIZEN_GAIN':
+                        citizensPerTick = this.state.citizensPerTick + addon.benefit;
+                        break;
+                }
+
+                this.setState({
+                    commoditiesPerTick: commoditiesPerTick,
+                    citizensPerTick: citizensPerTick,
+                    defenseAccuracy: defenseAccuracy,
+                    addonsBuilt: [].concat(_toConsumableArray(this.state.addonsBuilt), [addon]),
+                    commodities: this.state.commodities - addon.cost,
+                    logs: [].concat(_toConsumableArray(this.state.logs), ['You build the ' + addon.name + '!'])
+                });
+            } else {
+                this.setState({
+                    logs: [].concat(_toConsumableArray(this.state.logs), ['You cannot afford the ' + addon.name + '.'])
+                });
+            }
+        }
+    }, {
         key: 'checkForPlanetVisits',
         value: function checkForPlanetVisits() {
             var _this2 = this;
@@ -1171,7 +1265,7 @@ var Game = function (_React$Component) {
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
-            setInterval(this.updateGame, tick);
+            setInterval(this.updateGame, _config.tick);
         }
     }, {
         key: 'updateGame',
@@ -1239,14 +1333,14 @@ var Game = function (_React$Component) {
 
             var upgrade = this.getNextUpgradeCost();
             if (this.state.commodities >= upgrade.cost) {
-                var citizenTick = citizenGrowth.filter(function (c) {
+                var citizenTick = _config.citizenGrowth.filter(function (c) {
                     return c.level === _this4.state.level + 1;
                 });
                 this.setState({
                     commodities: this.state.commodities - upgrade.cost,
-                    commoditiesPerTick: upgrade.tick,
+                    commoditiesPerTick: this.state.commoditiesPerTick + upgrade.tick,
                     level: upgrade.level,
-                    citizensPerTick: citizenTick[0].tick
+                    citizensPerTick: this.state.citizensPerTick + citizenTick[0].tick
                 });
             } else {
                 this.setState({
@@ -1262,6 +1356,7 @@ var Game = function (_React$Component) {
                 this.setState({
                     citizens: this.state.citizens - upgradeDef.cost,
                     defenseAttack: upgradeDef.attack,
+                    defenseLevel: upgradeDef.level,
                     defenseAccuracy: upgradeDef.accuracy
                 });
             } else {
@@ -1275,7 +1370,7 @@ var Game = function (_React$Component) {
         value: function getNextUpgradeCost() {
             var _this5 = this;
 
-            return upgradeLevels.filter(function (upgrade) {
+            return _config.upgradeLevels.filter(function (upgrade) {
                 return upgrade.level === _this5.state.level + 1;
             })[0];
         }
@@ -1284,8 +1379,8 @@ var Game = function (_React$Component) {
         value: function getNextDraftCost() {
             var _this6 = this;
 
-            return defenceLevels.filter(function (defense) {
-                return defense.level === _this6.state.level + 1;
+            return _config.defenseLevels.filter(function (defense) {
+                return defense.level === _this6.state.defenseLevel + 1;
             })[0];
         }
     }, {
@@ -1300,112 +1395,195 @@ var Game = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
+            var _this7 = this;
+
             var upgrade = this.getNextUpgradeCost();
             var upgradeDefense = this.getNextDraftCost();
+            var filteredAddons = _addons.addons.filter(function (x) {
+                return !_this7.state.addonsBuilt.includes(x);
+            });
             return _react2.default.createElement(
                 'div',
-                null,
-                _react2.default.createElement(
-                    'span',
-                    null,
-                    _react2.default.createElement(
-                        'h4',
-                        null,
-                        'Level: ',
-                        this.state.level
-                    )
-                ),
-                _react2.default.createElement('br', null),
-                _react2.default.createElement(
-                    'span',
-                    null,
-                    _react2.default.createElement(
-                        'strong',
-                        null,
-                        'Commodities: ',
-                        Math.floor(this.state.commodities)
-                    )
-                ),
-                _react2.default.createElement('br', null),
-                _react2.default.createElement(
-                    'span',
-                    null,
-                    _react2.default.createElement(
-                        'strong',
-                        null,
-                        'Citizens: ',
-                        Math.floor(this.state.citizens)
-                    )
-                ),
-                _react2.default.createElement('br', null),
-                _react2.default.createElement(
-                    'span',
-                    null,
-                    'Upgrade Station'
-                ),
-                _react2.default.createElement(
-                    'button',
-                    { onClick: this.upgrade },
-                    '$',
-                    upgrade.cost
-                ),
-                _react2.default.createElement('br', null),
-                _react2.default.createElement(
-                    'span',
-                    null,
-                    'Upgrade Defense'
-                ),
-                _react2.default.createElement(
-                    'button',
-                    { onClick: this.upgradeDefense },
-                    upgradeDefense.cost,
-                    ' citizens'
-                ),
-                _react2.default.createElement('br', null),
+                { className: 'container' },
                 _react2.default.createElement(
                     'div',
-                    null,
-                    this.state.logs.map(function (x, i) {
-                        return _react2.default.createElement(
+                    { className: 'row' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'one-half column' },
+                        _react2.default.createElement(
+                            'h4',
+                            null,
+                            'Station Level: ',
+                            this.state.level
+                        ),
+                        _react2.default.createElement(
+                            'h5',
+                            null,
+                            'Defense Level: ',
+                            this.state.defenseLevel
+                        ),
+                        _react2.default.createElement('br', null),
+                        _react2.default.createElement(
                             'p',
-                            { key: i },
-                            x
-                        );
-                    })
+                            null,
+                            'Commod/tk ',
+                            this.state.commoditiesPerTick
+                        ),
+                        _react2.default.createElement(
+                            'p',
+                            null,
+                            'Citizen/tk ',
+                            this.state.citizensPerTick
+                        ),
+                        _react2.default.createElement(
+                            'p',
+                            null,
+                            'DefAc ',
+                            this.state.defenseAccuracy
+                        ),
+                        _react2.default.createElement(
+                            'span',
+                            null,
+                            _react2.default.createElement(
+                                'strong',
+                                null,
+                                'Commodities: ',
+                                Math.floor(this.state.commodities)
+                            )
+                        ),
+                        _react2.default.createElement('br', null),
+                        _react2.default.createElement(
+                            'span',
+                            null,
+                            _react2.default.createElement(
+                                'strong',
+                                null,
+                                'Citizens: ',
+                                Math.floor(this.state.citizens)
+                            )
+                        ),
+                        _react2.default.createElement('br', null),
+                        upgrade && _react2.default.createElement(
+                            'div',
+                            null,
+                            _react2.default.createElement(
+                                'span',
+                                null,
+                                'Upgrade Station'
+                            ),
+                            ' ',
+                            _react2.default.createElement(
+                                'button',
+                                { onClick: this.upgrade },
+                                '$',
+                                upgrade.cost
+                            )
+                        ),
+                        _react2.default.createElement('br', null),
+                        upgradeDefense && _react2.default.createElement(
+                            'div',
+                            null,
+                            _react2.default.createElement(
+                                'span',
+                                null,
+                                'Upgrade Defense'
+                            ),
+                            ' ',
+                            _react2.default.createElement(
+                                'button',
+                                { onClick: this.upgradeDefense },
+                                upgradeDefense.cost,
+                                ' citizens'
+                            )
+                        ),
+                        _react2.default.createElement('br', null)
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'one-half column' },
+                        _react2.default.createElement(
+                            'h4',
+                            null,
+                            'Logs'
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            null,
+                            this.state.logs.map(function (x, i) {
+                                return _react2.default.createElement(
+                                    'p',
+                                    { key: i },
+                                    x
+                                );
+                            })
+                        ),
+                        _react2.default.createElement('br', null),
+                        _react2.default.createElement('br', null),
+                        _react2.default.createElement(
+                            'h4',
+                            null,
+                            'Planets Visited'
+                        ),
+                        this.state.planetsVisited && this.state.planetsVisited.map(function (x, i) {
+                            return _react2.default.createElement(
+                                'p',
+                                { key: i },
+                                x.name,
+                                ' - arrived! They have ',
+                                x.population,
+                                ' citizens.'
+                            );
+                        }),
+                        _react2.default.createElement('br', null),
+                        _react2.default.createElement('br', null),
+                        _react2.default.createElement(
+                            'h4',
+                            null,
+                            'Potential Planets'
+                        ),
+                        this.state.planets.map(function (x, i) {
+                            return _react2.default.createElement(
+                                'p',
+                                { key: i },
+                                x.name,
+                                ' - arrives at ',
+                                x.threshold
+                            );
+                        })
+                    )
                 ),
-                _react2.default.createElement('br', null),
-                _react2.default.createElement('br', null),
                 _react2.default.createElement(
-                    'h4',
-                    null,
-                    'Planets Visited'
-                ),
-                this.state.planetsVisited && this.state.planetsVisited.map(function (x, i) {
-                    return _react2.default.createElement(
-                        'p',
-                        { key: i },
-                        x.name,
-                        ' - arrived! They have ',
-                        x.population,
-                        ' citizens.'
-                    );
-                }),
-                _react2.default.createElement('br', null),
-                _react2.default.createElement('br', null),
-                _react2.default.createElement(
-                    'h4',
-                    null,
-                    'Potential Planets'
-                ),
-                this.state.planets.map(function (x, i) {
-                    return _react2.default.createElement(
-                        'p',
-                        { key: i },
-                        x.name,
-                        ' - arrives at ',
-                        x.threshold
-                    );
-                })
+                    'div',
+                    { className: 'row' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'one-half column' },
+                        _react2.default.createElement(
+                            'h4',
+                            null,
+                            'Build'
+                        ),
+                        filteredAddons.map(function (x, i) {
+                            return _react2.default.createElement(
+                                'div',
+                                { key: i },
+                                _react2.default.createElement(
+                                    'span',
+                                    null,
+                                    x.name
+                                ),
+                                _react2.default.createElement(
+                                    'button',
+                                    { title: x.description, onClick: function onClick() {
+                                            return _this7.buildAddon(x);
+                                        } },
+                                    x.cost
+                                )
+                            );
+                        })
+                    )
+                )
             );
         }
     }]);
@@ -1416,7 +1594,7 @@ var Game = function (_React$Component) {
 _reactDom2.default.render(_react2.default.createElement(Game, null), document.getElementById('root'));
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1451,7 +1629,7 @@ function camelize(string) {
 module.exports = camelize;
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1466,7 +1644,7 @@ module.exports = camelize;
 
 
 
-var camelize = __webpack_require__(19);
+var camelize = __webpack_require__(21);
 
 var msPattern = /^-ms-/;
 
@@ -1494,7 +1672,7 @@ function camelizeStyleName(string) {
 module.exports = camelizeStyleName;
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1530,7 +1708,7 @@ function hyphenate(string) {
 module.exports = hyphenate;
 
 /***/ }),
-/* 22 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1545,7 +1723,7 @@ module.exports = hyphenate;
 
 
 
-var hyphenate = __webpack_require__(21);
+var hyphenate = __webpack_require__(23);
 
 var msPattern = /^ms-/;
 
@@ -1572,7 +1750,7 @@ function hyphenateStyleName(string) {
 module.exports = hyphenateStyleName;
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1600,7 +1778,7 @@ function isNode(object) {
 module.exports = isNode;
 
 /***/ }),
-/* 24 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1615,7 +1793,7 @@ module.exports = isNode;
  * @typechecks
  */
 
-var isNode = __webpack_require__(23);
+var isNode = __webpack_require__(25);
 
 /**
  * @param {*} object The object to check.
@@ -1628,7 +1806,7 @@ function isTextNode(object) {
 module.exports = isTextNode;
 
 /***/ }),
-/* 25 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1647,7 +1825,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 26 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1679,8 +1857,8 @@ var containsNode = __webpack_require__(9);
 var focusNode = __webpack_require__(10);
 var emptyObject = __webpack_require__(2);
 var checkPropTypes = __webpack_require__(13);
-var hyphenateStyleName = __webpack_require__(22);
-var camelizeStyleName = __webpack_require__(20);
+var hyphenateStyleName = __webpack_require__(24);
+var camelizeStyleName = __webpack_require__(22);
 
 /**
  * WARNING: DO NOT manually require this module.
@@ -17013,7 +17191,7 @@ module.exports = reactDom;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 27 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17247,7 +17425,7 @@ Z.injectIntoDevTools({findFiberByHostInstance:pb,bundleType:0,version:"16.1.0",r
 
 
 /***/ }),
-/* 28 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18598,7 +18776,7 @@ module.exports = react;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 29 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

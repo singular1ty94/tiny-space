@@ -2,61 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { PIRATE_LV_1, PIRATE_LV_2, pirates } from './pirates'
 import { planetsGenerator } from './planets'
-
-const tick = 250
-
-const upgradeLevels = [
-    {
-        level: 2,
-        cost: 500,
-        tick: 0.5
-    },
-    {
-        level: 3,
-        cost: 1500,
-        tick: 0.80
-    },
-    {
-        level: 4,
-        cost: 12000,
-        tick: 1.30
-    },
-    {
-        level: 5,
-        cost: 37000,
-        tick: 1.75
-    }
-]
-
-const citizenGrowth = [
-    {
-        level: 2,
-        tick: 0.4
-    },{
-        level: 3,
-        tick: 0.6   
-    },{
-        level: 4,
-        tick: 1.1   
-    },{
-        level: 5,
-        tick: 1.7  
-    }
-]
-
-const defenceLevels = [
-    {
-        level: 2,
-        accuracy: 0.4,
-        attack: 3,
-        cost: 15
-    },{
-        level: 3,
-        accuracy: 0.7,
-        attack: 6,
-        cost: 50
-    }
-]
+import { addons } from './addons'
+import { tick, upgradeLevels, citizenGrowth, defenseLevels } from './config'
 
 class Game extends React.Component {
     constructor(){
@@ -65,15 +12,17 @@ class Game extends React.Component {
             commodities: 1000,
             citizens: 7,
             commoditiesPerTick: 0.25,
-            citizensPerTick: 0.005,
+            citizensPerTick: 0.05,
             level: 1,
             logs: [],
             attacks: [],
             underAttack: null,
             defenseAttack: 1,
+            defenseLevel: 1,
             defenseAccuracy: 0.25,
             planets: planetsGenerator(20),
-            planetsVisited: []
+            planetsVisited: [],
+            addonsBuilt: []
         }
 
         this.getNextUpgradeCost = this.getNextUpgradeCost.bind(this)
@@ -81,6 +30,39 @@ class Game extends React.Component {
         this.upgradeDefense = this.upgradeDefense.bind(this)
         this.updateGame = this.updateGame.bind(this)
         this.checkForPlanetVisits = this.checkForPlanetVisits.bind(this)
+        this.buildAddon = this.buildAddon.bind(this)
+    }
+
+    buildAddon(addon) {
+        if (this.state.commodities >= addon.cost) {
+            let commoditiesPerTick = this.state.commoditiesPerTick
+            let defenseAccuracy = this.state.defenseAccuracy
+            let citizensPerTick = this.state.citizensPerTick
+            switch(addon.type) {
+                case 'COMMODITY_GAIN':
+                    commoditiesPerTick = this.state.commoditiesPerTick + addon.benefit 
+                    break;
+                case 'DEFENSE_ACCURACY':
+                    defenseAccuracy = this.state.defenseAccuracy + addon.benefit 
+                    break;
+                case 'CITIZEN_GAIN':
+                    citizensPerTick = this.state.citizensPerTick + addon.benefit 
+                    break;
+            }
+
+            this.setState({
+                commoditiesPerTick: commoditiesPerTick,
+                citizensPerTick: citizensPerTick,
+                defenseAccuracy: defenseAccuracy,
+                addonsBuilt: [...this.state.addonsBuilt, addon],
+                commodities: this.state.commodities - addon.cost,
+                logs: [...this.state.logs, `You build the ${addon.name}!`]
+            })
+        } else {
+            this.setState({
+                logs: [...this.state.logs, `You cannot afford the ${addon.name}.`]
+            })
+        }
     }
 
     checkForPlanetVisits() {
@@ -156,9 +138,9 @@ class Game extends React.Component {
             let citizenTick = citizenGrowth.filter((c) => c.level === this.state.level + 1)
             this.setState({
                 commodities: this.state.commodities - upgrade.cost,
-                commoditiesPerTick: upgrade.tick,
+                commoditiesPerTick: this.state.commoditiesPerTick + upgrade.tick,
                 level: upgrade.level,
-                citizensPerTick: citizenTick[0].tick
+                citizensPerTick: this.state.citizensPerTick + citizenTick[0].tick
             })
         } else {
             this.setState({
@@ -173,6 +155,7 @@ class Game extends React.Component {
             this.setState({
                 citizens: this.state.citizens - upgradeDef.cost,
                 defenseAttack: upgradeDef.attack,
+                defenseLevel: upgradeDef.level,
                 defenseAccuracy: upgradeDef.accuracy
             })
         } else {
@@ -187,7 +170,7 @@ class Game extends React.Component {
     }
 
     getNextDraftCost(){
-        return defenceLevels.filter((defense) => { return defense.level === (this.state.level + 1)})[0]
+        return defenseLevels.filter((defense) => { return defense.level === (this.state.defenseLevel + 1)})[0]
     }
 
     componentDidUpdate() {
@@ -201,35 +184,65 @@ class Game extends React.Component {
     render() {
         const upgrade = this.getNextUpgradeCost()
         const upgradeDefense = this.getNextDraftCost()
+        const filteredAddons = addons.filter(x => !this.state.addonsBuilt.includes(x))
         return (
-            <div>
-                <span><h4>Level: {this.state.level}</h4></span>
-                <br/>
-                <span><strong>Commodities: {Math.floor(this.state.commodities)}</strong></span>
-                <br/>
-                <span><strong>Citizens: {Math.floor(this.state.citizens)}</strong></span>
-                <br/>
-                <span>Upgrade Station</span><button onClick={this.upgrade}>${upgrade.cost}</button>
-                <br/>
-                <span>Upgrade Defense</span><button onClick={this.upgradeDefense}>{upgradeDefense.cost} citizens</button>
-                <br />
-                <div>
-                    {this.state.logs.map((x, i) =>
-                        <p key={i}>{x}</p>
-                    )}
+            <div className="container">
+                <div className="row">
+                    <div className="one-half column">
+                        <h4>Station Level: {this.state.level}</h4>
+                        <h5>Defense Level: {this.state.defenseLevel}</h5>
+                        <br/>
+                        <p>Commod/tk {this.state.commoditiesPerTick}</p>
+                        <p>Citizen/tk {this.state.citizensPerTick}</p>
+                        <p>DefAc {this.state.defenseAccuracy}</p>
+                        <span><strong>Commodities: {Math.floor(this.state.commodities)}</strong></span>
+                        <br/>
+                        <span><strong>Citizens: {Math.floor(this.state.citizens)}</strong></span>
+                        <br/>
+                        {upgrade && 
+                            <div>
+                                <span>Upgrade Station</span> <button onClick={this.upgrade}>${upgrade.cost}</button>
+                            </div>
+                        }
+                        <br/>
+                        {upgradeDefense && 
+                            <div>
+                                <span>Upgrade Defense</span> <button onClick={this.upgradeDefense}>{upgradeDefense.cost} citizens</button>
+                            </div>
+                        }
+                        <br />
+                    </div>
+                    <div className="one-half column">
+                    <h4>Logs</h4>
+                        <div>
+                            {this.state.logs.map((x, i) =>
+                                <p key={i}>{x}</p>
+                            )}
+                        </div>
+                        <br />
+                        <br />
+                        <h4>Planets Visited</h4>
+                        {this.state.planetsVisited && this.state.planetsVisited.map((x, i) =>
+                            <p key={i}>{x.name} - arrived! They have {x.population} citizens.</p>
+                        )}
+                        <br />
+                        <br />
+                        <h4>Potential Planets</h4>
+                        {this.state.planets.map((x, i) =>
+                            <p key={i}>{x.name} - arrives at {x.threshold}</p>
+                        )}
+                    </div>
                 </div>
-                <br />
-                <br />
-                <h4>Planets Visited</h4>
-                {this.state.planetsVisited && this.state.planetsVisited.map((x, i) =>
-                    <p key={i}>{x.name} - arrived! They have {x.population} citizens.</p>
-                )}
-                <br />
-                <br />
-                <h4>Potential Planets</h4>
-                {this.state.planets.map((x, i) =>
-                    <p key={i}>{x.name} - arrives at {x.threshold}</p>
-                )}
+                <div className="row">
+                    <div className="one-half column">
+                        <h4>Build</h4>
+                        {filteredAddons.map((x, i) =>
+                            <div key={i}>
+                                <span>{x.name}</span> <button title={x.description} onClick={() => this.buildAddon(x)}>{x.cost}</button>
+                            </div>
+                        )}
+                    </div>
+                </div>
             </div>
         )
     }

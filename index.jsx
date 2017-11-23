@@ -4,8 +4,16 @@ import { PIRATE_LV_1, PIRATE_LV_2, pirates } from './pirates'
 import { planetsGenerator } from './planets'
 import { addons } from './addons'
 import { tick, upgradeLevels, citizenGrowth, defenseLevels } from './config'
+import { getRandom } from './helpers'
+
+const FRAME_RATE = 30
 
 class Game extends React.Component {
+    canvas;
+    starfield;
+    degrees;
+    spaceStation;
+
     constructor(){
         super()
         this.state = {
@@ -26,6 +34,7 @@ class Game extends React.Component {
             resources: []
         }
 
+        this.renderStation = this.renderStation.bind(this)
         this.getNextUpgradeCost = this.getNextUpgradeCost.bind(this)
         this.upgrade = this.upgrade.bind(this)
         this.upgradeDefense = this.upgradeDefense.bind(this)
@@ -42,13 +51,13 @@ class Game extends React.Component {
             switch(addon.type) {
                 case 'COMMODITY_GAIN':
                     commoditiesPerTick = this.state.commoditiesPerTick + addon.benefit 
-                    break;
+                    break
                 case 'DEFENSE_ACCURACY':
                     defenseAccuracy = this.state.defenseAccuracy + addon.benefit 
-                    break;
+                    break
                 case 'CITIZEN_GAIN':
                     citizensPerTick = this.state.citizensPerTick + addon.benefit 
-                    break;
+                    break
             }
 
             this.setState({
@@ -75,6 +84,52 @@ class Game extends React.Component {
 
     componentDidMount() {
         setInterval(this.updateGame, tick)
+        this.drawStars()
+
+        this.spaceStation = new Image()
+        this.spaceStation.src = 'dist/resources/station/spaceStation_023.png'
+        setInterval(this.renderStation, 1000 / FRAME_RATE)
+    }
+
+    drawStars() {
+        const ctx = this.starfield.getContext('2d');
+        ctx.canvas.width  = window.innerWidth;
+        ctx.canvas.height = window.innerHeight;
+
+        let stars = 500;
+        let colorrange = [0,60,240];
+        for (var i = 0; i < stars; i++) {
+
+            var x = Math.random() * ctx.canvas.offsetWidth;
+            var y = Math.random() * ctx.canvas.offsetHeight,
+            radius = Math.random() * 1.2,
+            hue = colorrange[getRandom(0,colorrange.length - 1)],
+            sat = getRandom(50,100);
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, 360);
+            ctx.fillStyle = "hsl(" + hue + ", " + sat + "%, 88%)";
+            ctx.fill();
+        }
+    }
+
+    renderStation() {
+        // Render
+        const ctx = this.canvas.getContext('2d')
+        ctx.canvas.width  = window.innerWidth
+        ctx.canvas.height = window.innerHeight
+
+        let centerX = window.innerWidth / 2
+        let centerY = window.innerHeight / 2
+
+        ctx.clearRect(0,0, ctx.canvas.width, ctx.canvas.height)
+
+        let degrees = (this.degrees || 0) + ((360 / 3) / FRAME_RATE)
+        ctx.save()
+        ctx.translate(ctx.canvas.width/2, ctx.canvas.height/2)
+        ctx.rotate(degrees * Math.PI / 180)
+        ctx.drawImage(this.spaceStation, -(this.spaceStation.width / 2), -(this.spaceStation.height /2))
+        ctx.restore()     
+        this.degrees = degrees
     }
 
     updateGame() {
@@ -187,63 +242,93 @@ class Game extends React.Component {
         const upgradeDefense = this.getNextDraftCost()
         const filteredAddons = addons.filter(x => !this.state.addonsBuilt.includes(x))
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="one-half column">
-                        <h4>Station Level: {this.state.level}</h4>
-                        <h5>Defense Level: {this.state.defenseLevel}</h5>
-                        <br/>
-                        <p>Commod/tk {this.state.commoditiesPerTick}</p>
-                        <p>Citizen/tk {this.state.citizensPerTick}</p>
-                        <p>DefAc {this.state.defenseAccuracy}</p>
-                        <span><strong>Commodities: {Math.floor(this.state.commodities)}</strong></span>
-                        <br/>
-                        <span><strong>Citizens: {Math.floor(this.state.citizens)}</strong></span>
-                        <br/>
-                        {upgrade && 
+            <div>
+                <canvas
+                    ref={(starfield) => { this.starfield = starfield; }}
+                    width="100%"
+                    height="100%" 
+                    style={{position: "absolute", left: 0, top: 0, zIndex: 0}}>
+                </canvas>
+                <canvas
+                    ref={(canvas) => { this.canvas = canvas }}
+                    width="100%"
+                    height="100%" 
+                    style={{position: "absolute", left: 0, top: 0, zIndex: 2}}>
+                </canvas>
+
+                <div className="container" style={{position: "absolute", left: 0, top: 0, zIndex: 3, width: "100%", height: "100%"}}>
+                    <div className="row">
+                        <div className="one-half column" id="topLeftUI">
+                            <h4>Station</h4>
+                            <h5>Defense</h5>
+                            <span id="stationLevel">Lv {this.state.level}</span>
+                            <span id="defenseLevel">Lv {this.state.defenseLevel}</span>
+                            <br/>
+                            <p>Commod/tk {this.state.commoditiesPerTick}</p>
+                            <p>Citizen/tk {this.state.citizensPerTick}</p>
+                            <p>DefAc {this.state.defenseAccuracy}</p>
+                            <span><strong>Commodities: {Math.floor(this.state.commodities)}</strong></span>
+                            <br/>
+                            <span><strong>Citizens: {Math.floor(this.state.citizens)}</strong></span>
+                            <br/>
+                            {upgrade && 
+                                <div>
+                                    <span>Upgrade Station</span> <button onClick={this.upgrade}>${upgrade.cost}</button>
+                                </div>
+                            }
+                            <br/>
+                            {upgradeDefense && 
+                                <div>
+                                    <span>Upgrade Defense</span> <button onClick={this.upgradeDefense}>{upgradeDefense.cost} citizens</button>
+                                </div>
+                            }
+                            <br />
+                        </div>
+                        <div className="one-half column">
+                        <h4>Logs</h4>
                             <div>
-                                <span>Upgrade Station</span> <button onClick={this.upgrade}>${upgrade.cost}</button>
+                                {this.state.logs.map((x, i) =>
+                                    <p key={i}>{x}</p>
+                                )}
                             </div>
-                        }
-                        <br/>
-                        {upgradeDefense && 
-                            <div>
-                                <span>Upgrade Defense</span> <button onClick={this.upgradeDefense}>{upgradeDefense.cost} citizens</button>
-                            </div>
-                        }
-                        <br />
-                    </div>
-                    <div className="one-half column">
-                    <h4>Logs</h4>
-                        <div>
-                            {this.state.logs.map((x, i) =>
-                                <p key={i}>{x}</p>
+                            <br />
+                            <br />
+                            <h4>Planets Visited</h4>
+                            {this.state.planetsVisited && this.state.planetsVisited.map((x, i) =>
+                                <p key={i}>{x.name} - arrived! They have {x.population} citizens.</p>
                             )}
                         </div>
-                        <br />
-                        <br />
-                        <h4>Planets Visited</h4>
-                        {this.state.planetsVisited && this.state.planetsVisited.map((x, i) =>
-                            <p key={i}>{x.name} - arrived! They have {x.population} citizens.</p>
-                        )}
                     </div>
-                </div>
-                <div className="row">
-                    <div className="one-half column">
-                        <h4>Build</h4>
-                        {filteredAddons.map((x, i) =>
-                            <div key={i}>
-                                <span>{x.name}</span> <button title={x.description} onClick={() => this.buildAddon(x)}>{x.cost}</button>
+                    <div className="row">
+                        <div className="one-half column" id="bottomLeftUI">
+                            <button onClick={() => {
+                                this.setState({
+                                    buildMenuActive: !(this.state.buildMenuActive || false)
+                                })
+                            }}>Build</button>
+                            <div id="slideout" className={this.state.buildMenuActive ? 'on': null} >
+                                <h4 onClick={() => {
+                                    this.setState({
+                                        buildMenuActive: !(this.state.buildMenuActive || false)
+                                    })
+                                }}>Build</h4>
+                                {filteredAddons.map((x, i) =>
+                                    <div key={i}>
+                                        <span>{x.name}</span> <button title={x.description} onClick={() => this.buildAddon(x)}>{x.cost}</button>
+                                    </div>
+                                )}
                             </div>
-                        )}
-                    </div>
-                    <div className="one-half column">
-                        <h4>Resources</h4>
-                        {this.state.resources.map((r, i) => {
-                            <button key={i} title={r.description}>{r.name}<br />{r.amount}</button>
-                        })}
+                        </div>
+                        <div className="one-half column">
+                            <h4>Resources</h4>
+                            {this.state.resources.map((r, i) => {
+                                <button key={i} title={r.description}>{r.name}<br />{r.amount}</button>
+                            })}
+                        </div>
                     </div>
                 </div>
+
+
             </div>
         )
     }
@@ -252,4 +337,4 @@ class Game extends React.Component {
 ReactDOM.render(
   <Game />,
   document.getElementById('root')
-);
+)

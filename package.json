@@ -6,7 +6,9 @@
   "scripts": {
     "build": "./node_modules/.bin/webpack --config webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node dist/bundle.js"
+    "prebuild": "rm -rf dist",
+    "start": "node dist/bundle.js",
+    "postbuild": "cp -r resources dist/resources"
   },
   "author": "singular1ty94",
   "license": "MIT",

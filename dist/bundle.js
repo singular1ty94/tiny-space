@@ -568,6 +568,21 @@ module.exports = warning;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.getRandom = getRandom;
+function getRandom(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
 /**
@@ -645,7 +660,7 @@ module.exports = EventListener;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -684,7 +699,7 @@ var ExecutionEnvironment = {
 module.exports = ExecutionEnvironment;
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -727,7 +742,7 @@ function containsNode(outerNode, innerNode) {
 module.exports = containsNode;
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -757,7 +772,7 @@ function focusNode(node) {
 module.exports = focusNode;
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -799,7 +814,7 @@ function getActiveElement(doc) /*?DOMElement*/{
 module.exports = getActiveElement;
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -870,7 +885,7 @@ function shallowEqual(objA, objB) {
 module.exports = shallowEqual;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -937,7 +952,7 @@ module.exports = checkPropTypes;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -981,7 +996,7 @@ var LOW_RING_APARTMENTS = {
 var addons = exports.addons = [SPACE_FARM, MEDIUM_SPACE_FARM, SATELLITE_RELAY, LOW_RING_APARTMENTS];
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1037,7 +1052,7 @@ var defenseLevels = exports.defenseLevels = [{
 }];
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1058,7 +1073,7 @@ var pirates = exports.pirates = [{
 }];
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1069,7 +1084,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.planetsGenerator = planetsGenerator;
 
-var _helpers = __webpack_require__(19);
+var _helpers = __webpack_require__(7);
 
 var planetNameFront = ['Betelgeuse', 'Saturn', 'Polaris', 'Maroon', 'Dustiin', 'Solarus', 'Sycarus', 'Lupin', 'Neptuna', 'Horizon', 'Zygg', 'Ares', 'Mercina'];
 
@@ -1091,7 +1106,7 @@ function planetsGenerator(numPlanets) {
 }
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1137,21 +1152,6 @@ if (process.env.NODE_ENV === 'production') {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.getRandom = getRandom;
-function getRandom(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-/***/ }),
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1166,17 +1166,19 @@ var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(18);
+var _reactDom = __webpack_require__(19);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _pirates = __webpack_require__(16);
+var _pirates = __webpack_require__(17);
 
-var _planets = __webpack_require__(17);
+var _planets = __webpack_require__(18);
 
-var _addons = __webpack_require__(14);
+var _addons = __webpack_require__(15);
 
-var _config = __webpack_require__(15);
+var _config = __webpack_require__(16);
+
+var _helpers = __webpack_require__(7);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1187,6 +1189,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var FRAME_RATE = 30;
 
 var Game = function (_React$Component) {
     _inherits(Game, _React$Component);
@@ -1214,6 +1218,7 @@ var Game = function (_React$Component) {
             resources: []
         };
 
+        _this.renderStation = _this.renderStation.bind(_this);
         _this.getNextUpgradeCost = _this.getNextUpgradeCost.bind(_this);
         _this.upgrade = _this.upgrade.bind(_this);
         _this.upgradeDefense = _this.upgradeDefense.bind(_this);
@@ -1269,6 +1274,54 @@ var Game = function (_React$Component) {
         key: 'componentDidMount',
         value: function componentDidMount() {
             setInterval(this.updateGame, _config.tick);
+            this.drawStars();
+
+            this.spaceStation = new Image();
+            this.spaceStation.src = 'dist/resources/station/spaceStation_023.png';
+            setInterval(this.renderStation, 1000 / FRAME_RATE);
+        }
+    }, {
+        key: 'drawStars',
+        value: function drawStars() {
+            var ctx = this.starfield.getContext('2d');
+            ctx.canvas.width = window.innerWidth;
+            ctx.canvas.height = window.innerHeight;
+
+            var stars = 500;
+            var colorrange = [0, 60, 240];
+            for (var i = 0; i < stars; i++) {
+
+                var x = Math.random() * ctx.canvas.offsetWidth;
+                var y = Math.random() * ctx.canvas.offsetHeight,
+                    radius = Math.random() * 1.2,
+                    hue = colorrange[(0, _helpers.getRandom)(0, colorrange.length - 1)],
+                    sat = (0, _helpers.getRandom)(50, 100);
+                ctx.beginPath();
+                ctx.arc(x, y, radius, 0, 360);
+                ctx.fillStyle = "hsl(" + hue + ", " + sat + "%, 88%)";
+                ctx.fill();
+            }
+        }
+    }, {
+        key: 'renderStation',
+        value: function renderStation() {
+            // Render
+            var ctx = this.canvas.getContext('2d');
+            ctx.canvas.width = window.innerWidth;
+            ctx.canvas.height = window.innerHeight;
+
+            var centerX = window.innerWidth / 2;
+            var centerY = window.innerHeight / 2;
+
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+            var degrees = (this.degrees || 0) + 360 / 3 / FRAME_RATE;
+            ctx.save();
+            ctx.translate(ctx.canvas.width / 2, ctx.canvas.height / 2);
+            ctx.rotate(degrees * Math.PI / 180);
+            ctx.drawImage(this.spaceStation, -(this.spaceStation.width / 2), -(this.spaceStation.height / 2));
+            ctx.restore();
+            this.degrees = degrees;
         }
     }, {
         key: 'updateGame',
@@ -1407,187 +1460,232 @@ var Game = function (_React$Component) {
             });
             return _react2.default.createElement(
                 'div',
-                { className: 'container' },
+                null,
+                _react2.default.createElement('canvas', {
+                    ref: function ref(starfield) {
+                        _this7.starfield = starfield;
+                    },
+                    width: '100%',
+                    height: '100%',
+                    style: { position: "absolute", left: 0, top: 0, zIndex: 0 } }),
+                _react2.default.createElement('canvas', {
+                    ref: function ref(canvas) {
+                        _this7.canvas = canvas;
+                    },
+                    width: '100%',
+                    height: '100%',
+                    style: { position: "absolute", left: 0, top: 0, zIndex: 2 } }),
                 _react2.default.createElement(
                     'div',
-                    { className: 'row' },
+                    { className: 'container', style: { position: "absolute", left: 0, top: 0, zIndex: 3, width: "100%", height: "100%" } },
                     _react2.default.createElement(
                         'div',
-                        { className: 'one-half column' },
+                        { className: 'row' },
                         _react2.default.createElement(
-                            'h4',
-                            null,
-                            'Station Level: ',
-                            this.state.level
-                        ),
-                        _react2.default.createElement(
-                            'h5',
-                            null,
-                            'Defense Level: ',
-                            this.state.defenseLevel
-                        ),
-                        _react2.default.createElement('br', null),
-                        _react2.default.createElement(
-                            'p',
-                            null,
-                            'Commod/tk ',
-                            this.state.commoditiesPerTick
-                        ),
-                        _react2.default.createElement(
-                            'p',
-                            null,
-                            'Citizen/tk ',
-                            this.state.citizensPerTick
-                        ),
-                        _react2.default.createElement(
-                            'p',
-                            null,
-                            'DefAc ',
-                            this.state.defenseAccuracy
-                        ),
-                        _react2.default.createElement(
-                            'span',
-                            null,
-                            _react2.default.createElement(
-                                'strong',
-                                null,
-                                'Commodities: ',
-                                Math.floor(this.state.commodities)
-                            )
-                        ),
-                        _react2.default.createElement('br', null),
-                        _react2.default.createElement(
-                            'span',
-                            null,
-                            _react2.default.createElement(
-                                'strong',
-                                null,
-                                'Citizens: ',
-                                Math.floor(this.state.citizens)
-                            )
-                        ),
-                        _react2.default.createElement('br', null),
-                        upgrade && _react2.default.createElement(
                             'div',
-                            null,
+                            { className: 'one-half column', id: 'topLeftUI' },
+                            _react2.default.createElement(
+                                'h4',
+                                null,
+                                'Station'
+                            ),
+                            _react2.default.createElement(
+                                'h5',
+                                null,
+                                'Defense'
+                            ),
                             _react2.default.createElement(
                                 'span',
-                                null,
-                                'Upgrade Station'
+                                { id: 'stationLevel' },
+                                'Lv ',
+                                this.state.level
                             ),
-                            ' ',
-                            _react2.default.createElement(
-                                'button',
-                                { onClick: this.upgrade },
-                                '$',
-                                upgrade.cost
-                            )
-                        ),
-                        _react2.default.createElement('br', null),
-                        upgradeDefense && _react2.default.createElement(
-                            'div',
-                            null,
                             _react2.default.createElement(
                                 'span',
-                                null,
-                                'Upgrade Defense'
+                                { id: 'defenseLevel' },
+                                'Lv ',
+                                this.state.defenseLevel
                             ),
-                            ' ',
+                            _react2.default.createElement('br', null),
                             _react2.default.createElement(
-                                'button',
-                                { onClick: this.upgradeDefense },
-                                upgradeDefense.cost,
-                                ' citizens'
-                            )
-                        ),
-                        _react2.default.createElement('br', null)
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'one-half column' },
-                        _react2.default.createElement(
-                            'h4',
-                            null,
-                            'Logs'
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            null,
-                            this.state.logs.map(function (x, i) {
-                                return _react2.default.createElement(
-                                    'p',
-                                    { key: i },
-                                    x
-                                );
-                            })
-                        ),
-                        _react2.default.createElement('br', null),
-                        _react2.default.createElement('br', null),
-                        _react2.default.createElement(
-                            'h4',
-                            null,
-                            'Planets Visited'
-                        ),
-                        this.state.planetsVisited && this.state.planetsVisited.map(function (x, i) {
-                            return _react2.default.createElement(
                                 'p',
-                                { key: i },
-                                x.name,
-                                ' - arrived! They have ',
-                                x.population,
-                                ' citizens.'
-                            );
-                        })
-                    )
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'row' },
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'one-half column' },
-                        _react2.default.createElement(
-                            'h4',
-                            null,
-                            'Build'
-                        ),
-                        filteredAddons.map(function (x, i) {
-                            return _react2.default.createElement(
+                                null,
+                                'Commod/tk ',
+                                this.state.commoditiesPerTick
+                            ),
+                            _react2.default.createElement(
+                                'p',
+                                null,
+                                'Citizen/tk ',
+                                this.state.citizensPerTick
+                            ),
+                            _react2.default.createElement(
+                                'p',
+                                null,
+                                'DefAc ',
+                                this.state.defenseAccuracy
+                            ),
+                            _react2.default.createElement(
+                                'span',
+                                null,
+                                _react2.default.createElement(
+                                    'strong',
+                                    null,
+                                    'Commodities: ',
+                                    Math.floor(this.state.commodities)
+                                )
+                            ),
+                            _react2.default.createElement('br', null),
+                            _react2.default.createElement(
+                                'span',
+                                null,
+                                _react2.default.createElement(
+                                    'strong',
+                                    null,
+                                    'Citizens: ',
+                                    Math.floor(this.state.citizens)
+                                )
+                            ),
+                            _react2.default.createElement('br', null),
+                            upgrade && _react2.default.createElement(
                                 'div',
-                                { key: i },
+                                null,
                                 _react2.default.createElement(
                                     'span',
                                     null,
-                                    x.name
+                                    'Upgrade Station'
                                 ),
                                 ' ',
                                 _react2.default.createElement(
                                     'button',
-                                    { title: x.description, onClick: function onClick() {
-                                            return _this7.buildAddon(x);
-                                        } },
-                                    x.cost
+                                    { onClick: this.upgrade },
+                                    '$',
+                                    upgrade.cost
                                 )
-                            );
-                        })
+                            ),
+                            _react2.default.createElement('br', null),
+                            upgradeDefense && _react2.default.createElement(
+                                'div',
+                                null,
+                                _react2.default.createElement(
+                                    'span',
+                                    null,
+                                    'Upgrade Defense'
+                                ),
+                                ' ',
+                                _react2.default.createElement(
+                                    'button',
+                                    { onClick: this.upgradeDefense },
+                                    upgradeDefense.cost,
+                                    ' citizens'
+                                )
+                            ),
+                            _react2.default.createElement('br', null)
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'one-half column' },
+                            _react2.default.createElement(
+                                'h4',
+                                null,
+                                'Logs'
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                null,
+                                this.state.logs.map(function (x, i) {
+                                    return _react2.default.createElement(
+                                        'p',
+                                        { key: i },
+                                        x
+                                    );
+                                })
+                            ),
+                            _react2.default.createElement('br', null),
+                            _react2.default.createElement('br', null),
+                            _react2.default.createElement(
+                                'h4',
+                                null,
+                                'Planets Visited'
+                            ),
+                            this.state.planetsVisited && this.state.planetsVisited.map(function (x, i) {
+                                return _react2.default.createElement(
+                                    'p',
+                                    { key: i },
+                                    x.name,
+                                    ' - arrived! They have ',
+                                    x.population,
+                                    ' citizens.'
+                                );
+                            })
+                        )
                     ),
                     _react2.default.createElement(
                         'div',
-                        { className: 'one-half column' },
+                        { className: 'row' },
                         _react2.default.createElement(
-                            'h4',
-                            null,
-                            'Resources'
-                        ),
-                        this.state.resources.map(function (r, i) {
+                            'div',
+                            { className: 'one-half column', id: 'bottomLeftUI' },
                             _react2.default.createElement(
                                 'button',
-                                { key: i, title: r.description },
-                                r.name,
-                                _react2.default.createElement('br', null),
-                                r.amount
-                            );
-                        })
+                                { onClick: function onClick() {
+                                        _this7.setState({
+                                            buildMenuActive: !(_this7.state.buildMenuActive || false)
+                                        });
+                                    } },
+                                'Build'
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { id: 'slideout', className: this.state.buildMenuActive ? 'on' : null },
+                                _react2.default.createElement(
+                                    'h4',
+                                    { onClick: function onClick() {
+                                            _this7.setState({
+                                                buildMenuActive: !(_this7.state.buildMenuActive || false)
+                                            });
+                                        } },
+                                    'Build'
+                                ),
+                                filteredAddons.map(function (x, i) {
+                                    return _react2.default.createElement(
+                                        'div',
+                                        { key: i },
+                                        _react2.default.createElement(
+                                            'span',
+                                            null,
+                                            x.name
+                                        ),
+                                        ' ',
+                                        _react2.default.createElement(
+                                            'button',
+                                            { title: x.description, onClick: function onClick() {
+                                                    return _this7.buildAddon(x);
+                                                } },
+                                            x.cost
+                                        )
+                                    );
+                                })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'one-half column' },
+                            _react2.default.createElement(
+                                'h4',
+                                null,
+                                'Resources'
+                            ),
+                            this.state.resources.map(function (r, i) {
+                                _react2.default.createElement(
+                                    'button',
+                                    { key: i, title: r.description },
+                                    r.name,
+                                    _react2.default.createElement('br', null),
+                                    r.amount
+                                );
+                            })
+                        )
                     )
                 )
             );
@@ -1853,16 +1951,16 @@ if (process.env.NODE_ENV !== "production") {
 var React = __webpack_require__(4);
 var invariant = __webpack_require__(5);
 var warning = __webpack_require__(6);
-var ExecutionEnvironment = __webpack_require__(8);
+var ExecutionEnvironment = __webpack_require__(9);
 var _assign = __webpack_require__(3);
 var emptyFunction$1 = __webpack_require__(1);
-var EventListener = __webpack_require__(7);
-var getActiveElement = __webpack_require__(11);
-var shallowEqual = __webpack_require__(12);
-var containsNode = __webpack_require__(9);
-var focusNode = __webpack_require__(10);
+var EventListener = __webpack_require__(8);
+var getActiveElement = __webpack_require__(12);
+var shallowEqual = __webpack_require__(13);
+var containsNode = __webpack_require__(10);
+var focusNode = __webpack_require__(11);
 var emptyObject = __webpack_require__(2);
-var checkPropTypes = __webpack_require__(13);
+var checkPropTypes = __webpack_require__(14);
 var hyphenateStyleName = __webpack_require__(24);
 var camelizeStyleName = __webpack_require__(22);
 
@@ -17212,7 +17310,7 @@ module.exports = reactDom;
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(4),m=__webpack_require__(8),A=__webpack_require__(3),B=__webpack_require__(1),ca=__webpack_require__(7),da=__webpack_require__(11),ea=__webpack_require__(12),ha=__webpack_require__(9),ia=__webpack_require__(10),C=__webpack_require__(2);
+var aa=__webpack_require__(4),m=__webpack_require__(9),A=__webpack_require__(3),B=__webpack_require__(1),ca=__webpack_require__(8),da=__webpack_require__(12),ea=__webpack_require__(13),ha=__webpack_require__(10),ia=__webpack_require__(11),C=__webpack_require__(2);
 function D(a){for(var b=arguments.length-1,c="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,d=0;d<b;d++)c+="\x26args[]\x3d"+encodeURIComponent(arguments[d+1]);b=Error(c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}aa?void 0:D("227");
 var la={children:!0,dangerouslySetInnerHTML:!0,defaultValue:!0,defaultChecked:!0,innerHTML:!0,suppressContentEditableWarning:!0,suppressHydrationWarning:!0,style:!0};function qa(a,b){return(a&b)===b}
 var ra={MUST_USE_PROPERTY:1,HAS_BOOLEAN_VALUE:4,HAS_NUMERIC_VALUE:8,HAS_POSITIVE_NUMERIC_VALUE:24,HAS_OVERLOADED_BOOLEAN_VALUE:32,HAS_STRING_BOOLEAN_VALUE:64,injectDOMPropertyConfig:function(a){var b=ra,c=a.Properties||{},d=a.DOMAttributeNamespaces||{},e=a.DOMAttributeNames||{};a=a.DOMMutationMethods||{};for(var f in c){sa.hasOwnProperty(f)?D("48",f):void 0;var g=f.toLowerCase(),k=c[f];g={attributeName:g,attributeNamespace:null,propertyName:f,mutationMethod:null,mustUseProperty:qa(k,b.MUST_USE_PROPERTY),
@@ -17455,7 +17553,7 @@ var invariant = __webpack_require__(5);
 var emptyObject = __webpack_require__(2);
 var warning = __webpack_require__(6);
 var emptyFunction = __webpack_require__(1);
-var checkPropTypes = __webpack_require__(13);
+var checkPropTypes = __webpack_require__(14);
 
 // TODO: this is special because it gets imported during build.
 

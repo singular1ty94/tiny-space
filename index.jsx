@@ -22,7 +22,8 @@ class Game extends React.Component {
             defenseAccuracy: 0.25,
             planets: planetsGenerator(20),
             planetsVisited: [],
-            addonsBuilt: []
+            addonsBuilt: [],
+            resources: []
         }
 
         this.getNextUpgradeCost = this.getNextUpgradeCost.bind(this)
@@ -225,12 +226,6 @@ class Game extends React.Component {
                         {this.state.planetsVisited && this.state.planetsVisited.map((x, i) =>
                             <p key={i}>{x.name} - arrived! They have {x.population} citizens.</p>
                         )}
-                        <br />
-                        <br />
-                        <h4>Potential Planets</h4>
-                        {this.state.planets.map((x, i) =>
-                            <p key={i}>{x.name} - arrives at {x.threshold}</p>
-                        )}
                     </div>
                 </div>
                 <div className="row">
@@ -241,6 +236,12 @@ class Game extends React.Component {
                                 <span>{x.name}</span> <button title={x.description} onClick={() => this.buildAddon(x)}>{x.cost}</button>
                             </div>
                         )}
+                    </div>
+                    <div className="one-half column">
+                        <h4>Resources</h4>
+                        {this.state.resources.map((r, i) => {
+                            <button key={i} title={r.description}>{r.name}<br />{r.amount}</button>
+                        })}
                     </div>
                 </div>
             </div>

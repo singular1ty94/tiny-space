@@ -39,5 +39,5 @@ export function planetsGenerator(numPlanets) {
             imageUrl: `Planet${getRandom(1, 14)}.png`
         });
     }
-    return defaultPlanets; 
+    return defaultPlanets.sort((a, b) => b.threshold - a.threshold)
 }

@@ -1085,7 +1085,9 @@ function planetsGenerator(numPlanets) {
             imageUrl: 'Planet' + (0, _helpers.getRandom)(1, 14) + '.png'
         });
     }
-    return defaultPlanets;
+    return defaultPlanets.sort(function (a, b) {
+        return b.threshold - a.threshold;
+    });
 }
 
 /***/ }),
@@ -1208,7 +1210,8 @@ var Game = function (_React$Component) {
             defenseAccuracy: 0.25,
             planets: (0, _planets.planetsGenerator)(20),
             planetsVisited: [],
-            addonsBuilt: []
+            addonsBuilt: [],
+            resources: []
         };
 
         _this.getNextUpgradeCost = _this.getNextUpgradeCost.bind(_this);
@@ -1534,22 +1537,6 @@ var Game = function (_React$Component) {
                                 x.population,
                                 ' citizens.'
                             );
-                        }),
-                        _react2.default.createElement('br', null),
-                        _react2.default.createElement('br', null),
-                        _react2.default.createElement(
-                            'h4',
-                            null,
-                            'Potential Planets'
-                        ),
-                        this.state.planets.map(function (x, i) {
-                            return _react2.default.createElement(
-                                'p',
-                                { key: i },
-                                x.name,
-                                ' - arrives at ',
-                                x.threshold
-                            );
                         })
                     )
                 ),
@@ -1573,6 +1560,7 @@ var Game = function (_React$Component) {
                                     null,
                                     x.name
                                 ),
+                                ' ',
                                 _react2.default.createElement(
                                     'button',
                                     { title: x.description, onClick: function onClick() {
@@ -1580,6 +1568,24 @@ var Game = function (_React$Component) {
                                         } },
                                     x.cost
                                 )
+                            );
+                        })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'one-half column' },
+                        _react2.default.createElement(
+                            'h4',
+                            null,
+                            'Resources'
+                        ),
+                        this.state.resources.map(function (r, i) {
+                            _react2.default.createElement(
+                                'button',
+                                { key: i, title: r.description },
+                                r.name,
+                                _react2.default.createElement('br', null),
+                                r.amount
                             );
                         })
                     )

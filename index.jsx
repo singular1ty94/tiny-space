@@ -256,21 +256,19 @@ class Game extends React.Component {
                     style={{position: "absolute", left: 0, top: 0, zIndex: 2}}>
                 </canvas>
 
-                <div className="container" style={{position: "absolute", left: 0, top: 0, zIndex: 3, width: "100%", height: "100%"}}>
+                <div style={{position: "absolute", left: 0, top: 0, zIndex: 3, width: "100%", height: "100%"}}>
                     <div className="row">
                         <div className="one-half column" id="topLeftUI">
                             <h4>Station</h4>
                             <h5>Defense</h5>
                             <span id="stationLevel">Lv {this.state.level}</span>
                             <span id="defenseLevel">Lv {this.state.defenseLevel}</span>
-                            <br/>
-                            <p>Commod/tk {this.state.commoditiesPerTick}</p>
-                            <p>Citizen/tk {this.state.citizensPerTick}</p>
-                            <p>DefAc {this.state.defenseAccuracy}</p>
-                            <span><strong>Commodities: {Math.floor(this.state.commodities)}</strong></span>
-                            <br/>
-                            <span><strong>Citizens: {Math.floor(this.state.citizens)}</strong></span>
-                            <br/>
+                        </div>
+                        <div className="one-half column" id="topRightUI">
+                            <h4>Commodities</h4>
+                            <h5>Citizens</h5>
+                            <span id="commodities">{Math.floor(this.state.commodities)}</span>
+                            <span id="citizens">{Math.floor(this.state.citizens)}</span>
                             {upgrade && 
                                 <div>
                                     <span>Upgrade Station</span> <button onClick={this.upgrade}>${upgrade.cost}</button>
@@ -283,21 +281,6 @@ class Game extends React.Component {
                                 </div>
                             }
                             <br />
-                        </div>
-                        <div className="one-half column">
-                        <h4>Logs</h4>
-                            <div>
-                                {this.state.logs.map((x, i) =>
-                                    <p key={i}>{x}</p>
-                                )}
-                            </div>
-                            <br />
-                            <br />
-                            <h4>Planets Visited</h4>
-                            {this.state.planetsVisited && this.state.planetsVisited.map((x, i) =>
-                                <p key={i}>{x.name} - arrived! They have {x.population} citizens.</p>
-                            )}
-                        </div>
                     </div>
                     <div className="row">
                         <div className="one-half column" id="bottomLeftUI">
@@ -313,8 +296,10 @@ class Game extends React.Component {
                                     })
                                 }}>Build</h4>
                                 {filteredAddons.map((x, i) =>
-                                    <div key={i}>
-                                        <span>{x.name}</span> <button title={x.description} onClick={() => this.buildAddon(x)}>{x.cost}</button>
+                                    <div className="buildButtons" key={i}>
+                                        <span>{x.name}</span><br />
+                                        <button className="button-primary"
+                                            title={x.description} onClick={() => this.buildAddon(x)}>{x.cost}</button>
                                     </div>
                                 )}
                             </div>
@@ -327,9 +312,8 @@ class Game extends React.Component {
                         </div>
                     </div>
                 </div>
-
-
             </div>
+        </div>
         )
     }
   }
@@ -338,3 +322,23 @@ ReactDOM.render(
   <Game />,
   document.getElementById('root')
 )
+
+/* 
+                        <h4>Logs</h4>
+                            <div>
+                                {this.state.logs.map((x, i) =>
+                                    <p key={i}>{x}</p>
+                                )}
+                            </div>
+                            <br />
+                            <br />
+                            <h4>Planets Visited</h4>
+                            {this.state.planetsVisited && this.state.planetsVisited.map((x, i) =>
+                                <p key={i}>{x.name} - arrived! They have {x.population} citizens.</p>
+                            )}
+                        </div> 
+                                                    <br/>
+                            <p>Commod/tk {this.state.commoditiesPerTick}</p>
+                            <p>Citizen/tk {this.state.citizensPerTick}</p>
+                            <p>DefAc {this.state.defenseAccuracy}</p>
+*/

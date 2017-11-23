@@ -69,6 +69,49 @@ body, html {
     position: absolute;
 }
 
+#topRightUI h4 {
+    top: 2px;
+    font-size: 1.75rem;
+    font-weight: bold;
+    left: 20px;
+    color: white;
+    margin-bottom: 0px;
+    position: absolute;
+}
+
+#commodities {
+    position: absolute;
+    font-size: 2rem;
+    top: 45%;
+    left: 30px;
+}
+
+#citizens {
+    position: absolute;
+    font-size: 2rem;
+    top: 45%;
+    left: 130px;
+}
+
+#topRightUI h5 {
+    top: 2px;
+    font-size: 1.75rem;
+    font-weight: bold;
+    left: 120px;
+    color: white;
+    margin-bottom: 0px;
+    position: absolute;
+}
+
+#topRightUI {
+    color: black;
+    height: 100px;
+    width: 200px;
+    background: url('../dist/resources/interface/metalPanel_blue.png') 0 0;
+    background-repeat: repeat-x;
+    position: absolute;
+    right: 0;
+}
 
 #slideout {
     box-shadow: 0 0 5px rgba(0,0,0,.3);
@@ -99,3 +142,29 @@ body, html {
     margin-bottom: 0;
     cursor: pointer;
   }
+
+.buildButtons {
+    display: inline-block;
+    height: 75px;
+    width: 75px;
+    padding: 15px;
+    margin: 10px;
+    color: #555;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 38px;
+    background-color: transparent;
+    border-radius: 4px;
+    border: 1px solid #bbb;
+    vertical-align: top;
+    position: relative;
+}
+.buildButtons span { 
+    line-height: 14px;
+}
+.buildButtons button {
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+}

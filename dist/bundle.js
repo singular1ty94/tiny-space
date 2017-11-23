@@ -1477,7 +1477,7 @@ var Game = function (_React$Component) {
                     style: { position: "absolute", left: 0, top: 0, zIndex: 2 } }),
                 _react2.default.createElement(
                     'div',
-                    { className: 'container', style: { position: "absolute", left: 0, top: 0, zIndex: 3, width: "100%", height: "100%" } },
+                    { style: { position: "absolute", left: 0, top: 0, zIndex: 3, width: "100%", height: "100%" } },
                     _react2.default.createElement(
                         'div',
                         { className: 'row' },
@@ -1505,48 +1505,31 @@ var Game = function (_React$Component) {
                                 { id: 'defenseLevel' },
                                 'Lv ',
                                 this.state.defenseLevel
-                            ),
-                            _react2.default.createElement('br', null),
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'one-half column', id: 'topRightUI' },
                             _react2.default.createElement(
-                                'p',
+                                'h4',
                                 null,
-                                'Commod/tk ',
-                                this.state.commoditiesPerTick
-                            ),
-                            _react2.default.createElement(
-                                'p',
-                                null,
-                                'Citizen/tk ',
-                                this.state.citizensPerTick
+                                'Commodities'
                             ),
                             _react2.default.createElement(
-                                'p',
+                                'h5',
                                 null,
-                                'DefAc ',
-                                this.state.defenseAccuracy
+                                'Citizens'
                             ),
                             _react2.default.createElement(
                                 'span',
-                                null,
-                                _react2.default.createElement(
-                                    'strong',
-                                    null,
-                                    'Commodities: ',
-                                    Math.floor(this.state.commodities)
-                                )
+                                { id: 'commodities' },
+                                Math.floor(this.state.commodities)
                             ),
-                            _react2.default.createElement('br', null),
                             _react2.default.createElement(
                                 'span',
-                                null,
-                                _react2.default.createElement(
-                                    'strong',
-                                    null,
-                                    'Citizens: ',
-                                    Math.floor(this.state.citizens)
-                                )
+                                { id: 'citizens' },
+                                Math.floor(this.state.citizens)
                             ),
-                            _react2.default.createElement('br', null),
                             upgrade && _react2.default.createElement(
                                 'div',
                                 null,
@@ -1584,62 +1567,12 @@ var Game = function (_React$Component) {
                         ),
                         _react2.default.createElement(
                             'div',
-                            { className: 'one-half column' },
-                            _react2.default.createElement(
-                                'h4',
-                                null,
-                                'Logs'
-                            ),
+                            { className: 'row' },
                             _react2.default.createElement(
                                 'div',
-                                null,
-                                this.state.logs.map(function (x, i) {
-                                    return _react2.default.createElement(
-                                        'p',
-                                        { key: i },
-                                        x
-                                    );
-                                })
-                            ),
-                            _react2.default.createElement('br', null),
-                            _react2.default.createElement('br', null),
-                            _react2.default.createElement(
-                                'h4',
-                                null,
-                                'Planets Visited'
-                            ),
-                            this.state.planetsVisited && this.state.planetsVisited.map(function (x, i) {
-                                return _react2.default.createElement(
-                                    'p',
-                                    { key: i },
-                                    x.name,
-                                    ' - arrived! They have ',
-                                    x.population,
-                                    ' citizens.'
-                                );
-                            })
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'row' },
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'one-half column', id: 'bottomLeftUI' },
-                            _react2.default.createElement(
-                                'button',
-                                { onClick: function onClick() {
-                                        _this7.setState({
-                                            buildMenuActive: !(_this7.state.buildMenuActive || false)
-                                        });
-                                    } },
-                                'Build'
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { id: 'slideout', className: this.state.buildMenuActive ? 'on' : null },
+                                { className: 'one-half column', id: 'bottomLeftUI' },
                                 _react2.default.createElement(
-                                    'h4',
+                                    'button',
                                     { onClick: function onClick() {
                                             _this7.setState({
                                                 buildMenuActive: !(_this7.state.buildMenuActive || false)
@@ -1647,44 +1580,58 @@ var Game = function (_React$Component) {
                                         } },
                                     'Build'
                                 ),
-                                filteredAddons.map(function (x, i) {
-                                    return _react2.default.createElement(
-                                        'div',
-                                        { key: i },
-                                        _react2.default.createElement(
-                                            'span',
-                                            null,
-                                            x.name
-                                        ),
-                                        ' ',
-                                        _react2.default.createElement(
-                                            'button',
-                                            { title: x.description, onClick: function onClick() {
-                                                    return _this7.buildAddon(x);
-                                                } },
-                                            x.cost
-                                        )
+                                _react2.default.createElement(
+                                    'div',
+                                    { id: 'slideout', className: this.state.buildMenuActive ? 'on' : null },
+                                    _react2.default.createElement(
+                                        'h4',
+                                        { onClick: function onClick() {
+                                                _this7.setState({
+                                                    buildMenuActive: !(_this7.state.buildMenuActive || false)
+                                                });
+                                            } },
+                                        'Build'
+                                    ),
+                                    filteredAddons.map(function (x, i) {
+                                        return _react2.default.createElement(
+                                            'div',
+                                            { className: 'buildButtons', key: i },
+                                            _react2.default.createElement(
+                                                'span',
+                                                null,
+                                                x.name
+                                            ),
+                                            _react2.default.createElement('br', null),
+                                            _react2.default.createElement(
+                                                'button',
+                                                { className: 'button-primary',
+                                                    title: x.description, onClick: function onClick() {
+                                                        return _this7.buildAddon(x);
+                                                    } },
+                                                x.cost
+                                            )
+                                        );
+                                    })
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'one-half column' },
+                                _react2.default.createElement(
+                                    'h4',
+                                    null,
+                                    'Resources'
+                                ),
+                                this.state.resources.map(function (r, i) {
+                                    _react2.default.createElement(
+                                        'button',
+                                        { key: i, title: r.description },
+                                        r.name,
+                                        _react2.default.createElement('br', null),
+                                        r.amount
                                     );
                                 })
                             )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'one-half column' },
-                            _react2.default.createElement(
-                                'h4',
-                                null,
-                                'Resources'
-                            ),
-                            this.state.resources.map(function (r, i) {
-                                _react2.default.createElement(
-                                    'button',
-                                    { key: i, title: r.description },
-                                    r.name,
-                                    _react2.default.createElement('br', null),
-                                    r.amount
-                                );
-                            })
                         )
                     )
                 )
@@ -1696,6 +1643,26 @@ var Game = function (_React$Component) {
 }(_react2.default.Component);
 
 _reactDom2.default.render(_react2.default.createElement(Game, null), document.getElementById('root'));
+
+/* 
+                        <h4>Logs</h4>
+                            <div>
+                                {this.state.logs.map((x, i) =>
+                                    <p key={i}>{x}</p>
+                                )}
+                            </div>
+                            <br />
+                            <br />
+                            <h4>Planets Visited</h4>
+                            {this.state.planetsVisited && this.state.planetsVisited.map((x, i) =>
+                                <p key={i}>{x.name} - arrived! They have {x.population} citizens.</p>
+                            )}
+                        </div> 
+                                                    <br/>
+                            <p>Commod/tk {this.state.commoditiesPerTick}</p>
+                            <p>Citizen/tk {this.state.citizensPerTick}</p>
+                            <p>DefAc {this.state.defenseAccuracy}</p>
+*/
 
 /***/ }),
 /* 21 */

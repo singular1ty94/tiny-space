@@ -55,6 +55,25 @@ body, html {
       text-transform: none;
     }
   }
+
+  #topMidUI {
+    color: black;
+    height: 35px;
+    width: 160px;
+    background: url('resources/interface/metalPanel_blue_galactic.png') 0 0;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    left: calc(50% - 14px);
+    > button {
+      border: none;
+      font-size: 13pt;
+      color: white;
+      margin-left: -8px;
+      margin-top: -2px;
+      text-transform: none;
+    }
+  }
   
     
   #bottomMidUI {
@@ -162,6 +181,38 @@ body, html {
       cursor: pointer;
     }
   }
+
+  #slideoutTravel {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    color: #333;
+    position: fixed;
+    left: calc(50% - 400px);
+    width: 0;
+    height: 0;
+    top: -400px;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    background: url('resources/interface/metalPanel_travel.png') 0 0;
+    background-repeat: no-repeat;
+    &.on {
+      width: 800px;
+      height: 400px;
+      top: 0;
+    }
+    h4 {
+      color: white;
+      font-size: 2rem;
+      font-weight: bold;
+      margin-left: 10px;
+      width: 100%;
+      margin-top: 2px;
+      margin-bottom: 0;
+      cursor: pointer;
+    }
+  }
+
 
   #slideoutUpgrade {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);

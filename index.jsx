@@ -4,7 +4,7 @@ import { PIRATE_LV_1, PIRATE_LV_2, pirates } from './pirates'
 import { planetsGenerator } from './planets'
 import { addons } from './addons'
 import { tick, upgradeLevels, citizenGrowth, defenseLevels } from './config'
-import { getRandom } from './helpers'
+import { getRandom, nebula } from './helpers'
 
 const FRAME_RATE = 30
 
@@ -13,6 +13,9 @@ class Game extends React.Component {
     starfield;
     degrees;
     spaceStation;
+    nebula1;
+    nebula2;
+    nebula3;
 
     constructor(){
         super()
@@ -96,6 +99,7 @@ class Game extends React.Component {
         })
 
         setInterval(this.renderStation, 1000 / FRAME_RATE)
+        nebula(this.nebula1, this.nebula2, this.nebula3, window.innerWidth / 2, window.innerHeight / 2)
     }
 
     drawStars() {
@@ -284,6 +288,14 @@ class Game extends React.Component {
                     height="100%" 
                     style={{position: "absolute", left: 0, top: 0, zIndex: 0}}>
                 </canvas>
+
+                <canvas ref={(nebula1) => {this.nebula1 = nebula1; }} 
+                        style={{display:"none"}} id="canvas" width={window.innerWidth /2} height={window.innerHeight /2}></canvas>
+                <canvas  ref={(nebula3) => {this.nebula3 = nebula3; }} 
+                        style={{display:"none"}} id="canvas3" width={window.innerWidth} height={window.innerHeight}></canvas>
+                <canvas  ref={(nebula2) => {this.nebula2 = nebula2; }} 
+                        id="canvas2" width={window.innerWidth} height={window.innerHeight}></canvas>
+
                 <canvas
                     ref={(canvas) => { this.canvas = canvas }}
                     width="100%"
@@ -304,7 +316,23 @@ class Game extends React.Component {
                             <h5>Citizens</h5>
                             <span id="commodities">{Math.floor(this.state.commodities)}</span>
                             <span id="citizens">{Math.floor(this.state.citizens)}</span>
-                    </div>
+                        </div>
+                        <div id="topMidUI">
+                            <button onClick={() => {
+                                this.setState({
+                                    systemTravel: !(this.state.systemTravel || false)
+                                })
+                            }}>Galactic Map</button>
+                            <div id="slideoutTravel" className={this.state.systemTravel ? 'on': null} >
+                                <h4 onClick={() => {
+                                    this.setState({
+                                        systemTravel: !(this.state.systemTravel || false)
+                                    })
+                                }}>Galactic Map</h4>
+                                <p>Travel between systems to mine resources</p>
+                            </div>
+                        </div>
+
                     <div className="row">
                         <div id="bottomLeftUI">
                             <button onClick={() => {

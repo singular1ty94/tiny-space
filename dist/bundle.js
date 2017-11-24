@@ -944,8 +944,86 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.getRandom = getRandom;
+exports.nebula = nebula;
 function getRandom(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function nebula(canvas, canvas2, canvas3, halfWidth, halfHeight) {
+    //////////////////////////////////////////////////////////////////////////////////
+    // A demonstration of a Canvas nebula effect
+    // (c) 2010 by R Cecco. <http://www.professorcloud.com>
+    // MIT License
+    //
+    // Please retain this copyright header in all versions of the software if
+    // using significant parts of it
+    //////////////////////////////////////////////////////////////////////////////////
+    // The canvas element we are drawing into.      
+    var ctx2 = canvas2.getContext('2d');
+    var ctx = canvas.getContext('2d');
+    var w = canvas.width,
+        h = canvas.height;
+    var img = new Image();
+
+    // A puff.
+    var Puff = function Puff(p) {
+        var opacity,
+            sy = Math.random() * halfHeight >> 0,
+            sx = Math.random() * halfWidth >> 0;
+
+        this.p = p;
+
+        this.move = function (timeFac) {
+            p = this.p + 0.3 * timeFac;
+            opacity = Math.sin(p * 0.05) * 0.5;
+            if (opacity < 0) {
+                p = opacity = 0;
+                sy = Math.random() * halfHeight >> 0;
+                sx = Math.random() * halfWidth >> 0;
+            }
+            this.p = p;
+            ctx.globalAlpha = opacity;
+            ctx.drawImage(canvas3, sy + p, sy + p, halfWidth - p * 2, halfHeight - p * 2, 0, 0, w, h);
+        };
+    };
+
+    var puffs = [];
+    var sortPuff = function sortPuff(p1, p2) {
+        return p1.p - p2.p;
+    };
+    puffs.push(new Puff(0));
+    puffs.push(new Puff(20));
+    puffs.push(new Puff(40));
+
+    var newTime,
+        oldTime = 0,
+        timeFac;
+
+    var loop = function loop() {
+        newTime = new Date().getTime();
+        if (oldTime === 0) {
+            oldTime = newTime;
+        }
+        timeFac = (newTime - oldTime) * 0.1;
+        if (timeFac > 3) {
+            timeFac = 3;
+        }
+        oldTime = newTime;
+        puffs.sort(sortPuff);
+
+        for (var i = 0; i < puffs.length; i++) {
+            puffs[i].move(timeFac);
+        }
+        ctx2.drawImage(canvas, 0, 0, window.innerWidth, window.innerHeight);
+        setTimeout(loop, 10);
+    };
+    // Turns out Chrome is much faster doing bitmap work if the bitmap is in an existing canvas rather
+    // than an IMG, VIDEO etc. So draw the big nebula image into canvas3
+    var ctx3 = canvas3.getContext('2d');
+    img.onload = function () {
+        ctx3.drawImage(img, 0, 0, window.innerWidth, window.innerHeight);loop();
+    };
+    img.src = 'dist/resources/nebula/nebula.jpg';
 }
 
 /***/ }),
@@ -1091,6 +1169,7 @@ var Game = function (_React$Component) {
             });
 
             setInterval(this.renderStation, 1000 / FRAME_RATE);
+            (0, _helpers.nebula)(this.nebula1, this.nebula2, this.nebula3, window.innerWidth / 2, window.innerHeight / 2);
         }
     }, {
         key: 'drawStars',
@@ -1149,7 +1228,8 @@ var Game = function (_React$Component) {
                     var newX = centerX + addon.display.orbital * Math.cos(addon.display.angle);
                     var newY = centerY + addon.display.orbital * Math.sin(addon.display.angle);
 
-                    ctx.strokeStyle = "#121212";
+                    // Draw an orbital trail
+                    ctx.strokeStyle = "lightgray";
                     ctx.beginPath();
                     ctx.arc(centerX, centerY, addon.display.orbital, 0, Math.PI * 2, false);
                     ctx.closePath();
@@ -1307,6 +1387,18 @@ var Game = function (_React$Component) {
                     width: '100%',
                     height: '100%',
                     style: { position: "absolute", left: 0, top: 0, zIndex: 0 } }),
+                _react2.default.createElement('canvas', { ref: function ref(nebula1) {
+                        _this7.nebula1 = nebula1;
+                    },
+                    style: { display: "none" }, id: 'canvas', width: window.innerWidth / 2, height: window.innerHeight / 2 }),
+                _react2.default.createElement('canvas', { ref: function ref(nebula3) {
+                        _this7.nebula3 = nebula3;
+                    },
+                    style: { display: "none" }, id: 'canvas3', width: window.innerWidth, height: window.innerHeight }),
+                _react2.default.createElement('canvas', { ref: function ref(nebula2) {
+                        _this7.nebula2 = nebula2;
+                    },
+                    id: 'canvas2', width: window.innerWidth, height: window.innerHeight }),
                 _react2.default.createElement('canvas', {
                     ref: function ref(canvas) {
                         _this7.canvas = canvas;
@@ -1368,6 +1460,37 @@ var Game = function (_React$Component) {
                                 'span',
                                 { id: 'citizens' },
                                 Math.floor(this.state.citizens)
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { id: 'topMidUI' },
+                            _react2.default.createElement(
+                                'button',
+                                { onClick: function onClick() {
+                                        _this7.setState({
+                                            systemTravel: !(_this7.state.systemTravel || false)
+                                        });
+                                    } },
+                                'Galactic Map'
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { id: 'slideoutTravel', className: this.state.systemTravel ? 'on' : null },
+                                _react2.default.createElement(
+                                    'h4',
+                                    { onClick: function onClick() {
+                                            _this7.setState({
+                                                systemTravel: !(_this7.state.systemTravel || false)
+                                            });
+                                        } },
+                                    'Galactic Map'
+                                ),
+                                _react2.default.createElement(
+                                    'p',
+                                    null,
+                                    'Travel between systems to mine resources'
+                                )
                             )
                         ),
                         _react2.default.createElement(

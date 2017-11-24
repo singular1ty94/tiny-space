@@ -1288,7 +1288,7 @@ var Game = function (_React$Component) {
                         { className: 'row' },
                         _react2.default.createElement(
                             'div',
-                            { className: 'one-half column', id: 'topLeftUI' },
+                            { id: 'topLeftUI' },
                             _react2.default.createElement(
                                 'h4',
                                 null,
@@ -1314,7 +1314,7 @@ var Game = function (_React$Component) {
                         ),
                         _react2.default.createElement(
                             'div',
-                            { className: 'one-half column', id: 'topRightUI' },
+                            { id: 'topRightUI' },
                             _react2.default.createElement(
                                 'h4',
                                 null,
@@ -1334,48 +1334,14 @@ var Game = function (_React$Component) {
                                 'span',
                                 { id: 'citizens' },
                                 Math.floor(this.state.citizens)
-                            ),
-                            upgrade && _react2.default.createElement(
-                                'div',
-                                null,
-                                _react2.default.createElement(
-                                    'span',
-                                    null,
-                                    'Upgrade Station'
-                                ),
-                                ' ',
-                                _react2.default.createElement(
-                                    'button',
-                                    { onClick: this.upgrade },
-                                    '$',
-                                    upgrade.cost
-                                )
-                            ),
-                            _react2.default.createElement('br', null),
-                            upgradeDefense && _react2.default.createElement(
-                                'div',
-                                null,
-                                _react2.default.createElement(
-                                    'span',
-                                    null,
-                                    'Upgrade Defense'
-                                ),
-                                ' ',
-                                _react2.default.createElement(
-                                    'button',
-                                    { onClick: this.upgradeDefense },
-                                    upgradeDefense.cost,
-                                    ' citizens'
-                                )
-                            ),
-                            _react2.default.createElement('br', null)
+                            )
                         ),
                         _react2.default.createElement(
                             'div',
                             { className: 'row' },
                             _react2.default.createElement(
                                 'div',
-                                { className: 'one-half column', id: 'bottomLeftUI' },
+                                { id: 'bottomLeftUI' },
                                 _react2.default.createElement(
                                     'button',
                                     { onClick: function onClick() {
@@ -1421,21 +1387,61 @@ var Game = function (_React$Component) {
                             ),
                             _react2.default.createElement(
                                 'div',
-                                { className: 'one-half column' },
+                                { id: 'bottomMidUI' },
                                 _react2.default.createElement(
-                                    'h4',
-                                    null,
-                                    'Resources'
+                                    'button',
+                                    { onClick: function onClick() {
+                                            _this7.setState({
+                                                upgradeMenuActive: !(_this7.state.upgradeMenuActive || false)
+                                            });
+                                        } },
+                                    'Upgrade'
                                 ),
-                                this.state.resources.map(function (r, i) {
+                                _react2.default.createElement(
+                                    'div',
+                                    { id: 'slideoutUpgrade', className: this.state.upgradeMenuActive ? 'on' : null },
                                     _react2.default.createElement(
-                                        'button',
-                                        { key: i, title: r.description },
-                                        r.name,
+                                        'h4',
+                                        { onClick: function onClick() {
+                                                _this7.setState({
+                                                    upgradeMenuActive: !(_this7.state.upgradeMenuActive || false)
+                                                });
+                                            } },
+                                        'Upgrade'
+                                    ),
+                                    upgrade && _react2.default.createElement(
+                                        'div',
+                                        { className: 'buildButtons' },
+                                        _react2.default.createElement(
+                                            'span',
+                                            null,
+                                            'Upgrade Station'
+                                        ),
                                         _react2.default.createElement('br', null),
-                                        r.amount
-                                    );
-                                })
+                                        _react2.default.createElement(
+                                            'button',
+                                            { className: 'button-primary', onClick: this.upgrade },
+                                            '$',
+                                            upgrade.cost
+                                        )
+                                    ),
+                                    _react2.default.createElement('br', null),
+                                    upgradeDefense && _react2.default.createElement(
+                                        'div',
+                                        { className: 'buildButtons' },
+                                        _react2.default.createElement(
+                                            'span',
+                                            null,
+                                            'Upgrade Defense'
+                                        ),
+                                        _react2.default.createElement('br', null),
+                                        _react2.default.createElement(
+                                            'button',
+                                            { className: 'button-primary', onClick: this.upgradeDefense },
+                                            upgradeDefense.cost
+                                        )
+                                    )
+                                )
                             )
                         )
                     )

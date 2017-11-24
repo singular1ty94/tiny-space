@@ -258,32 +258,20 @@ class Game extends React.Component {
 
                 <div style={{position: "absolute", left: 0, top: 0, zIndex: 3, width: "100%", height: "100%"}}>
                     <div className="row">
-                        <div className="one-half column" id="topLeftUI">
+                        <div id="topLeftUI">
                             <h4>Station</h4>
                             <h5>Defense</h5>
                             <span id="stationLevel">Lv {this.state.level}</span>
                             <span id="defenseLevel">Lv {this.state.defenseLevel}</span>
                         </div>
-                        <div className="one-half column" id="topRightUI">
+                        <div id="topRightUI">
                             <h4>Commodities</h4>
                             <h5>Citizens</h5>
                             <span id="commodities">{Math.floor(this.state.commodities)}</span>
                             <span id="citizens">{Math.floor(this.state.citizens)}</span>
-                            {upgrade && 
-                                <div>
-                                    <span>Upgrade Station</span> <button onClick={this.upgrade}>${upgrade.cost}</button>
-                                </div>
-                            }
-                            <br/>
-                            {upgradeDefense && 
-                                <div>
-                                    <span>Upgrade Defense</span> <button onClick={this.upgradeDefense}>{upgradeDefense.cost} citizens</button>
-                                </div>
-                            }
-                            <br />
                     </div>
                     <div className="row">
-                        <div className="one-half column" id="bottomLeftUI">
+                        <div id="bottomLeftUI">
                             <button onClick={() => {
                                 this.setState({
                                     buildMenuActive: !(this.state.buildMenuActive || false)
@@ -304,12 +292,39 @@ class Game extends React.Component {
                                 )}
                             </div>
                         </div>
-                        <div className="one-half column">
+                        <div id="bottomMidUI">
+                            <button onClick={() => {
+                                this.setState({
+                                    upgradeMenuActive: !(this.state.upgradeMenuActive || false)
+                                })
+                            }}>Upgrade</button>
+                            <div id="slideoutUpgrade" className={this.state.upgradeMenuActive ? 'on': null} >
+                                <h4 onClick={() => {
+                                    this.setState({
+                                        upgradeMenuActive: !(this.state.upgradeMenuActive || false)
+                                    })
+                                }}>Upgrade</h4>
+                                {upgrade && 
+                                    <div className="buildButtons">
+                                        <span>Upgrade Station</span><br />
+                                        <button className="button-primary" onClick={this.upgrade}>${upgrade.cost}</button>
+                                    </div>
+                                }
+                                <br/>
+                                {upgradeDefense && 
+                                    <div className="buildButtons">
+                                        <span>Upgrade Defense</span><br />
+                                        <button className="button-primary" onClick={this.upgradeDefense}>{upgradeDefense.cost}</button>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        {/* <div className="one-half column">
                             <h4>Resources</h4>
                             {this.state.resources.map((r, i) => {
                                 <button key={i} title={r.description}>{r.name}<br />{r.amount}</button>
                             })}
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

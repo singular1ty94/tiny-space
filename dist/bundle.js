@@ -1083,6 +1083,13 @@ var Game = function (_React$Component) {
 
             this.spaceStation = new Image();
             this.spaceStation.src = 'dist/resources/station/spaceStation_023.png';
+
+            // Fetch all resources in a side-effecting manner
+            _addons.addons.forEach(function (addon) {
+                addon.display.image = new Image();
+                addon.display.image.src = addon.display.url;
+            });
+
             setInterval(this.renderStation, 1000 / FRAME_RATE);
         }
     }, {
@@ -1115,18 +1122,35 @@ var Game = function (_React$Component) {
             ctx.canvas.width = window.innerWidth;
             ctx.canvas.height = window.innerHeight;
 
-            var centerX = window.innerWidth / 2;
-            var centerY = window.innerHeight / 2;
+            var centerX = ctx.canvas.width / 2;
+            var centerY = ctx.canvas.height / 2;
 
             ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-            var degrees = (this.degrees || 0) + 360 / 3 / FRAME_RATE;
+            var degrees = (this.degrees || 0) + 360 / 7 / FRAME_RATE;
             ctx.save();
             ctx.translate(ctx.canvas.width / 2, ctx.canvas.height / 2);
             ctx.rotate(degrees * Math.PI / 180);
-            ctx.drawImage(this.spaceStation, -(this.spaceStation.width / 2), -(this.spaceStation.height / 2));
-            ctx.restore();
+            // ctx.drawImage(this.spaceStation, -(this.spaceStation.width / 2), -(this.spaceStation.height /2))
+            ctx.drawImage(this.spaceStation, -this.spaceStation.width / 2, -this.spaceStation.height / 2);
             this.degrees = degrees;
+            ctx.restore();
+
+            // Render any addons we have
+            this.state.addonsBuilt.forEach(function (addon) {
+                if (addon.display.direction) {
+                    addon.display.angle += Math.acos(1 - Math.pow(addon.display.speed / addon.display.orbital, 2) / 2);
+                } else {
+                    addon.display.angle -= Math.acos(1 - Math.pow(addon.display.speed / addon.display.orbital, 2) / 2);
+                }
+
+                // calculate the new ball.x / ball.y
+                var newX = centerX + addon.display.orbital * Math.cos(addon.display.angle);
+                var newY = centerY + addon.display.orbital * Math.sin(addon.display.angle);
+
+                // draw
+                ctx.drawImage(addon.display.image, newX - addon.display.image.width / 2, newY - addon.display.image.height / 2);
+            });
         }
     }, {
         key: 'updateGame',
@@ -18843,7 +18867,15 @@ var SPACE_FARM = {
     cost: 250,
     benefit: 0.2,
     type: 'COMMODITY_GAIN',
-    description: 'Grow fresh produce for sale on the galactic market and increase your commodities gained.'
+    description: 'Grow fresh produce for sale on the galactic market and increase your commodities gained.',
+    display: {
+        url: 'dist/resources/station/space_farm.png',
+        orbital: 150,
+        image: null,
+        direction: false,
+        angle: 0,
+        speed: 1.5
+    }
 };
 
 var MEDIUM_SPACE_FARM = {
@@ -18851,7 +18883,15 @@ var MEDIUM_SPACE_FARM = {
     cost: 750,
     benefit: 0.4,
     type: 'COMMODITY_GAIN',
-    description: 'Expand your agricultural yields with larger farms and gain more commodities.'
+    description: 'Expand your agricultural yields with larger farms and gain more commodities.',
+    display: {
+        url: 'dist/resources/station/space_farm.png',
+        orbital: 150,
+        image: null,
+        direction: false,
+        angle: 0,
+        speed: 1.5
+    }
 };
 
 var SATELLITE_RELAY = {
@@ -18859,7 +18899,15 @@ var SATELLITE_RELAY = {
     cost: 500,
     benefit: 0.2,
     type: 'DEFENSE_ACCURACY',
-    description: 'Early-warning detection systems help you accurately defeat enemies.'
+    description: 'Early-warning detection systems help you accurately defeat enemies.',
+    display: {
+        url: 'dist/resources/station/space_farm.png',
+        orbital: 150,
+        image: null,
+        direction: false,
+        angle: 0,
+        speed: 1.5
+    }
 };
 
 var LOW_RING_APARTMENTS = {
@@ -18867,7 +18915,15 @@ var LOW_RING_APARTMENTS = {
     cost: 300,
     benefit: 0.5,
     type: 'CITIZEN_GAIN',
-    description: 'More room to live means more citizens will emigrate to your habitat.'
+    description: 'More room to live means more citizens will emigrate to your habitat.',
+    display: {
+        url: 'dist/resources/station/space_farm.png',
+        orbital: 150,
+        image: null,
+        direction: false,
+        angle: 0,
+        speed: 1.5
+    }
 };
 
 var addons = exports.addons = [SPACE_FARM, MEDIUM_SPACE_FARM, SATELLITE_RELAY, LOW_RING_APARTMENTS];

@@ -14,7 +14,7 @@ The gameplay loop includes:
 
 Dev Goals Completed:
 * Framework for gaining citizens, uniform resources and upgrading station
-
+* Graphical UI
 
 Dev Goals Ahead:
 * Framework for exploring new places in space, or clicking things to get resources
@@ -24,5 +24,3 @@ Dev Goals Ahead:
 * Remove react - we're not getting any gains from it, and we'll be going to canvas render with graphics anyway
 * Unlockable goods of different rarities
 * Change planets to have more specific goals 
-* Graphical UI
-* Graphics for everything 

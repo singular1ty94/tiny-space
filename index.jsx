@@ -88,6 +88,13 @@ class Game extends React.Component {
 
         this.spaceStation = new Image()
         this.spaceStation.src = 'dist/resources/station/spaceStation_023.png'
+
+        // Fetch all resources in a side-effecting manner
+        addons.forEach((addon) => {
+            addon.display.image = new Image()
+            addon.display.image.src = addon.display.url
+        })
+
         setInterval(this.renderStation, 1000 / FRAME_RATE)
     }
 
@@ -118,18 +125,35 @@ class Game extends React.Component {
         ctx.canvas.width  = window.innerWidth
         ctx.canvas.height = window.innerHeight
 
-        let centerX = window.innerWidth / 2
-        let centerY = window.innerHeight / 2
+        let centerX = ctx.canvas.width / 2
+        let centerY = ctx.canvas.height / 2
 
         ctx.clearRect(0,0, ctx.canvas.width, ctx.canvas.height)
 
-        let degrees = (this.degrees || 0) + ((360 / 3) / FRAME_RATE)
+        let degrees = (this.degrees || 0) + ((360 / 7) / FRAME_RATE)
         ctx.save()
         ctx.translate(ctx.canvas.width/2, ctx.canvas.height/2)
         ctx.rotate(degrees * Math.PI / 180)
-        ctx.drawImage(this.spaceStation, -(this.spaceStation.width / 2), -(this.spaceStation.height /2))
-        ctx.restore()     
+        // ctx.drawImage(this.spaceStation, -(this.spaceStation.width / 2), -(this.spaceStation.height /2))
+        ctx.drawImage(this.spaceStation, -this.spaceStation.width / 2, -this.spaceStation.height / 2)
         this.degrees = degrees
+        ctx.restore()     
+
+        // Render any addons we have
+        this.state.addonsBuilt.forEach((addon) => {
+            if (addon.display.direction) {
+                addon.display.angle += Math.acos(1-Math.pow(addon.display.speed/addon.display.orbital,2)/2);
+            } else {
+                addon.display.angle -= Math.acos(1-Math.pow(addon.display.speed/addon.display.orbital,2)/2);
+            }
+            
+            // calculate the new ball.x / ball.y
+            var newX = (centerX) + addon.display.orbital * Math.cos(addon.display.angle);
+            var newY = (centerY) + addon.display.orbital * Math.sin(addon.display.angle);
+
+            // draw
+            ctx.drawImage(addon.display.image, newX - (addon.display.image.width / 2), newY - (addon.display.image.height / 2))              
+        })
     }
 
     updateGame() {
@@ -307,7 +331,7 @@ class Game extends React.Component {
                                 {upgrade && 
                                     <div className="buildButtons">
                                         <span>Upgrade Station</span><br />
-                                        <button className="button-primary" onClick={this.upgrade}>${upgrade.cost}</button>
+                                        <button className="button-primary" onClick={this.upgrade}>{upgrade.cost}</button>
                                     </div>
                                 }
                                 <br/>

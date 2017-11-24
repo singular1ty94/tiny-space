@@ -141,18 +141,29 @@ class Game extends React.Component {
 
         // Render any addons we have
         this.state.addonsBuilt.forEach((addon) => {
-            if (addon.display.direction) {
-                addon.display.angle += Math.acos(1-Math.pow(addon.display.speed/addon.display.orbital,2)/2);
-            } else {
-                addon.display.angle -= Math.acos(1-Math.pow(addon.display.speed/addon.display.orbital,2)/2);
-            }
-            
-            // calculate the new ball.x / ball.y
-            var newX = (centerX) + addon.display.orbital * Math.cos(addon.display.angle);
-            var newY = (centerY) + addon.display.orbital * Math.sin(addon.display.angle);
+            if (addon.display.orbital) {
+                if (addon.display.direction) {
+                    addon.display.angle += Math.acos(1-Math.pow(addon.display.speed/addon.display.orbital,2)/2);
+                } else {
+                    addon.display.angle -= Math.acos(1-Math.pow(addon.display.speed/addon.display.orbital,2)/2);
+                }
+                
+                // calculate the new ball.x / ball.y
+                var newX = (centerX) + addon.display.orbital * Math.cos(addon.display.angle);
+                var newY = (centerY) + addon.display.orbital * Math.sin(addon.display.angle);
 
-            // draw
-            ctx.drawImage(addon.display.image, newX - (addon.display.image.width / 2), newY - (addon.display.image.height / 2))              
+                // Draw an orbital trail
+                ctx.strokeStyle = "lightgray";
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, addon.display.orbital, 0, Math.PI * 2, false);
+                ctx.closePath();
+                ctx.stroke();
+    
+                // draw
+                ctx.drawImage(addon.display.image, newX - (addon.display.image.width / 2), newY - (addon.display.image.height / 2))  
+            } else {
+                ctx.drawImage(addon.display.image, centerX - (addon.display.image.width / 2), centerY - (addon.display.image.height / 2))  
+            }           
         })
     }
 

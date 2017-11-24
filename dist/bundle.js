@@ -1138,18 +1138,28 @@ var Game = function (_React$Component) {
 
             // Render any addons we have
             this.state.addonsBuilt.forEach(function (addon) {
-                if (addon.display.direction) {
-                    addon.display.angle += Math.acos(1 - Math.pow(addon.display.speed / addon.display.orbital, 2) / 2);
+                if (addon.display.orbital) {
+                    if (addon.display.direction) {
+                        addon.display.angle += Math.acos(1 - Math.pow(addon.display.speed / addon.display.orbital, 2) / 2);
+                    } else {
+                        addon.display.angle -= Math.acos(1 - Math.pow(addon.display.speed / addon.display.orbital, 2) / 2);
+                    }
+
+                    // calculate the new ball.x / ball.y
+                    var newX = centerX + addon.display.orbital * Math.cos(addon.display.angle);
+                    var newY = centerY + addon.display.orbital * Math.sin(addon.display.angle);
+
+                    ctx.strokeStyle = "#121212";
+                    ctx.beginPath();
+                    ctx.arc(centerX, centerY, addon.display.orbital, 0, Math.PI * 2, false);
+                    ctx.closePath();
+                    ctx.stroke();
+
+                    // draw
+                    ctx.drawImage(addon.display.image, newX - addon.display.image.width / 2, newY - addon.display.image.height / 2);
                 } else {
-                    addon.display.angle -= Math.acos(1 - Math.pow(addon.display.speed / addon.display.orbital, 2) / 2);
+                    ctx.drawImage(addon.display.image, centerX - addon.display.image.width / 2, centerY - addon.display.image.height / 2);
                 }
-
-                // calculate the new ball.x / ball.y
-                var newX = centerX + addon.display.orbital * Math.cos(addon.display.angle);
-                var newY = centerY + addon.display.orbital * Math.sin(addon.display.angle);
-
-                // draw
-                ctx.drawImage(addon.display.image, newX - addon.display.image.width / 2, newY - addon.display.image.height / 2);
             });
         }
     }, {
@@ -1445,7 +1455,6 @@ var Game = function (_React$Component) {
                                         _react2.default.createElement(
                                             'button',
                                             { className: 'button-primary', onClick: this.upgrade },
-                                            '$',
                                             upgrade.cost
                                         )
                                     ),
@@ -18885,12 +18894,12 @@ var MEDIUM_SPACE_FARM = {
     type: 'COMMODITY_GAIN',
     description: 'Expand your agricultural yields with larger farms and gain more commodities.',
     display: {
-        url: 'dist/resources/station/space_farm.png',
-        orbital: 150,
+        url: 'dist/resources/station/medium_space_farm.png',
+        orbital: 200,
         image: null,
-        direction: false,
-        angle: 0,
-        speed: 1.5
+        direction: true,
+        angle: 0.3,
+        speed: 1.3
     }
 };
 
@@ -18901,12 +18910,8 @@ var SATELLITE_RELAY = {
     type: 'DEFENSE_ACCURACY',
     description: 'Early-warning detection systems help you accurately defeat enemies.',
     display: {
-        url: 'dist/resources/station/space_farm.png',
-        orbital: 150,
-        image: null,
-        direction: false,
-        angle: 0,
-        speed: 1.5
+        url: 'dist/resources/station/relay.png',
+        image: null
     }
 };
 

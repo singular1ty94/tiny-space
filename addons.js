@@ -21,12 +21,12 @@ let MEDIUM_SPACE_FARM = {
     type: 'COMMODITY_GAIN',
     description: 'Expand your agricultural yields with larger farms and gain more commodities.',
     display: {
-        url: 'dist/resources/station/space_farm.png',
-        orbital: 150,
+        url: 'dist/resources/station/medium_space_farm.png',
+        orbital: 200,
         image: null,
-        direction: false,
-        angle: 0,
-        speed: 1.5
+        direction: true,
+        angle: 0.3,
+        speed: 1.3
     }
 }
 
@@ -37,12 +37,8 @@ let SATELLITE_RELAY = {
     type: 'DEFENSE_ACCURACY',
     description: 'Early-warning detection systems help you accurately defeat enemies.',
     display: {
-        url: 'dist/resources/station/space_farm.png',
-        orbital: 150,
-        image: null,
-        direction: false,
-        angle: 0,
-        speed: 1.5
+        url: 'dist/resources/station/relay.png',
+        image: null
     }
 }
 

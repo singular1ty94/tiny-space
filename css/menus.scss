@@ -1,0 +1,83 @@
+slideout {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    color: #333;
+    position: fixed;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    background-repeat: no-repeat;
+    width: 0;
+    height: 0;
+    z-index: 999;
+    h4 {
+        color: white;
+        font-size: 2rem;
+        font-weight: bold;
+        margin-left: 10px;
+        width: 100%;
+        margin-top: 2px;
+        margin-bottom: 0;
+        cursor: pointer;
+    }
+}
+
+#slideout {
+    @extend slideout;
+    left: 0;
+    bottom: 0;
+    background: url('resources/interface/metalPanel_build.png') 0 0;
+    &.on {
+        width: 475px;
+        height: 300px;
+    }
+}
+
+#slideoutTravel {
+    @extend slideout;
+    left: calc(50% - 400px);
+    top: -400px;
+    background: url('resources/interface/metalPanel_travel.png') 0 0;
+    &.on {
+        width: 800px;
+        height: 400px;
+        top: 0;
+    }
+}
+
+#slideoutUpgrade {
+    @extend slideout;
+    left: 120px;
+    bottom: 0;
+    background: url('resources/interface/metalPanel_upgrade.png') 0 0;
+    &.on {
+        width: 130px;
+        height: 300px;
+    }
+}
+
+.buildButtons {
+    display: inline-block;
+    height: 75px;
+    width: 75px;
+    padding: 15px;
+    margin: 10px;
+    color: #555;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 38px;
+    background-color: transparent;
+    border-radius: 4px;
+    border: 1px solid #bbb;
+    vertical-align: top;
+    position: relative;
+    span {
+        line-height: 14px;
+    }
+    button {
+        position: absolute;
+        bottom: 0;
+        left: 10px;
+    }
+}

@@ -17,10 +17,12 @@ Dev Goals Completed:
 * Graphical UI
 
 Dev Goals Ahead:
+* Pirate attack Graphics
 * Framework for exploring new places in space, or clicking things to get resources
 * calculating earned resources when logging back in
 * saving state to the window and reloading back
 * Better conditional unlock system than checking per loop
-* Remove react - we're not getting any gains from it, and we'll be going to canvas render with graphics anyway
+* Improve React component style
 * Unlockable goods of different rarities
 * Change planets to have more specific goals 
+* Provide support for phone sizing

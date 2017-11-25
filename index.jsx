@@ -5,6 +5,7 @@ import { planetsGenerator } from './planets'
 import { addons } from './addons'
 import { tick, upgradeLevels, citizenGrowth, defenseLevels } from './config'
 import { getRandom, nebula } from './helpers'
+import { BuildMenu } from './components/BuildMenu'
 
 const FRAME_RATE = 30
 
@@ -334,27 +335,16 @@ class Game extends React.Component {
                         </div>
 
                     <div className="row">
-                        <div id="bottomLeftUI">
-                            <button onClick={() => {
+                        <BuildMenu 
+                            active={this.state.buildMenuActive || false}
+                            addons={filteredAddons}
+                            build={(addon) => this.buildAddon(addon)}
+                            toggleMenu={() => {
                                 this.setState({
                                     buildMenuActive: !(this.state.buildMenuActive || false)
                                 })
-                            }}>Build</button>
-                            <div id="slideout" className={this.state.buildMenuActive ? 'on': null} >
-                                <h4 onClick={() => {
-                                    this.setState({
-                                        buildMenuActive: !(this.state.buildMenuActive || false)
-                                    })
-                                }}>Build</h4>
-                                {filteredAddons.map((x, i) =>
-                                    <div className="buildButtons" key={i}>
-                                        <span>{x.name}</span><br />
-                                        <button className="button-primary"
-                                            title={x.description} onClick={() => this.buildAddon(x)}>{x.cost}</button>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
+                            }} 
+                        />
                         <div id="bottomMidUI">
                             <button onClick={() => {
                                 this.setState({

@@ -5,7 +5,11 @@ import { planetsGenerator } from './planets'
 import { addons } from './addons'
 import { tick, upgradeLevels, citizenGrowth, defenseLevels } from './config'
 import { getRandom, nebula } from './helpers'
-import { BuildMenu, UpgradeMenu } from './components'
+import { BuildMenu,
+         UpgradeMenu,
+         ResourceMenu
+        } from './components'
+import * as resource from './resources'
 
 const FRAME_RATE = 30
 
@@ -35,7 +39,7 @@ class Game extends React.Component {
             planets: planetsGenerator(20),
             planetsVisited: [],
             addonsBuilt: [],
-            resources: []
+            resources: [resource.ALUMINUM]
         }
 
         this.renderStation = this.renderStation.bind(this)
@@ -357,6 +361,16 @@ class Game extends React.Component {
                             upgradeStationData={upgradeStation}
                             upgradeDefenseData={upgradeDefense}
                         />
+
+                        <ResourceMenu 
+                            active={this.state.resourceMenuActive || false}
+                            resources={this.state.resources}
+                            toggleMenu={() => {
+                                this.setState({
+                                    resourceMenuActive: !(this.state.resourceMenuActive || false)
+                                })
+                            }} 
+                        />          
                         
                         {/* <div className="one-half column">
                             <h4>Resources</h4>

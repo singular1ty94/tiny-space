@@ -14,9 +14,14 @@ The gameplay loop includes:
 
 Dev Goals Completed:
 * Framework for gaining citizens, uniform resources and upgrading station
-* Graphical UI
+* Graphical UI overall
+* Build menu UI
+* Upgrade menu UI
+* Resource menu UI
 
 Dev Goals Ahead:
+* Collecting resources
+* Selling resources
 * Pirate attack Graphics
 * Framework for exploring new places in space, or clicking things to get resources
 * calculating earned resources when logging back in

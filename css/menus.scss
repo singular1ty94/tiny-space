@@ -56,7 +56,26 @@ slideout {
     }
 }
 
-.buildButtons {
+#slideoutResources {
+    @extend slideout;
+    text-align: center;
+    right: 0;
+    bottom: 0;
+    background: url('resources/interface/metalPanel_resources.png') 0 0;
+    width: 475px;
+    height: 125px;
+    &.on {
+        width: 475px;
+        height: 300px;
+    }
+    h4 {
+        text-align: right;
+        margin-left: -10px;
+    }
+}
+
+
+smallBox {
     display: inline-block;
     height: 75px;
     width: 75px;
@@ -72,12 +91,31 @@ slideout {
     border: 1px solid #bbb;
     vertical-align: top;
     position: relative;
-    span {
-        line-height: 14px;
-    }
+
     button {
         position: absolute;
         bottom: 0;
         left: 10px;
+    }
+}
+
+.buildButtons {
+    @extend smallBox;
+    span {
+        line-height: 14px;
+    }
+}
+
+.resourceSquare {
+    @extend smallBox;
+    height: 45px;
+    line-height: 14px;
+
+    button {
+        font-size: 10px;
+        padding: 0 10px;
+        display: block;
+        position: static;
+        margin: 0 auto;
     }
 }

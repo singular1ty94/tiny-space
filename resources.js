@@ -1,68 +1,81 @@
-export const RARITY = { COMMON, UNCOMMON, RARE, EXOTIC }
+export let RARITY = { COMMONE: 'COMMON', UNCOMMON: 'UNCOMMON', RARE: 'RARE', EXOTIC: 'EXOTIC' }
 
 /* COMMON GOODS */
-export const ALUMINUM = {
+export let ALUMINUM = {
     name: 'Aluminum',
     description: 'A base metal used in the construction of new equipment in space!',
     resale: 10,
-    rarity: RARITY.COMMON
+    rarity: RARITY.COMMON,
+    held: 0
 }
 
-export const TITANIUM = {
+export let TITANIUM = {
     name: 'Titanium',
     description: 'A strong metal used to build new space station parts!',
     resale: 40,
-    rarity: RARITY.COMMON
+    rarity: RARITY.COMMON,
+    held: 0
 }
 
-export const SUPPLIES = {
+export let SUPPLIES = {
     name: 'Supplies',
     description: 'Food and water in convenient packages for consumption in long-term space environments.',
     resale: 15,
-    rarity: RARITY.COMMON
+    rarity: RARITY.COMMON,
+    held: 0
 }
 
-export const FUEL = {
+export let FUEL = {
     name: 'Helium-3 Fuel',
     description: 'Space travel requires Helium-3 combustible fuel, and lots of it!',
     resale: 20,
-    rarity: RARITY.COMMON
+    rarity: RARITY.COMMON,
+    held: 0
 }
 
 /* UNCOMMON GOODS */
-export const HYPER_TORPEDO = {
+export let HYPER_TORPEDO = {
     name: 'Hyper Torpedo',
     description: 'One of the most common weapons fitted on low-orbit fighter craft.',
     resale: 100,
-    rarity: RARITY.UNCOMMON
+    rarity: RARITY.UNCOMMON,
+    held: 0
 }
 
-export const CRYOPOD = {
+export let CRYOPOD = {
     name: 'Cryopod',
     description: 'Used to store passengers safely during long times of space transport.',
     resale: 250,
-    rarity: RARITY.UNCOMMON
+    rarity: RARITY.UNCOMMON,
+    held: 0
 }
 
 /* RARE GOODS */
-export const SOLAR_ARRAY = {
+export let SOLAR_ARRAY = {
     name: 'Solar Array',
     description: 'A massive solar array used to power an entire space station.',
     resale: 1500,
-    rarity: RARITY.RARE
+    rarity: RARITY.RARE,
+    held: 0
 }
 
 /* EXOTIC */
-export const KHERG_CARAPICE = {
+export let KHERG_CARAPICE = {
     name: 'Kherg Carapice',
     description: 'An iridiscent carapice from an alien parasite, used to create Hyper-Fuel for galactic travel.',
     resale: 100000,
-    rarity: RARITY.EXOTIC
+    rarity: RARITY.EXOTIC,
+    held: 0
 }
 
-export const GALACTIC_GATEWAY = {
+export let GALACTIC_GATEWAY = {
     name: '?',
     description: 'Some form of alien artifact that predates our Universe.',
     resale: 10000000,
-    rarity: RARITY.EXOTIC
+    rarity: RARITY.EXOTIC,
+    held: 0
 }
+
+export let resourceList = [
+    ALUMINUM, TITANIUM, SUPPLIES, FUEL, HYPER_TORPEDO, CRYOPOD, SOLAR_ARRAY, KHERG_CARAPICE, GALACTIC_GATEWAY
+]

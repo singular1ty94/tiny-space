@@ -5,7 +5,7 @@ import { planetsGenerator } from './planets'
 import { addons } from './addons'
 import { tick, upgradeLevels, citizenGrowth, defenseLevels } from './config'
 import { getRandom, nebula } from './helpers'
-import { BuildMenu } from './components/BuildMenu'
+import { BuildMenu, UpgradeMenu } from './components'
 
 const FRAME_RATE = 30
 
@@ -278,7 +278,7 @@ class Game extends React.Component {
     }
 
     render() {
-        const upgrade = this.getNextUpgradeCost()
+        const upgradeStation = this.getNextUpgradeCost()
         const upgradeDefense = this.getNextDraftCost()
         const filteredAddons = addons.filter(x => !this.state.addonsBuilt.includes(x))
         return (
@@ -345,33 +345,19 @@ class Game extends React.Component {
                                 })
                             }} 
                         />
-                        <div id="bottomMidUI">
-                            <button onClick={() => {
+                        <UpgradeMenu
+                            active={this.state.upgradeMenuActive || false}
+                            toggleMenu={() => {
                                 this.setState({
                                     upgradeMenuActive: !(this.state.upgradeMenuActive || false)
                                 })
-                            }}>Upgrade</button>
-                            <div id="slideoutUpgrade" className={this.state.upgradeMenuActive ? 'on': null} >
-                                <h4 onClick={() => {
-                                    this.setState({
-                                        upgradeMenuActive: !(this.state.upgradeMenuActive || false)
-                                    })
-                                }}>Upgrade</h4>
-                                {upgrade && 
-                                    <div className="buildButtons">
-                                        <span>Upgrade Station</span><br />
-                                        <button className="button-primary" onClick={this.upgrade}>{upgrade.cost}</button>
-                                    </div>
-                                }
-                                <br/>
-                                {upgradeDefense && 
-                                    <div className="buildButtons">
-                                        <span>Upgrade Defense</span><br />
-                                        <button className="button-primary" onClick={this.upgradeDefense}>{upgradeDefense.cost}</button>
-                                    </div>
-                                }
-                            </div>
-                        </div>
+                            }}
+                            upgradeStation={() => this.upgrade()}
+                            upgradeDefense={() => this.upgradeDefense()}
+                            upgradeStationData={upgradeStation}
+                            upgradeDefenseData={upgradeDefense}
+                        />
+                        
                         {/* <div className="one-half column">
                             <h4>Resources</h4>
                             {this.state.resources.map((r, i) => {

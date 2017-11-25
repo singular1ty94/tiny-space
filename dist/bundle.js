@@ -1031,7 +1031,7 @@ function nebula(canvas, canvas2, canvas3, halfWidth, halfHeight) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(16);
-module.exports = __webpack_require__(34);
+module.exports = __webpack_require__(36);
 
 
 /***/ }),
@@ -1063,7 +1063,7 @@ var _config = __webpack_require__(32);
 
 var _helpers = __webpack_require__(14);
 
-var _BuildMenu = __webpack_require__(33);
+var _components = __webpack_require__(33);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1374,7 +1374,7 @@ var Game = function (_React$Component) {
         value: function render() {
             var _this7 = this;
 
-            var upgrade = this.getNextUpgradeCost();
+            var upgradeStation = this.getNextUpgradeCost();
             var upgradeDefense = this.getNextDraftCost();
             var filteredAddons = _addons.addons.filter(function (x) {
                 return !_this7.state.addonsBuilt.includes(x);
@@ -1498,7 +1498,7 @@ var Game = function (_React$Component) {
                         _react2.default.createElement(
                             'div',
                             { className: 'row' },
-                            _react2.default.createElement(_BuildMenu.BuildMenu, {
+                            _react2.default.createElement(_components.BuildMenu, {
                                 active: this.state.buildMenuActive || false,
                                 addons: filteredAddons,
                                 build: function build(addon) {
@@ -1510,63 +1510,22 @@ var Game = function (_React$Component) {
                                     });
                                 }
                             }),
-                            _react2.default.createElement(
-                                'div',
-                                { id: 'bottomMidUI' },
-                                _react2.default.createElement(
-                                    'button',
-                                    { onClick: function onClick() {
-                                            _this7.setState({
-                                                upgradeMenuActive: !(_this7.state.upgradeMenuActive || false)
-                                            });
-                                        } },
-                                    'Upgrade'
-                                ),
-                                _react2.default.createElement(
-                                    'div',
-                                    { id: 'slideoutUpgrade', className: this.state.upgradeMenuActive ? 'on' : null },
-                                    _react2.default.createElement(
-                                        'h4',
-                                        { onClick: function onClick() {
-                                                _this7.setState({
-                                                    upgradeMenuActive: !(_this7.state.upgradeMenuActive || false)
-                                                });
-                                            } },
-                                        'Upgrade'
-                                    ),
-                                    upgrade && _react2.default.createElement(
-                                        'div',
-                                        { className: 'buildButtons' },
-                                        _react2.default.createElement(
-                                            'span',
-                                            null,
-                                            'Upgrade Station'
-                                        ),
-                                        _react2.default.createElement('br', null),
-                                        _react2.default.createElement(
-                                            'button',
-                                            { className: 'button-primary', onClick: this.upgrade },
-                                            upgrade.cost
-                                        )
-                                    ),
-                                    _react2.default.createElement('br', null),
-                                    upgradeDefense && _react2.default.createElement(
-                                        'div',
-                                        { className: 'buildButtons' },
-                                        _react2.default.createElement(
-                                            'span',
-                                            null,
-                                            'Upgrade Defense'
-                                        ),
-                                        _react2.default.createElement('br', null),
-                                        _react2.default.createElement(
-                                            'button',
-                                            { className: 'button-primary', onClick: this.upgradeDefense },
-                                            upgradeDefense.cost
-                                        )
-                                    )
-                                )
-                            )
+                            _react2.default.createElement(_components.UpgradeMenu, {
+                                active: this.state.upgradeMenuActive || false,
+                                toggleMenu: function toggleMenu() {
+                                    _this7.setState({
+                                        upgradeMenuActive: !(_this7.state.upgradeMenuActive || false)
+                                    });
+                                },
+                                upgradeStation: function upgradeStation() {
+                                    return _this7.upgrade();
+                                },
+                                upgradeDefense: function upgradeDefense() {
+                                    return _this7.upgradeDefense();
+                                },
+                                upgradeStationData: upgradeStation,
+                                upgradeDefenseData: upgradeDefense
+                            })
                         )
                     )
                 )
@@ -19088,6 +19047,41 @@ var defenseLevels = exports.defenseLevels = [{
 
 
 Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _BuildMenu = __webpack_require__(34);
+
+Object.keys(_BuildMenu).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _BuildMenu[key];
+    }
+  });
+});
+
+var _UpgradeMenu = __webpack_require__(35);
+
+Object.keys(_UpgradeMenu).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _UpgradeMenu[key];
+    }
+  });
+});
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.BuildMenu = undefined;
@@ -19169,7 +19163,114 @@ var BuildMenu = exports.BuildMenu = function (_React$Component) {
 }(React.Component);
 
 /***/ }),
-/* 34 */
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.UpgradeMenu = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(2);
+
+var React = _interopRequireWildcard(_react);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var UpgradeMenu = exports.UpgradeMenu = function (_React$Component) {
+    _inherits(UpgradeMenu, _React$Component);
+
+    function UpgradeMenu() {
+        _classCallCheck(this, UpgradeMenu);
+
+        return _possibleConstructorReturn(this, (UpgradeMenu.__proto__ || Object.getPrototypeOf(UpgradeMenu)).apply(this, arguments));
+    }
+
+    _createClass(UpgradeMenu, [{
+        key: "render",
+        value: function render() {
+            var _this2 = this;
+
+            return React.createElement(
+                "div",
+                { id: "bottomMidUI" },
+                React.createElement(
+                    "button",
+                    { onClick: function onClick() {
+                            return _this2.props.toggleMenu();
+                        } },
+                    "Upgrade"
+                ),
+                React.createElement(
+                    "div",
+                    { id: "slideoutUpgrade", className: this.props.active ? 'on' : null },
+                    React.createElement(
+                        "h4",
+                        { onClick: function onClick() {
+                                return _this2.props.toggleMenu();
+                            } },
+                        "Upgrade"
+                    ),
+                    this.props.upgradeStationData && React.createElement(
+                        "div",
+                        { className: "buildButtons" },
+                        React.createElement(
+                            "span",
+                            null,
+                            "Upgrade Station"
+                        ),
+                        React.createElement("br", null),
+                        React.createElement(
+                            "button",
+                            {
+                                className: "button-primary",
+                                onClick: function onClick() {
+                                    return _this2.props.upgradeStation();
+                                } },
+                            this.props.upgradeStationData.cost
+                        )
+                    ),
+                    React.createElement("br", null),
+                    this.props.upgradeDefenseData && React.createElement(
+                        "div",
+                        { className: "buildButtons" },
+                        React.createElement(
+                            "span",
+                            null,
+                            "Upgrade Defense"
+                        ),
+                        React.createElement("br", null),
+                        React.createElement(
+                            "button",
+                            {
+                                className: "button-primary",
+                                onClick: function onClick() {
+                                    return _this2.props.upgradeDefense();
+                                } },
+                            this.props.upgradeDefenseData.cost
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return UpgradeMenu;
+}(React.Component);
+
+/***/ }),
+/* 36 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

@@ -4,12 +4,16 @@ import { PIRATE_LV_1, PIRATE_LV_2, pirates } from './pirates'
 import { planetsGenerator } from './planets'
 import { addons } from './addons'
 import { tick, upgradeLevels, citizenGrowth, defenseLevels } from './config'
-import { getRandom, nebula } from './helpers'
+import { getRandom, nebula, drawStars } from './helpers'
 import { BuildMenu,
          UpgradeMenu,
-         ResourceMenu
+         ResourceMenu,
+         LevelUI,
+         StatsUI
         } from './components'
 import * as resource from './resources'
+import { GalacticSystem } from './components/System';
+import { SIREN_CLOUD } from './systems'
 
 const FRAME_RATE = 30
 
@@ -21,6 +25,7 @@ class Game extends React.Component {
     nebula1;
     nebula2;
     nebula3;
+    nebulaId;
 
     constructor(){
         super()
@@ -39,9 +44,11 @@ class Game extends React.Component {
             planets: planetsGenerator(20),
             planetsVisited: [],
             addonsBuilt: [],
-            resources: [resource.ALUMINUM]
+            resources: [resource.ALUMINUM],
+            currentSystem: SIREN_CLOUD
         }
 
+        this.drawBackgrounds = this.drawBackgrounds.bind(this)
         this.renderStation = this.renderStation.bind(this)
         this.getNextUpgradeCost = this.getNextUpgradeCost.bind(this)
         this.upgrade = this.upgrade.bind(this)
@@ -92,8 +99,6 @@ class Game extends React.Component {
 
     componentDidMount() {
         setInterval(this.updateGame, tick)
-        this.drawStars()
-
         this.spaceStation = new Image()
         this.spaceStation.src = 'dist/resources/station/spaceStation_023.png'
 
@@ -104,76 +109,64 @@ class Game extends React.Component {
         })
 
         setInterval(this.renderStation, 1000 / FRAME_RATE)
-        nebula(this.nebula1, this.nebula2, this.nebula3, window.innerWidth / 2, window.innerHeight / 2)
+        if (this.state.currentSystem == 'HOME') { 
+            this.drawBackgrounds()
+        }
     }
 
-    drawStars() {
-        const ctx = this.starfield.getContext('2d');
-        ctx.canvas.width  = window.innerWidth;
-        ctx.canvas.height = window.innerHeight;
-
-        let stars = 500;
-        let colorrange = [0,60,240];
-        for (var i = 0; i < stars; i++) {
-
-            var x = Math.random() * ctx.canvas.offsetWidth;
-            var y = Math.random() * ctx.canvas.offsetHeight,
-            radius = Math.random() * 1.2,
-            hue = colorrange[getRandom(0,colorrange.length - 1)],
-            sat = getRandom(50,100);
-            ctx.beginPath();
-            ctx.arc(x, y, radius, 0, 360);
-            ctx.fillStyle = "hsl(" + hue + ", " + sat + "%, 88%)";
-            ctx.fill();
-        }
+    drawBackgrounds() {
+        drawStars(this.starfield)
+        this.nebulaId = nebula(this.nebula1, this.nebula2, this.nebula3, window.innerWidth / 2, window.innerHeight / 2)
     }
 
     renderStation() {
         // Render
-        const ctx = this.canvas.getContext('2d')
-        ctx.canvas.width  = window.innerWidth
-        ctx.canvas.height = window.innerHeight
+        if (this.state.currentSystem == 'HOME') {
+            const ctx = this.canvas.getContext('2d')
+            ctx.canvas.width  = window.innerWidth
+            ctx.canvas.height = window.innerHeight
 
-        let centerX = ctx.canvas.width / 2
-        let centerY = ctx.canvas.height / 2
+            let centerX = ctx.canvas.width / 2
+            let centerY = ctx.canvas.height / 2
 
-        ctx.clearRect(0,0, ctx.canvas.width, ctx.canvas.height)
+            ctx.clearRect(0,0, ctx.canvas.width, ctx.canvas.height)
 
-        let degrees = (this.degrees || 0) + ((360 / 7) / FRAME_RATE)
-        ctx.save()
-        ctx.translate(ctx.canvas.width/2, ctx.canvas.height/2)
-        ctx.rotate(degrees * Math.PI / 180)
-        // ctx.drawImage(this.spaceStation, -(this.spaceStation.width / 2), -(this.spaceStation.height /2))
-        ctx.drawImage(this.spaceStation, -this.spaceStation.width / 2, -this.spaceStation.height / 2)
-        this.degrees = degrees
-        ctx.restore()     
+            let degrees = (this.degrees || 0) + ((360 / 7) / FRAME_RATE)
+            ctx.save()
+            ctx.translate(ctx.canvas.width/2, ctx.canvas.height/2)
+            ctx.rotate(degrees * Math.PI / 180)
+            // ctx.drawImage(this.spaceStation, -(this.spaceStation.width / 2), -(this.spaceStation.height /2))
+            ctx.drawImage(this.spaceStation, -this.spaceStation.width / 2, -this.spaceStation.height / 2)
+            this.degrees = degrees
+            ctx.restore()     
 
-        // Render any addons we have
-        this.state.addonsBuilt.forEach((addon) => {
-            if (addon.display.orbital) {
-                if (addon.display.direction) {
-                    addon.display.angle += Math.acos(1-Math.pow(addon.display.speed/addon.display.orbital,2)/2);
+            // Render any addons we have
+            this.state.addonsBuilt.forEach((addon) => {
+                if (addon.display.orbital) {
+                    if (addon.display.direction) {
+                        addon.display.angle += Math.acos(1-Math.pow(addon.display.speed/addon.display.orbital,2)/2);
+                    } else {
+                        addon.display.angle -= Math.acos(1-Math.pow(addon.display.speed/addon.display.orbital,2)/2);
+                    }
+                    
+                    // calculate the new ball.x / ball.y
+                    var newX = (centerX) + addon.display.orbital * Math.cos(addon.display.angle);
+                    var newY = (centerY) + addon.display.orbital * Math.sin(addon.display.angle);
+
+                    // Draw an orbital trail
+                    ctx.strokeStyle = "lightgray";
+                    ctx.beginPath();
+                    ctx.arc(centerX, centerY, addon.display.orbital, 0, Math.PI * 2, false);
+                    ctx.closePath();
+                    ctx.stroke();
+        
+                    // draw
+                    ctx.drawImage(addon.display.image, newX - (addon.display.image.width / 2), newY - (addon.display.image.height / 2))  
                 } else {
-                    addon.display.angle -= Math.acos(1-Math.pow(addon.display.speed/addon.display.orbital,2)/2);
-                }
-                
-                // calculate the new ball.x / ball.y
-                var newX = (centerX) + addon.display.orbital * Math.cos(addon.display.angle);
-                var newY = (centerY) + addon.display.orbital * Math.sin(addon.display.angle);
-
-                // Draw an orbital trail
-                ctx.strokeStyle = "lightgray";
-                ctx.beginPath();
-                ctx.arc(centerX, centerY, addon.display.orbital, 0, Math.PI * 2, false);
-                ctx.closePath();
-                ctx.stroke();
-    
-                // draw
-                ctx.drawImage(addon.display.image, newX - (addon.display.image.width / 2), newY - (addon.display.image.height / 2))  
-            } else {
-                ctx.drawImage(addon.display.image, centerX - (addon.display.image.width / 2), centerY - (addon.display.image.height / 2))  
-            }           
-        })
+                    ctx.drawImage(addon.display.image, centerX - (addon.display.image.width / 2), centerY - (addon.display.image.height / 2))  
+                }           
+            })
+        }
     }
 
     updateGame() {
@@ -287,101 +280,120 @@ class Game extends React.Component {
         const filteredAddons = addons.filter(x => !this.state.addonsBuilt.includes(x))
         return (
             <div>
-                <canvas
-                    ref={(starfield) => { this.starfield = starfield; }}
-                    width="100%"
-                    height="100%" 
-                    style={{position: "absolute", left: 0, top: 0, zIndex: 0}}>
-                </canvas>
+                {this.state.currentSystem == 'HOME' &&
+                    <div>
+                        <canvas
+                            ref={(starfield) => { this.starfield = starfield; }}
+                            width="100%"
+                            height="100%" 
+                            style={{position: "absolute", left: 0, top: 0, zIndex: 0}}>
+                        </canvas>
 
-                <canvas ref={(nebula1) => {this.nebula1 = nebula1; }} 
-                        style={{display:"none"}} id="canvas" width={window.innerWidth /2} height={window.innerHeight /2}></canvas>
-                <canvas  ref={(nebula3) => {this.nebula3 = nebula3; }} 
-                        style={{display:"none"}} id="canvas3" width={window.innerWidth} height={window.innerHeight}></canvas>
-                <canvas  ref={(nebula2) => {this.nebula2 = nebula2; }} 
-                        id="canvas2" width={window.innerWidth} height={window.innerHeight}></canvas>
+                        <canvas ref={(nebula1) => {this.nebula1 = nebula1; }} 
+                                style={{display:"none"}} id="canvas" width={window.innerWidth /2} height={window.innerHeight /2}></canvas>
+                        <canvas  ref={(nebula3) => {this.nebula3 = nebula3; }} 
+                                style={{display:"none"}} id="canvas3" width={window.innerWidth} height={window.innerHeight}></canvas>
+                        <canvas  ref={(nebula2) => {this.nebula2 = nebula2; }} 
+                                id="canvas2" width={window.innerWidth} height={window.innerHeight}></canvas>
 
-                <canvas
-                    ref={(canvas) => { this.canvas = canvas }}
-                    width="100%"
-                    height="100%" 
-                    style={{position: "absolute", left: 0, top: 0, zIndex: 2}}>
-                </canvas>
+                        <canvas
+                            ref={(canvas) => { this.canvas = canvas }}
+                            width="100%"
+                            height="100%" 
+                            style={{position: "absolute", left: 0, top: 0, zIndex: 2}}>
+                        </canvas>
 
-                <div style={{position: "absolute", left: 0, top: 0, zIndex: 3, width: "100%", height: "100%"}}>
-                    <div className="row">
-                        <div id="topLeftUI">
-                            <h4>Station</h4>
-                            <h5>Defense</h5>
-                            <span id="stationLevel">Lv {this.state.level}</span>
-                            <span id="defenseLevel">Lv {this.state.defenseLevel}</span>
-                        </div>
-                        <div id="topRightUI">
-                            <h4>Commodities</h4>
-                            <h5>Citizens</h5>
-                            <span id="commodities">{Math.floor(this.state.commodities)}</span>
-                            <span id="citizens">{Math.floor(this.state.citizens)}</span>
-                        </div>
-                        <div id="topMidUI">
-                            <button onClick={() => {
-                                this.setState({
-                                    systemTravel: !(this.state.systemTravel || false)
-                                })
-                            }}>Galactic Map</button>
-                            <div id="slideoutTravel" className={this.state.systemTravel ? 'on': null} >
-                                <h4 onClick={() => {
-                                    this.setState({
-                                        systemTravel: !(this.state.systemTravel || false)
-                                    })
-                                }}>Galactic Map</h4>
-                                <p>Travel between systems to mine resources</p>
+                        <div style={{position: "absolute", left: 0, top: 0, zIndex: 3, width: "100%", height: "100%"}}>
+                            <div className="row">
+                                <LevelUI
+                                    stationLevel={this.state.level}
+                                    defenseLevel={this.state.defenseLevel} 
+                                />
+                                <StatsUI
+                                    commodities={Math.floor(this.state.commodities)}
+                                    citizens={Math.floor(this.state.citizens)}
+                                />
+
+                                <div id="topMidUI">
+                                    <button onClick={() => {
+                                        this.setState({
+                                            systemTravel: !(this.state.systemTravel || false)
+                                        })
+                                    }}>Galactic Map</button>
+                                    <div id="slideoutTravel" className={this.state.systemTravel ? 'on': null} >
+                                        <h4 onClick={() => {
+                                            this.setState({
+                                                systemTravel: !(this.state.systemTravel || false)
+                                            })
+                                        }}>Galactic Map</h4>
+                                        <div className="buildButtons">
+                                            <span>Siren Cloud</span><br />
+                                            <button className="button-primary"
+                                                    onClick={() => {
+                                                        clearTimeout(this.nebulaId)
+                                                        this.setState({ systemTravel: false, currentSystem: SIREN_CLOUD})
+                                                    }}>Visit</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            <div className="row">
+                                <BuildMenu 
+                                    active={this.state.buildMenuActive || false}
+                                    addons={filteredAddons}
+                                    build={(addon) => this.buildAddon(addon)}
+                                    toggleMenu={() => {
+                                        this.setState({
+                                            buildMenuActive: !(this.state.buildMenuActive || false)
+                                        })
+                                    }} 
+                                />
+                                <UpgradeMenu
+                                    active={this.state.upgradeMenuActive || false}
+                                    toggleMenu={() => {
+                                        this.setState({
+                                            upgradeMenuActive: !(this.state.upgradeMenuActive || false)
+                                        })
+                                    }}
+                                    upgradeStation={() => this.upgrade()}
+                                    upgradeDefense={() => this.upgradeDefense()}
+                                    upgradeStationData={upgradeStation}
+                                    upgradeDefenseData={upgradeDefense}
+                                />
+
+                                <ResourceMenu 
+                                    active={this.state.resourceMenuActive || false}
+                                    resources={this.state.resources}
+                                    toggleMenu={() => {
+                                        this.setState({
+                                            resourceMenuActive: !(this.state.resourceMenuActive || false)
+                                        })
+                                    }} 
+                                />
                             </div>
                         </div>
-
-                    <div className="row">
-                        <BuildMenu 
-                            active={this.state.buildMenuActive || false}
-                            addons={filteredAddons}
-                            build={(addon) => this.buildAddon(addon)}
-                            toggleMenu={() => {
-                                this.setState({
-                                    buildMenuActive: !(this.state.buildMenuActive || false)
-                                })
-                            }} 
-                        />
-                        <UpgradeMenu
-                            active={this.state.upgradeMenuActive || false}
-                            toggleMenu={() => {
-                                this.setState({
-                                    upgradeMenuActive: !(this.state.upgradeMenuActive || false)
-                                })
-                            }}
-                            upgradeStation={() => this.upgrade()}
-                            upgradeDefense={() => this.upgradeDefense()}
-                            upgradeStationData={upgradeStation}
-                            upgradeDefenseData={upgradeDefense}
-                        />
-
-                        <ResourceMenu 
-                            active={this.state.resourceMenuActive || false}
-                            resources={this.state.resources}
-                            toggleMenu={() => {
-                                this.setState({
-                                    resourceMenuActive: !(this.state.resourceMenuActive || false)
-                                })
-                            }} 
-                        />          
-                        
-                        {/* <div className="one-half column">
-                            <h4>Resources</h4>
-                            {this.state.resources.map((r, i) => {
-                                <button key={i} title={r.description}>{r.name}<br />{r.amount}</button>
-                            })}
-                        </div> */}
                     </div>
-                </div>
+                    </div>
+                }
+                { this.state.currentSystem !== 'HOME' &&
+                    <GalacticSystem
+                        base={this.state.currentSystem}
+                        returnHome={() => this.setState({ currentSystem: 'HOME' }, () => this.drawBackgrounds())}
+                        gain={(resource) => {
+                            let resources = this.state.resources
+                            if (resources.includes(resource)) {
+                                resource.held = resource.held + 1
+                            } else {
+                                resource.held = 1
+                                resources.push(resource)
+                            }
+                            this.setState({
+                                resources: resources
+                            })
+                        }}
+                    />
+                }
             </div>
-        </div>
         )
     }
   }

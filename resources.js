@@ -1,4 +1,5 @@
 export let RARITY = { COMMONE: 'COMMON', UNCOMMON: 'UNCOMMON', RARE: 'RARE', EXOTIC: 'EXOTIC' }
+export let TYPE = { METAL: 'METAL' }
 
 /* COMMON GOODS */
 export let ALUMINUM = {
@@ -6,6 +7,7 @@ export let ALUMINUM = {
     description: 'A base metal used in the construction of new equipment in space!',
     resale: 10,
     rarity: RARITY.COMMON,
+    type: TYPE.METAL,
     held: 0
 }
 
@@ -14,6 +16,7 @@ export let TITANIUM = {
     description: 'A strong metal used to build new space station parts!',
     resale: 40,
     rarity: RARITY.COMMON,
+    type: TYPE.METAL,
     held: 0
 }
 

@@ -17,6 +17,8 @@ export function nebula(canvas, canvas2, canvas3, halfWidth, halfHeight) {
     var w = canvas.width, h = canvas.height;
     var img = new Image();
 
+    var id;
+
     // A puff.
     var Puff = function (p) {
         var opacity,
@@ -61,7 +63,7 @@ export function nebula(canvas, canvas2, canvas3, halfWidth, halfHeight) {
             puffs[i].move(timeFac);
         }
         ctx2.drawImage(canvas, 0, 0, window.innerWidth, window.innerHeight);
-        setTimeout(loop, 10);
+        id = setTimeout(loop, 10);
     };
     // Turns out Chrome is much faster doing bitmap work if the bitmap is in an existing canvas rather
     // than an IMG, VIDEO etc. So draw the big nebula image into canvas3
@@ -70,4 +72,26 @@ export function nebula(canvas, canvas2, canvas3, halfWidth, halfHeight) {
         ctx3.drawImage(img, 0, 0, window.innerWidth, window.innerHeight); loop();
     }
     img.src = 'dist/resources/nebula/nebula.jpg';
+    return id;
+}
+
+export function drawStars(canvas) {
+    const ctx = canvas.getContext('2d');
+    ctx.canvas.width  = window.innerWidth;
+    ctx.canvas.height = window.innerHeight;
+
+    let stars = 500;
+    let colorrange = [0,60,240];
+    for (var i = 0; i < stars; i++) {
+
+        var x = Math.random() * ctx.canvas.offsetWidth;
+        var y = Math.random() * ctx.canvas.offsetHeight,
+        radius = Math.random() * 1.2,
+        hue = colorrange[getRandom(0,colorrange.length - 1)],
+        sat = getRandom(50,100);
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, 360);
+        ctx.fillStyle = "hsl(" + hue + ", " + sat + "%, 88%)";
+        ctx.fill();
+    }
 }

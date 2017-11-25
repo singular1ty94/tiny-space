@@ -65,6 +65,21 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+if (process.env.NODE_ENV === 'production') {
+  module.exports = __webpack_require__(18);
+} else {
+  module.exports = __webpack_require__(19);
+}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -254,21 +269,6 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(18);
-} else {
-  module.exports = __webpack_require__(19);
-}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -429,10 +429,100 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 module.exports = emptyObject;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var RARITY = exports.RARITY = { COMMONE: 'COMMON', UNCOMMON: 'UNCOMMON', RARE: 'RARE', EXOTIC: 'EXOTIC' };
+var TYPE = exports.TYPE = { METAL: 'METAL'
+
+    /* COMMON GOODS */
+};var ALUMINUM = exports.ALUMINUM = {
+    name: 'Aluminum',
+    description: 'A base metal used in the construction of new equipment in space!',
+    resale: 10,
+    rarity: RARITY.COMMON,
+    type: TYPE.METAL,
+    held: 0
+};
+
+var TITANIUM = exports.TITANIUM = {
+    name: 'Titanium',
+    description: 'A strong metal used to build new space station parts!',
+    resale: 40,
+    rarity: RARITY.COMMON,
+    type: TYPE.METAL,
+    held: 0
+};
+
+var SUPPLIES = exports.SUPPLIES = {
+    name: 'Supplies',
+    description: 'Food and water in convenient packages for consumption in long-term space environments.',
+    resale: 15,
+    rarity: RARITY.COMMON,
+    held: 0
+};
+
+var FUEL = exports.FUEL = {
+    name: 'Helium-3 Fuel',
+    description: 'Space travel requires Helium-3 combustible fuel, and lots of it!',
+    resale: 20,
+    rarity: RARITY.COMMON,
+    held: 0
+
+    /* UNCOMMON GOODS */
+};var HYPER_TORPEDO = exports.HYPER_TORPEDO = {
+    name: 'Hyper Torpedo',
+    description: 'One of the most common weapons fitted on low-orbit fighter craft.',
+    resale: 100,
+    rarity: RARITY.UNCOMMON,
+    held: 0
+};
+
+var CRYOPOD = exports.CRYOPOD = {
+    name: 'Cryopod',
+    description: 'Used to store passengers safely during long times of space transport.',
+    resale: 250,
+    rarity: RARITY.UNCOMMON,
+    held: 0
+
+    /* RARE GOODS */
+};var SOLAR_ARRAY = exports.SOLAR_ARRAY = {
+    name: 'Solar Array',
+    description: 'A massive solar array used to power an entire space station.',
+    resale: 1500,
+    rarity: RARITY.RARE,
+    held: 0
+
+    /* EXOTIC */
+};var KHERG_CARAPICE = exports.KHERG_CARAPICE = {
+    name: 'Kherg Carapice',
+    description: 'An iridiscent carapice from an alien parasite, used to create Hyper-Fuel for galactic travel.',
+    resale: 100000,
+    rarity: RARITY.EXOTIC,
+    held: 0
+};
+
+var GALACTIC_GATEWAY = exports.GALACTIC_GATEWAY = {
+    name: '?',
+    description: 'Some form of alien artifact that predates our Universe.',
+    resale: 10000000,
+    rarity: RARITY.EXOTIC,
+    held: 0
+};
+
+var resourceList = exports.resourceList = [ALUMINUM, TITANIUM, SUPPLIES, FUEL, HYPER_TORPEDO, CRYOPOD, SOLAR_ARRAY, KHERG_CARAPICE, GALACTIC_GATEWAY];
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -489,10 +579,10 @@ function invariant(condition, format, a, b, c, d, e, f) {
 }
 
 module.exports = invariant;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -558,10 +648,128 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 module.exports = warning;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 7 */
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.getRandom = getRandom;
+exports.nebula = nebula;
+exports.drawStars = drawStars;
+function getRandom(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function nebula(canvas, canvas2, canvas3, halfWidth, halfHeight) {
+    //////////////////////////////////////////////////////////////////////////////////
+    // A demonstration of a Canvas nebula effect
+    // (c) 2010 by R Cecco. <http://www.professorcloud.com>
+    // MIT License
+    //
+    // Please retain this copyright header in all versions of the software if
+    // using significant parts of it
+    //////////////////////////////////////////////////////////////////////////////////
+    // The canvas element we are drawing into.      
+    var ctx2 = canvas2.getContext('2d');
+    var ctx = canvas.getContext('2d');
+    var w = canvas.width,
+        h = canvas.height;
+    var img = new Image();
+
+    var id;
+
+    // A puff.
+    var Puff = function Puff(p) {
+        var opacity,
+            sy = Math.random() * halfHeight >> 0,
+            sx = Math.random() * halfWidth >> 0;
+
+        this.p = p;
+
+        this.move = function (timeFac) {
+            p = this.p + 0.3 * timeFac;
+            opacity = Math.sin(p * 0.05) * 0.5;
+            if (opacity < 0) {
+                p = opacity = 0;
+                sy = Math.random() * halfHeight >> 0;
+                sx = Math.random() * halfWidth >> 0;
+            }
+            this.p = p;
+            ctx.globalAlpha = opacity;
+            ctx.drawImage(canvas3, sy + p, sy + p, halfWidth - p * 2, halfHeight - p * 2, 0, 0, w, h);
+        };
+    };
+
+    var puffs = [];
+    var sortPuff = function sortPuff(p1, p2) {
+        return p1.p - p2.p;
+    };
+    puffs.push(new Puff(0));
+    puffs.push(new Puff(20));
+    puffs.push(new Puff(40));
+
+    var newTime,
+        oldTime = 0,
+        timeFac;
+
+    var loop = function loop() {
+        newTime = new Date().getTime();
+        if (oldTime === 0) {
+            oldTime = newTime;
+        }
+        timeFac = (newTime - oldTime) * 0.1;
+        if (timeFac > 3) {
+            timeFac = 3;
+        }
+        oldTime = newTime;
+        puffs.sort(sortPuff);
+
+        for (var i = 0; i < puffs.length; i++) {
+            puffs[i].move(timeFac);
+        }
+        ctx2.drawImage(canvas, 0, 0, window.innerWidth, window.innerHeight);
+        id = setTimeout(loop, 10);
+    };
+    // Turns out Chrome is much faster doing bitmap work if the bitmap is in an existing canvas rather
+    // than an IMG, VIDEO etc. So draw the big nebula image into canvas3
+    var ctx3 = canvas3.getContext('2d');
+    img.onload = function () {
+        ctx3.drawImage(img, 0, 0, window.innerWidth, window.innerHeight);loop();
+    };
+    img.src = 'dist/resources/nebula/nebula.jpg';
+    return id;
+}
+
+function drawStars(canvas) {
+    var ctx = canvas.getContext('2d');
+    ctx.canvas.width = window.innerWidth;
+    ctx.canvas.height = window.innerHeight;
+
+    var stars = 500;
+    var colorrange = [0, 60, 240];
+    for (var i = 0; i < stars; i++) {
+
+        var x = Math.random() * ctx.canvas.offsetWidth;
+        var y = Math.random() * ctx.canvas.offsetHeight,
+            radius = Math.random() * 1.2,
+            hue = colorrange[getRandom(0, colorrange.length - 1)],
+            sat = getRandom(50, 100);
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, 360);
+        ctx.fillStyle = "hsl(" + hue + ", " + sat + "%, 88%)";
+        ctx.fill();
+    }
+}
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -575,8 +783,8 @@ module.exports = warning;
 
 
 if (process.env.NODE_ENV !== 'production') {
-  var invariant = __webpack_require__(5);
-  var warning = __webpack_require__(6);
+  var invariant = __webpack_require__(6);
+  var warning = __webpack_require__(7);
   var ReactPropTypesSecret = __webpack_require__(20);
   var loggedTypeFailures = {};
 }
@@ -625,10 +833,10 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
 
 module.exports = checkPropTypes;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 8 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -667,7 +875,7 @@ var ExecutionEnvironment = {
 module.exports = ExecutionEnvironment;
 
 /***/ }),
-/* 9 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -745,10 +953,10 @@ var EventListener = {
 };
 
 module.exports = EventListener;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -790,7 +998,7 @@ function getActiveElement(doc) /*?DOMElement*/{
 module.exports = getActiveElement;
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -861,7 +1069,7 @@ function shallowEqual(objA, objB) {
 module.exports = shallowEqual;
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -904,7 +1112,7 @@ function containsNode(outerNode, innerNode) {
 module.exports = containsNode;
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -934,191 +1142,11 @@ function focusNode(node) {
 module.exports = focusNode;
 
 /***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.getRandom = getRandom;
-exports.nebula = nebula;
-function getRandom(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function nebula(canvas, canvas2, canvas3, halfWidth, halfHeight) {
-    //////////////////////////////////////////////////////////////////////////////////
-    // A demonstration of a Canvas nebula effect
-    // (c) 2010 by R Cecco. <http://www.professorcloud.com>
-    // MIT License
-    //
-    // Please retain this copyright header in all versions of the software if
-    // using significant parts of it
-    //////////////////////////////////////////////////////////////////////////////////
-    // The canvas element we are drawing into.      
-    var ctx2 = canvas2.getContext('2d');
-    var ctx = canvas.getContext('2d');
-    var w = canvas.width,
-        h = canvas.height;
-    var img = new Image();
-
-    // A puff.
-    var Puff = function Puff(p) {
-        var opacity,
-            sy = Math.random() * halfHeight >> 0,
-            sx = Math.random() * halfWidth >> 0;
-
-        this.p = p;
-
-        this.move = function (timeFac) {
-            p = this.p + 0.3 * timeFac;
-            opacity = Math.sin(p * 0.05) * 0.5;
-            if (opacity < 0) {
-                p = opacity = 0;
-                sy = Math.random() * halfHeight >> 0;
-                sx = Math.random() * halfWidth >> 0;
-            }
-            this.p = p;
-            ctx.globalAlpha = opacity;
-            ctx.drawImage(canvas3, sy + p, sy + p, halfWidth - p * 2, halfHeight - p * 2, 0, 0, w, h);
-        };
-    };
-
-    var puffs = [];
-    var sortPuff = function sortPuff(p1, p2) {
-        return p1.p - p2.p;
-    };
-    puffs.push(new Puff(0));
-    puffs.push(new Puff(20));
-    puffs.push(new Puff(40));
-
-    var newTime,
-        oldTime = 0,
-        timeFac;
-
-    var loop = function loop() {
-        newTime = new Date().getTime();
-        if (oldTime === 0) {
-            oldTime = newTime;
-        }
-        timeFac = (newTime - oldTime) * 0.1;
-        if (timeFac > 3) {
-            timeFac = 3;
-        }
-        oldTime = newTime;
-        puffs.sort(sortPuff);
-
-        for (var i = 0; i < puffs.length; i++) {
-            puffs[i].move(timeFac);
-        }
-        ctx2.drawImage(canvas, 0, 0, window.innerWidth, window.innerHeight);
-        setTimeout(loop, 10);
-    };
-    // Turns out Chrome is much faster doing bitmap work if the bitmap is in an existing canvas rather
-    // than an IMG, VIDEO etc. So draw the big nebula image into canvas3
-    var ctx3 = canvas3.getContext('2d');
-    img.onload = function () {
-        ctx3.drawImage(img, 0, 0, window.innerWidth, window.innerHeight);loop();
-    };
-    img.src = 'dist/resources/nebula/nebula.jpg';
-}
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var RARITY = exports.RARITY = { COMMONE: 'COMMON', UNCOMMON: 'UNCOMMON', RARE: 'RARE', EXOTIC: 'EXOTIC'
-
-    /* COMMON GOODS */
-};var ALUMINUM = exports.ALUMINUM = {
-    name: 'Aluminum',
-    description: 'A base metal used in the construction of new equipment in space!',
-    resale: 10,
-    rarity: RARITY.COMMON,
-    held: 0
-};
-
-var TITANIUM = exports.TITANIUM = {
-    name: 'Titanium',
-    description: 'A strong metal used to build new space station parts!',
-    resale: 40,
-    rarity: RARITY.COMMON,
-    held: 0
-};
-
-var SUPPLIES = exports.SUPPLIES = {
-    name: 'Supplies',
-    description: 'Food and water in convenient packages for consumption in long-term space environments.',
-    resale: 15,
-    rarity: RARITY.COMMON,
-    held: 0
-};
-
-var FUEL = exports.FUEL = {
-    name: 'Helium-3 Fuel',
-    description: 'Space travel requires Helium-3 combustible fuel, and lots of it!',
-    resale: 20,
-    rarity: RARITY.COMMON,
-    held: 0
-
-    /* UNCOMMON GOODS */
-};var HYPER_TORPEDO = exports.HYPER_TORPEDO = {
-    name: 'Hyper Torpedo',
-    description: 'One of the most common weapons fitted on low-orbit fighter craft.',
-    resale: 100,
-    rarity: RARITY.UNCOMMON,
-    held: 0
-};
-
-var CRYOPOD = exports.CRYOPOD = {
-    name: 'Cryopod',
-    description: 'Used to store passengers safely during long times of space transport.',
-    resale: 250,
-    rarity: RARITY.UNCOMMON,
-    held: 0
-
-    /* RARE GOODS */
-};var SOLAR_ARRAY = exports.SOLAR_ARRAY = {
-    name: 'Solar Array',
-    description: 'A massive solar array used to power an entire space station.',
-    resale: 1500,
-    rarity: RARITY.RARE,
-    held: 0
-
-    /* EXOTIC */
-};var KHERG_CARAPICE = exports.KHERG_CARAPICE = {
-    name: 'Kherg Carapice',
-    description: 'An iridiscent carapice from an alien parasite, used to create Hyper-Fuel for galactic travel.',
-    resale: 100000,
-    rarity: RARITY.EXOTIC,
-    held: 0
-};
-
-var GALACTIC_GATEWAY = exports.GALACTIC_GATEWAY = {
-    name: '?',
-    description: 'Some form of alien artifact that predates our Universe.',
-    resale: 10000000,
-    rarity: RARITY.EXOTIC,
-    held: 0
-};
-
-var resourceList = exports.resourceList = [ALUMINUM, TITANIUM, SUPPLIES, FUEL, HYPER_TORPEDO, CRYOPOD, SOLAR_ARRAY, KHERG_CARAPICE, GALACTIC_GATEWAY];
-
-/***/ }),
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(17);
-module.exports = __webpack_require__(38);
+module.exports = __webpack_require__(42);
 
 
 /***/ }),
@@ -1132,7 +1160,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(1);
+var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -1148,13 +1176,17 @@ var _addons = __webpack_require__(32);
 
 var _config = __webpack_require__(33);
 
-var _helpers = __webpack_require__(14);
+var _helpers = __webpack_require__(8);
 
 var _components = __webpack_require__(34);
 
-var _resources = __webpack_require__(15);
+var _resources = __webpack_require__(5);
 
 var resource = _interopRequireWildcard(_resources);
+
+var _System = __webpack_require__(40);
+
+var _systems = __webpack_require__(41);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -1193,9 +1225,11 @@ var Game = function (_React$Component) {
             planets: (0, _planets.planetsGenerator)(20),
             planetsVisited: [],
             addonsBuilt: [],
-            resources: [resource.ALUMINUM]
+            resources: [resource.ALUMINUM],
+            currentSystem: _systems.SIREN_CLOUD
         };
 
+        _this.drawBackgrounds = _this.drawBackgrounds.bind(_this);
         _this.renderStation = _this.renderStation.bind(_this);
         _this.getNextUpgradeCost = _this.getNextUpgradeCost.bind(_this);
         _this.upgrade = _this.upgrade.bind(_this);
@@ -1252,8 +1286,6 @@ var Game = function (_React$Component) {
         key: 'componentDidMount',
         value: function componentDidMount() {
             setInterval(this.updateGame, _config.tick);
-            this.drawStars();
-
             this.spaceStation = new Image();
             this.spaceStation.src = 'dist/resources/station/spaceStation_023.png';
 
@@ -1264,78 +1296,66 @@ var Game = function (_React$Component) {
             });
 
             setInterval(this.renderStation, 1000 / FRAME_RATE);
-            (0, _helpers.nebula)(this.nebula1, this.nebula2, this.nebula3, window.innerWidth / 2, window.innerHeight / 2);
+            if (this.state.currentSystem == 'HOME') {
+                this.drawBackgrounds();
+            }
         }
     }, {
-        key: 'drawStars',
-        value: function drawStars() {
-            var ctx = this.starfield.getContext('2d');
-            ctx.canvas.width = window.innerWidth;
-            ctx.canvas.height = window.innerHeight;
-
-            var stars = 500;
-            var colorrange = [0, 60, 240];
-            for (var i = 0; i < stars; i++) {
-
-                var x = Math.random() * ctx.canvas.offsetWidth;
-                var y = Math.random() * ctx.canvas.offsetHeight,
-                    radius = Math.random() * 1.2,
-                    hue = colorrange[(0, _helpers.getRandom)(0, colorrange.length - 1)],
-                    sat = (0, _helpers.getRandom)(50, 100);
-                ctx.beginPath();
-                ctx.arc(x, y, radius, 0, 360);
-                ctx.fillStyle = "hsl(" + hue + ", " + sat + "%, 88%)";
-                ctx.fill();
-            }
+        key: 'drawBackgrounds',
+        value: function drawBackgrounds() {
+            (0, _helpers.drawStars)(this.starfield);
+            this.nebulaId = (0, _helpers.nebula)(this.nebula1, this.nebula2, this.nebula3, window.innerWidth / 2, window.innerHeight / 2);
         }
     }, {
         key: 'renderStation',
         value: function renderStation() {
             // Render
-            var ctx = this.canvas.getContext('2d');
-            ctx.canvas.width = window.innerWidth;
-            ctx.canvas.height = window.innerHeight;
+            if (this.state.currentSystem == 'HOME') {
+                var ctx = this.canvas.getContext('2d');
+                ctx.canvas.width = window.innerWidth;
+                ctx.canvas.height = window.innerHeight;
 
-            var centerX = ctx.canvas.width / 2;
-            var centerY = ctx.canvas.height / 2;
+                var centerX = ctx.canvas.width / 2;
+                var centerY = ctx.canvas.height / 2;
 
-            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+                ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-            var degrees = (this.degrees || 0) + 360 / 7 / FRAME_RATE;
-            ctx.save();
-            ctx.translate(ctx.canvas.width / 2, ctx.canvas.height / 2);
-            ctx.rotate(degrees * Math.PI / 180);
-            // ctx.drawImage(this.spaceStation, -(this.spaceStation.width / 2), -(this.spaceStation.height /2))
-            ctx.drawImage(this.spaceStation, -this.spaceStation.width / 2, -this.spaceStation.height / 2);
-            this.degrees = degrees;
-            ctx.restore();
+                var degrees = (this.degrees || 0) + 360 / 7 / FRAME_RATE;
+                ctx.save();
+                ctx.translate(ctx.canvas.width / 2, ctx.canvas.height / 2);
+                ctx.rotate(degrees * Math.PI / 180);
+                // ctx.drawImage(this.spaceStation, -(this.spaceStation.width / 2), -(this.spaceStation.height /2))
+                ctx.drawImage(this.spaceStation, -this.spaceStation.width / 2, -this.spaceStation.height / 2);
+                this.degrees = degrees;
+                ctx.restore();
 
-            // Render any addons we have
-            this.state.addonsBuilt.forEach(function (addon) {
-                if (addon.display.orbital) {
-                    if (addon.display.direction) {
-                        addon.display.angle += Math.acos(1 - Math.pow(addon.display.speed / addon.display.orbital, 2) / 2);
+                // Render any addons we have
+                this.state.addonsBuilt.forEach(function (addon) {
+                    if (addon.display.orbital) {
+                        if (addon.display.direction) {
+                            addon.display.angle += Math.acos(1 - Math.pow(addon.display.speed / addon.display.orbital, 2) / 2);
+                        } else {
+                            addon.display.angle -= Math.acos(1 - Math.pow(addon.display.speed / addon.display.orbital, 2) / 2);
+                        }
+
+                        // calculate the new ball.x / ball.y
+                        var newX = centerX + addon.display.orbital * Math.cos(addon.display.angle);
+                        var newY = centerY + addon.display.orbital * Math.sin(addon.display.angle);
+
+                        // Draw an orbital trail
+                        ctx.strokeStyle = "lightgray";
+                        ctx.beginPath();
+                        ctx.arc(centerX, centerY, addon.display.orbital, 0, Math.PI * 2, false);
+                        ctx.closePath();
+                        ctx.stroke();
+
+                        // draw
+                        ctx.drawImage(addon.display.image, newX - addon.display.image.width / 2, newY - addon.display.image.height / 2);
                     } else {
-                        addon.display.angle -= Math.acos(1 - Math.pow(addon.display.speed / addon.display.orbital, 2) / 2);
+                        ctx.drawImage(addon.display.image, centerX - addon.display.image.width / 2, centerY - addon.display.image.height / 2);
                     }
-
-                    // calculate the new ball.x / ball.y
-                    var newX = centerX + addon.display.orbital * Math.cos(addon.display.angle);
-                    var newY = centerY + addon.display.orbital * Math.sin(addon.display.angle);
-
-                    // Draw an orbital trail
-                    ctx.strokeStyle = "lightgray";
-                    ctx.beginPath();
-                    ctx.arc(centerX, centerY, addon.display.orbital, 0, Math.PI * 2, false);
-                    ctx.closePath();
-                    ctx.stroke();
-
-                    // draw
-                    ctx.drawImage(addon.display.image, newX - addon.display.image.width / 2, newY - addon.display.image.height / 2);
-                } else {
-                    ctx.drawImage(addon.display.image, centerX - addon.display.image.width / 2, centerY - addon.display.image.height / 2);
-                }
-            });
+                });
+            }
         }
     }, {
         key: 'updateGame',
@@ -1475,105 +1495,54 @@ var Game = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 null,
-                _react2.default.createElement('canvas', {
-                    ref: function ref(starfield) {
-                        _this7.starfield = starfield;
-                    },
-                    width: '100%',
-                    height: '100%',
-                    style: { position: "absolute", left: 0, top: 0, zIndex: 0 } }),
-                _react2.default.createElement('canvas', { ref: function ref(nebula1) {
-                        _this7.nebula1 = nebula1;
-                    },
-                    style: { display: "none" }, id: 'canvas', width: window.innerWidth / 2, height: window.innerHeight / 2 }),
-                _react2.default.createElement('canvas', { ref: function ref(nebula3) {
-                        _this7.nebula3 = nebula3;
-                    },
-                    style: { display: "none" }, id: 'canvas3', width: window.innerWidth, height: window.innerHeight }),
-                _react2.default.createElement('canvas', { ref: function ref(nebula2) {
-                        _this7.nebula2 = nebula2;
-                    },
-                    id: 'canvas2', width: window.innerWidth, height: window.innerHeight }),
-                _react2.default.createElement('canvas', {
-                    ref: function ref(canvas) {
-                        _this7.canvas = canvas;
-                    },
-                    width: '100%',
-                    height: '100%',
-                    style: { position: "absolute", left: 0, top: 0, zIndex: 2 } }),
-                _react2.default.createElement(
+                this.state.currentSystem == 'HOME' && _react2.default.createElement(
                     'div',
-                    { style: { position: "absolute", left: 0, top: 0, zIndex: 3, width: "100%", height: "100%" } },
+                    null,
+                    _react2.default.createElement('canvas', {
+                        ref: function ref(starfield) {
+                            _this7.starfield = starfield;
+                        },
+                        width: '100%',
+                        height: '100%',
+                        style: { position: "absolute", left: 0, top: 0, zIndex: 0 } }),
+                    _react2.default.createElement('canvas', { ref: function ref(nebula1) {
+                            _this7.nebula1 = nebula1;
+                        },
+                        style: { display: "none" }, id: 'canvas', width: window.innerWidth / 2, height: window.innerHeight / 2 }),
+                    _react2.default.createElement('canvas', { ref: function ref(nebula3) {
+                            _this7.nebula3 = nebula3;
+                        },
+                        style: { display: "none" }, id: 'canvas3', width: window.innerWidth, height: window.innerHeight }),
+                    _react2.default.createElement('canvas', { ref: function ref(nebula2) {
+                            _this7.nebula2 = nebula2;
+                        },
+                        id: 'canvas2', width: window.innerWidth, height: window.innerHeight }),
+                    _react2.default.createElement('canvas', {
+                        ref: function ref(canvas) {
+                            _this7.canvas = canvas;
+                        },
+                        width: '100%',
+                        height: '100%',
+                        style: { position: "absolute", left: 0, top: 0, zIndex: 2 } }),
                     _react2.default.createElement(
                         'div',
-                        { className: 'row' },
+                        { style: { position: "absolute", left: 0, top: 0, zIndex: 3, width: "100%", height: "100%" } },
                         _react2.default.createElement(
                             'div',
-                            { id: 'topLeftUI' },
-                            _react2.default.createElement(
-                                'h4',
-                                null,
-                                'Station'
-                            ),
-                            _react2.default.createElement(
-                                'h5',
-                                null,
-                                'Defense'
-                            ),
-                            _react2.default.createElement(
-                                'span',
-                                { id: 'stationLevel' },
-                                'Lv ',
-                                this.state.level
-                            ),
-                            _react2.default.createElement(
-                                'span',
-                                { id: 'defenseLevel' },
-                                'Lv ',
-                                this.state.defenseLevel
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { id: 'topRightUI' },
-                            _react2.default.createElement(
-                                'h4',
-                                null,
-                                'Commodities'
-                            ),
-                            _react2.default.createElement(
-                                'h5',
-                                null,
-                                'Citizens'
-                            ),
-                            _react2.default.createElement(
-                                'span',
-                                { id: 'commodities' },
-                                Math.floor(this.state.commodities)
-                            ),
-                            _react2.default.createElement(
-                                'span',
-                                { id: 'citizens' },
-                                Math.floor(this.state.citizens)
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { id: 'topMidUI' },
-                            _react2.default.createElement(
-                                'button',
-                                { onClick: function onClick() {
-                                        _this7.setState({
-                                            systemTravel: !(_this7.state.systemTravel || false)
-                                        });
-                                    } },
-                                'Galactic Map'
-                            ),
+                            { className: 'row' },
+                            _react2.default.createElement(_components.LevelUI, {
+                                stationLevel: this.state.level,
+                                defenseLevel: this.state.defenseLevel
+                            }),
+                            _react2.default.createElement(_components.StatsUI, {
+                                commodities: Math.floor(this.state.commodities),
+                                citizens: Math.floor(this.state.citizens)
+                            }),
                             _react2.default.createElement(
                                 'div',
-                                { id: 'slideoutTravel', className: this.state.systemTravel ? 'on' : null },
+                                { id: 'topMidUI' },
                                 _react2.default.createElement(
-                                    'h4',
+                                    'button',
                                     { onClick: function onClick() {
                                             _this7.setState({
                                                 systemTravel: !(_this7.state.systemTravel || false)
@@ -1582,55 +1551,102 @@ var Game = function (_React$Component) {
                                     'Galactic Map'
                                 ),
                                 _react2.default.createElement(
-                                    'p',
-                                    null,
-                                    'Travel between systems to mine resources'
+                                    'div',
+                                    { id: 'slideoutTravel', className: this.state.systemTravel ? 'on' : null },
+                                    _react2.default.createElement(
+                                        'h4',
+                                        { onClick: function onClick() {
+                                                _this7.setState({
+                                                    systemTravel: !(_this7.state.systemTravel || false)
+                                                });
+                                            } },
+                                        'Galactic Map'
+                                    ),
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'buildButtons' },
+                                        _react2.default.createElement(
+                                            'span',
+                                            null,
+                                            'Siren Cloud'
+                                        ),
+                                        _react2.default.createElement('br', null),
+                                        _react2.default.createElement(
+                                            'button',
+                                            { className: 'button-primary',
+                                                onClick: function onClick() {
+                                                    clearTimeout(_this7.nebulaId);
+                                                    _this7.setState({ systemTravel: false, currentSystem: _systems.SIREN_CLOUD });
+                                                } },
+                                            'Visit'
+                                        )
+                                    )
                                 )
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'row' },
+                                _react2.default.createElement(_components.BuildMenu, {
+                                    active: this.state.buildMenuActive || false,
+                                    addons: filteredAddons,
+                                    build: function build(addon) {
+                                        return _this7.buildAddon(addon);
+                                    },
+                                    toggleMenu: function toggleMenu() {
+                                        _this7.setState({
+                                            buildMenuActive: !(_this7.state.buildMenuActive || false)
+                                        });
+                                    }
+                                }),
+                                _react2.default.createElement(_components.UpgradeMenu, {
+                                    active: this.state.upgradeMenuActive || false,
+                                    toggleMenu: function toggleMenu() {
+                                        _this7.setState({
+                                            upgradeMenuActive: !(_this7.state.upgradeMenuActive || false)
+                                        });
+                                    },
+                                    upgradeStation: function upgradeStation() {
+                                        return _this7.upgrade();
+                                    },
+                                    upgradeDefense: function upgradeDefense() {
+                                        return _this7.upgradeDefense();
+                                    },
+                                    upgradeStationData: upgradeStation,
+                                    upgradeDefenseData: upgradeDefense
+                                }),
+                                _react2.default.createElement(_components.ResourceMenu, {
+                                    active: this.state.resourceMenuActive || false,
+                                    resources: this.state.resources,
+                                    toggleMenu: function toggleMenu() {
+                                        _this7.setState({
+                                            resourceMenuActive: !(_this7.state.resourceMenuActive || false)
+                                        });
+                                    }
+                                })
                             )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'row' },
-                            _react2.default.createElement(_components.BuildMenu, {
-                                active: this.state.buildMenuActive || false,
-                                addons: filteredAddons,
-                                build: function build(addon) {
-                                    return _this7.buildAddon(addon);
-                                },
-                                toggleMenu: function toggleMenu() {
-                                    _this7.setState({
-                                        buildMenuActive: !(_this7.state.buildMenuActive || false)
-                                    });
-                                }
-                            }),
-                            _react2.default.createElement(_components.UpgradeMenu, {
-                                active: this.state.upgradeMenuActive || false,
-                                toggleMenu: function toggleMenu() {
-                                    _this7.setState({
-                                        upgradeMenuActive: !(_this7.state.upgradeMenuActive || false)
-                                    });
-                                },
-                                upgradeStation: function upgradeStation() {
-                                    return _this7.upgrade();
-                                },
-                                upgradeDefense: function upgradeDefense() {
-                                    return _this7.upgradeDefense();
-                                },
-                                upgradeStationData: upgradeStation,
-                                upgradeDefenseData: upgradeDefense
-                            }),
-                            _react2.default.createElement(_components.ResourceMenu, {
-                                active: this.state.resourceMenuActive || false,
-                                resources: this.state.resources,
-                                toggleMenu: function toggleMenu() {
-                                    _this7.setState({
-                                        resourceMenuActive: !(_this7.state.resourceMenuActive || false)
-                                    });
-                                }
-                            })
                         )
                     )
-                )
+                ),
+                this.state.currentSystem !== 'HOME' && _react2.default.createElement(_System.GalacticSystem, {
+                    base: this.state.currentSystem,
+                    returnHome: function returnHome() {
+                        return _this7.setState({ currentSystem: 'HOME' }, function () {
+                            return _this7.drawBackgrounds();
+                        });
+                    },
+                    gain: function gain(resource) {
+                        var resources = _this7.state.resources;
+                        if (resources.includes(resource)) {
+                            resource.held = resource.held + 1;
+                        } else {
+                            resource.held = 1;
+                            resources.push(resource);
+                        }
+                        _this7.setState({
+                            resources: resources
+                        });
+                    }
+                })
             );
         }
     }]);
@@ -1710,11 +1726,11 @@ if (process.env.NODE_ENV !== "production") {
 'use strict';
 
 var _assign = __webpack_require__(3);
-var invariant = __webpack_require__(5);
+var invariant = __webpack_require__(6);
 var emptyObject = __webpack_require__(4);
-var warning = __webpack_require__(6);
+var warning = __webpack_require__(7);
 var emptyFunction = __webpack_require__(2);
-var checkPropTypes = __webpack_require__(7);
+var checkPropTypes = __webpack_require__(9);
 
 // TODO: this is special because it gets imported during build.
 
@@ -3038,7 +3054,7 @@ module.exports = react;
   })();
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
 /* 20 */
@@ -3103,7 +3119,7 @@ if (process.env.NODE_ENV === 'production') {
   module.exports = __webpack_require__(25);
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
 /* 22 */
@@ -3121,7 +3137,7 @@ if (process.env.NODE_ENV === 'production') {
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(1),m=__webpack_require__(8),A=__webpack_require__(3),B=__webpack_require__(2),ca=__webpack_require__(9),da=__webpack_require__(10),ea=__webpack_require__(11),ha=__webpack_require__(12),ia=__webpack_require__(13),C=__webpack_require__(4);
+var aa=__webpack_require__(0),m=__webpack_require__(10),A=__webpack_require__(3),B=__webpack_require__(2),ca=__webpack_require__(11),da=__webpack_require__(12),ea=__webpack_require__(13),ha=__webpack_require__(14),ia=__webpack_require__(15),C=__webpack_require__(4);
 function D(a){for(var b=arguments.length-1,c="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,d=0;d<b;d++)c+="\x26args[]\x3d"+encodeURIComponent(arguments[d+1]);b=Error(c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}aa?void 0:D("227");
 var la={children:!0,dangerouslySetInnerHTML:!0,defaultValue:!0,defaultChecked:!0,innerHTML:!0,suppressContentEditableWarning:!0,suppressHydrationWarning:!0,style:!0};function qa(a,b){return(a&b)===b}
 var ra={MUST_USE_PROPERTY:1,HAS_BOOLEAN_VALUE:4,HAS_NUMERIC_VALUE:8,HAS_POSITIVE_NUMERIC_VALUE:24,HAS_OVERLOADED_BOOLEAN_VALUE:32,HAS_STRING_BOOLEAN_VALUE:64,injectDOMPropertyConfig:function(a){var b=ra,c=a.Properties||{},d=a.DOMAttributeNamespaces||{},e=a.DOMAttributeNames||{};a=a.DOMMutationMethods||{};for(var f in c){sa.hasOwnProperty(f)?D("48",f):void 0;var g=f.toLowerCase(),k=c[f];g={attributeName:g,attributeNamespace:null,propertyName:f,mutationMethod:null,mustUseProperty:qa(k,b.MUST_USE_PROPERTY),
@@ -3415,19 +3431,19 @@ if (process.env.NODE_ENV !== "production") {
   (function() {
 'use strict';
 
-var React = __webpack_require__(1);
-var invariant = __webpack_require__(5);
-var warning = __webpack_require__(6);
-var ExecutionEnvironment = __webpack_require__(8);
+var React = __webpack_require__(0);
+var invariant = __webpack_require__(6);
+var warning = __webpack_require__(7);
+var ExecutionEnvironment = __webpack_require__(10);
 var _assign = __webpack_require__(3);
 var emptyFunction$1 = __webpack_require__(2);
-var EventListener = __webpack_require__(9);
-var getActiveElement = __webpack_require__(10);
-var shallowEqual = __webpack_require__(11);
-var containsNode = __webpack_require__(12);
-var focusNode = __webpack_require__(13);
+var EventListener = __webpack_require__(11);
+var getActiveElement = __webpack_require__(12);
+var shallowEqual = __webpack_require__(13);
+var containsNode = __webpack_require__(14);
+var focusNode = __webpack_require__(15);
 var emptyObject = __webpack_require__(4);
-var checkPropTypes = __webpack_require__(7);
+var checkPropTypes = __webpack_require__(9);
 var hyphenateStyleName = __webpack_require__(26);
 var camelizeStyleName = __webpack_require__(28);
 
@@ -18801,7 +18817,7 @@ module.exports = reactDom;
   })();
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
 /* 26 */
@@ -18992,7 +19008,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.planetsGenerator = planetsGenerator;
 
-var _helpers = __webpack_require__(14);
+var _helpers = __webpack_require__(8);
 
 var planetNameFront = ['Betelgeuse', 'Saturn', 'Polaris', 'Maroon', 'Dustiin', 'Solarus', 'Sycarus', 'Lupin', 'Neptuna', 'Horizon', 'Zygg', 'Ares', 'Mercina'];
 
@@ -19188,6 +19204,30 @@ Object.keys(_ResourceMenu).forEach(function (key) {
   });
 });
 
+var _LevelUI = __webpack_require__(38);
+
+Object.keys(_LevelUI).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _LevelUI[key];
+    }
+  });
+});
+
+var _StatsUI = __webpack_require__(39);
+
+Object.keys(_StatsUI).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _StatsUI[key];
+    }
+  });
+});
+
 /***/ }),
 /* 35 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -19202,7 +19242,7 @@ exports.BuildMenu = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(1);
+var _react = __webpack_require__(0);
 
 var React = _interopRequireWildcard(_react);
 
@@ -19290,7 +19330,7 @@ exports.UpgradeMenu = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(1);
+var _react = __webpack_require__(0);
 
 var React = _interopRequireWildcard(_react);
 
@@ -19397,11 +19437,11 @@ exports.ResourceMenu = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(1);
+var _react = __webpack_require__(0);
 
 var React = _interopRequireWildcard(_react);
 
-var _resources = __webpack_require__(15);
+var _resources = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -19517,6 +19557,351 @@ var ResourceMenu = exports.ResourceMenu = function (_React$Component) {
 
 /***/ }),
 /* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.LevelUI = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var React = _interopRequireWildcard(_react);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var LevelUI = exports.LevelUI = function (_React$Component) {
+    _inherits(LevelUI, _React$Component);
+
+    function LevelUI() {
+        _classCallCheck(this, LevelUI);
+
+        return _possibleConstructorReturn(this, (LevelUI.__proto__ || Object.getPrototypeOf(LevelUI)).apply(this, arguments));
+    }
+
+    _createClass(LevelUI, [{
+        key: "render",
+        value: function render() {
+            return React.createElement(
+                "div",
+                { id: "topLeftUI" },
+                React.createElement(
+                    "h4",
+                    null,
+                    "Station"
+                ),
+                React.createElement(
+                    "h5",
+                    null,
+                    "Defense"
+                ),
+                React.createElement(
+                    "span",
+                    { id: "stationLevel" },
+                    "Lv ",
+                    this.props.stationLevel
+                ),
+                React.createElement(
+                    "span",
+                    { id: "defenseLevel" },
+                    "Lv ",
+                    this.props.defenseLevel
+                )
+            );
+        }
+    }]);
+
+    return LevelUI;
+}(React.Component);
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.StatsUI = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var React = _interopRequireWildcard(_react);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var StatsUI = exports.StatsUI = function (_React$Component) {
+    _inherits(StatsUI, _React$Component);
+
+    function StatsUI() {
+        _classCallCheck(this, StatsUI);
+
+        return _possibleConstructorReturn(this, (StatsUI.__proto__ || Object.getPrototypeOf(StatsUI)).apply(this, arguments));
+    }
+
+    _createClass(StatsUI, [{
+        key: "render",
+        value: function render() {
+            return React.createElement(
+                "div",
+                { id: "topRightUI" },
+                React.createElement(
+                    "h4",
+                    null,
+                    "Commodities"
+                ),
+                React.createElement(
+                    "h5",
+                    null,
+                    "Citizens"
+                ),
+                React.createElement(
+                    "span",
+                    { id: "commodities" },
+                    this.props.commodities
+                ),
+                React.createElement(
+                    "span",
+                    { id: "citizens" },
+                    this.props.citizens
+                )
+            );
+        }
+    }]);
+
+    return StatsUI;
+}(React.Component);
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.GalacticSystem = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var React = _interopRequireWildcard(_react);
+
+var _helpers = __webpack_require__(8);
+
+var _resources = __webpack_require__(5);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var METEOR_IMAGES = ['spaceMeteors_001.png', 'spaceMeteors_002.png', 'spaceMeteors_003.png', 'spaceMeteors_004.png'];
+
+var GalacticSystem = exports.GalacticSystem = function (_React$Component) {
+    _inherits(GalacticSystem, _React$Component);
+
+    function GalacticSystem(props) {
+        _classCallCheck(this, GalacticSystem);
+
+        var _this = _possibleConstructorReturn(this, (GalacticSystem.__proto__ || Object.getPrototypeOf(GalacticSystem)).call(this, props));
+
+        _this.loop = _this.loop.bind(_this);
+        _this.clickEvent = _this.clickEvent.bind(_this);
+        return _this;
+    }
+
+    _createClass(GalacticSystem, [{
+        key: 'clickEvent',
+        value: function clickEvent(e) {
+            var _this2 = this;
+
+            this.meteors.forEach(function (m) {
+                if (e.pageX >= m.x && e.pageX <= m.x + m.image.width && e.pageY >= m.y && e.pageY >= m.image.height) {
+                    // Time to mine some ore!
+                    if (!m.dry) {
+                        var res = _resources.resourceList.filter(function (r) {
+                            return r.rarity == _this2.props.base.rarity;
+                        });
+                        var mine = res[(0, _helpers.getRandom)(0, res.length - 1)];
+                        console.log('You got a ' + mine + '!');
+                        _this2.props.gain(mine);
+                        m.dry = true;
+                    } else {
+                        console.log("The asteroid is empty!");
+                    }
+                }
+            });
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            // Spawn some meteors
+            var numMeteors = (0, _helpers.getRandom)(this.props.base.mining[0], this.props.base.mining[1]);
+            this.meteors = [];
+            for (var i = 0; i < numMeteors; i++) {
+                var meteor = new Image();
+                meteor.src = 'dist/resources/meteors/' + METEOR_IMAGES[(0, _helpers.getRandom)(0, METEOR_IMAGES.length - 1)];
+                this.meteors[i] = {
+                    image: meteor,
+                    x: (0, _helpers.getRandom)(0, window.innerWidth),
+                    y: (0, _helpers.getRandom)(0, window.innerHeight),
+                    degrees: 0,
+                    dry: false
+                };
+            }
+            (0, _helpers.drawStars)(this.starfield);
+            if (this.props.base.nebula) {
+                this.nebulaId = (0, _helpers.nebula)(this.nebula1, this.nebula2, this.nebula3, window.innerWidth / 2, window.innerHeight / 2);
+            }
+            this.startLoop();
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            clearTimeout(this.nebulaId);
+            this.stopLoop();
+        }
+    }, {
+        key: 'startLoop',
+        value: function startLoop() {
+            if (!this._frameId) {
+                this._frameId = window.requestAnimationFrame(this.loop);
+            }
+        }
+    }, {
+        key: 'loop',
+        value: function loop() {
+            // perform loop work here
+            var ctx = this.canvas.getContext('2d');
+            ctx.canvas.width = window.innerWidth;
+            ctx.canvas.height = window.innerHeight;
+
+            this.meteors.forEach(function (m) {
+                var degrees = (m.degrees || 0) + 360 / 12 / 30;
+                ctx.save();
+                ctx.translate(m.x, m.y);
+                ctx.rotate(degrees * Math.PI / 180);
+                ctx.drawImage(m.image, -m.image.width / 2, -m.image.height / 2);
+                m.degrees = degrees;
+                ctx.restore();
+            });
+            // Set up next iteration of the loop
+            this._frameId = window.requestAnimationFrame(this.loop);
+        }
+    }, {
+        key: 'stopLoop',
+        value: function stopLoop() {
+            window.cancelAnimationFrame(this._frameId);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this3 = this;
+
+            return React.createElement(
+                'div',
+                null,
+                React.createElement('canvas', {
+                    ref: function ref(starfield) {
+                        _this3.starfield = starfield;
+                    },
+                    width: '100%',
+                    height: '100%',
+                    style: { position: "absolute", left: 0, top: 0, zIndex: 0 } }),
+                React.createElement('canvas', { ref: function ref(nebula1) {
+                        _this3.nebula1 = nebula1;
+                    },
+                    style: { display: "none" }, id: 'canvas', width: window.innerWidth / 2, height: window.innerHeight / 2 }),
+                React.createElement('canvas', { ref: function ref(nebula3) {
+                        _this3.nebula3 = nebula3;
+                    },
+                    style: { display: "none" }, id: 'canvas3', width: window.innerWidth, height: window.innerHeight }),
+                React.createElement('canvas', { ref: function ref(nebula2) {
+                        _this3.nebula2 = nebula2;
+                    },
+                    id: 'canvas2', width: window.innerWidth, height: window.innerHeight }),
+                React.createElement(
+                    'div',
+                    { style: { position: "absolute", left: 0, top: 0, zIndex: 3, width: "100%", height: "30px" } },
+                    React.createElement(
+                        'div',
+                        { id: 'topMidUI' },
+                        React.createElement(
+                            'button',
+                            { onClick: function onClick() {
+                                    return _this3.props.returnHome();
+                                } },
+                            'Return Home'
+                        )
+                    )
+                ),
+                React.createElement('canvas', {
+                    ref: function ref(canvas) {
+                        _this3.canvas = canvas;
+                    },
+                    width: '100%',
+                    height: '100%',
+                    style: { position: "absolute", left: 0, top: 0, zIndex: 1 },
+                    onClick: this.clickEvent })
+            );
+        }
+    }]);
+
+    return GalacticSystem;
+}(React.Component);
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.SIREN_CLOUD = undefined;
+
+var _resources = __webpack_require__(5);
+
+var SIREN_CLOUD = exports.SIREN_CLOUD = {
+    name: 'Siren Cloud',
+    description: 'A nebulous cloud of small asteroids, and rich deposit of basic minerals.',
+    rarity: _resources.RARITY.COMMON,
+    mining: [3, 8],
+    nebula: true
+};
+
+/***/ }),
+/* 42 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

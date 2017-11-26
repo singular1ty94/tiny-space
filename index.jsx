@@ -45,7 +45,7 @@ class Game extends React.Component {
             planetsVisited: [],
             addonsBuilt: [],
             resources: [resource.ALUMINUM],
-            currentSystem: SIREN_CLOUD
+            currentSystem: 'HOME'
         }
 
         this.drawBackgrounds = this.drawBackgrounds.bind(this)

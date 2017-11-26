@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 16);
+/******/ 	return __webpack_require__(__webpack_require__.s = 17);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -71,9 +71,9 @@
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(18);
-} else {
   module.exports = __webpack_require__(19);
+} else {
+  module.exports = __webpack_require__(20);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
@@ -785,7 +785,7 @@ function drawStars(canvas) {
 if (process.env.NODE_ENV !== 'production') {
   var invariant = __webpack_require__(6);
   var warning = __webpack_require__(7);
-  var ReactPropTypesSecret = __webpack_require__(20);
+  var ReactPropTypesSecret = __webpack_require__(21);
   var loggedTypeFailures = {};
 }
 
@@ -840,6 +840,52 @@ module.exports = checkPropTypes;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+function checkDCE() {
+  /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
+  if (
+    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined' ||
+    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== 'function'
+  ) {
+    return;
+  }
+  if (process.env.NODE_ENV !== 'production') {
+    // This branch is unreachable because this function is only called
+    // in production, but the condition is true only in development.
+    // Therefore if the branch is still here, dead code elimination wasn't
+    // properly applied.
+    // Don't change the message. React DevTools relies on it. Also make sure
+    // this message doesn't occur elsewhere in this function, or it will cause
+    // a false positive.
+    throw new Error('^_^');
+  }
+  try {
+    // Verify that the code above has been dead code eliminated (DCE'd).
+    __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
+  } catch (err) {
+    // DevTools shouldn't crash React, no matter what.
+    // We should still report in case we break this code.
+    console.error(err);
+  }
+}
+
+if (process.env.NODE_ENV === 'production') {
+  // DCE check should happen before ReactDOM bundle executes so that
+  // DevTools can report bad minification during injection.
+  checkDCE();
+  module.exports = __webpack_require__(22);
+} else {
+  module.exports = __webpack_require__(25);
+}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -875,7 +921,7 @@ var ExecutionEnvironment = {
 module.exports = ExecutionEnvironment;
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -956,7 +1002,7 @@ module.exports = EventListener;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -998,7 +1044,7 @@ function getActiveElement(doc) /*?DOMElement*/{
 module.exports = getActiveElement;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1069,7 +1115,7 @@ function shallowEqual(objA, objB) {
 module.exports = shallowEqual;
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1112,7 +1158,7 @@ function containsNode(outerNode, innerNode) {
 module.exports = containsNode;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1142,15 +1188,15 @@ function focusNode(node) {
 module.exports = focusNode;
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(17);
+__webpack_require__(18);
 module.exports = __webpack_require__(42);
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1164,7 +1210,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(21);
+var _reactDom = __webpack_require__(10);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -1677,7 +1723,7 @@ _reactDom2.default.render(_react2.default.createElement(Game, null), document.ge
 */
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1706,7 +1752,7 @@ version:"16.1.1",__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED:{ReactCurren
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3057,7 +3103,7 @@ module.exports = react;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3076,52 +3122,6 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-function checkDCE() {
-  /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
-  if (
-    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined' ||
-    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== 'function'
-  ) {
-    return;
-  }
-  if (process.env.NODE_ENV !== 'production') {
-    // This branch is unreachable because this function is only called
-    // in production, but the condition is true only in development.
-    // Therefore if the branch is still here, dead code elimination wasn't
-    // properly applied.
-    // Don't change the message. React DevTools relies on it. Also make sure
-    // this message doesn't occur elsewhere in this function, or it will cause
-    // a false positive.
-    throw new Error('^_^');
-  }
-  try {
-    // Verify that the code above has been dead code eliminated (DCE'd).
-    __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
-  } catch (err) {
-    // DevTools shouldn't crash React, no matter what.
-    // We should still report in case we break this code.
-    console.error(err);
-  }
-}
-
-if (process.env.NODE_ENV === 'production') {
-  // DCE check should happen before ReactDOM bundle executes so that
-  // DevTools can report bad minification during injection.
-  checkDCE();
-  module.exports = __webpack_require__(22);
-} else {
-  module.exports = __webpack_require__(25);
-}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ }),
 /* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3137,7 +3137,7 @@ if (process.env.NODE_ENV === 'production') {
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(0),m=__webpack_require__(10),A=__webpack_require__(3),B=__webpack_require__(2),ca=__webpack_require__(11),da=__webpack_require__(12),ea=__webpack_require__(13),ha=__webpack_require__(14),ia=__webpack_require__(15),C=__webpack_require__(4);
+var aa=__webpack_require__(0),m=__webpack_require__(11),A=__webpack_require__(3),B=__webpack_require__(2),ca=__webpack_require__(12),da=__webpack_require__(13),ea=__webpack_require__(14),ha=__webpack_require__(15),ia=__webpack_require__(16),C=__webpack_require__(4);
 function D(a){for(var b=arguments.length-1,c="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,d=0;d<b;d++)c+="\x26args[]\x3d"+encodeURIComponent(arguments[d+1]);b=Error(c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}aa?void 0:D("227");
 var la={children:!0,dangerouslySetInnerHTML:!0,defaultValue:!0,defaultChecked:!0,innerHTML:!0,suppressContentEditableWarning:!0,suppressHydrationWarning:!0,style:!0};function qa(a,b){return(a&b)===b}
 var ra={MUST_USE_PROPERTY:1,HAS_BOOLEAN_VALUE:4,HAS_NUMERIC_VALUE:8,HAS_POSITIVE_NUMERIC_VALUE:24,HAS_OVERLOADED_BOOLEAN_VALUE:32,HAS_STRING_BOOLEAN_VALUE:64,injectDOMPropertyConfig:function(a){var b=ra,c=a.Properties||{},d=a.DOMAttributeNamespaces||{},e=a.DOMAttributeNames||{};a=a.DOMMutationMethods||{};for(var f in c){sa.hasOwnProperty(f)?D("48",f):void 0;var g=f.toLowerCase(),k=c[f];g={attributeName:g,attributeNamespace:null,propertyName:f,mutationMethod:null,mustUseProperty:qa(k,b.MUST_USE_PROPERTY),
@@ -3434,14 +3434,14 @@ if (process.env.NODE_ENV !== "production") {
 var React = __webpack_require__(0);
 var invariant = __webpack_require__(6);
 var warning = __webpack_require__(7);
-var ExecutionEnvironment = __webpack_require__(10);
+var ExecutionEnvironment = __webpack_require__(11);
 var _assign = __webpack_require__(3);
 var emptyFunction$1 = __webpack_require__(2);
-var EventListener = __webpack_require__(11);
-var getActiveElement = __webpack_require__(12);
-var shallowEqual = __webpack_require__(13);
-var containsNode = __webpack_require__(14);
-var focusNode = __webpack_require__(15);
+var EventListener = __webpack_require__(12);
+var getActiveElement = __webpack_require__(13);
+var shallowEqual = __webpack_require__(14);
+var containsNode = __webpack_require__(15);
+var focusNode = __webpack_require__(16);
 var emptyObject = __webpack_require__(4);
 var checkPropTypes = __webpack_require__(9);
 var hyphenateStyleName = __webpack_require__(26);
@@ -19711,9 +19711,15 @@ var _react = __webpack_require__(0);
 
 var React = _interopRequireWildcard(_react);
 
+var _reactDom = __webpack_require__(10);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
 var _helpers = __webpack_require__(8);
 
 var _resources = __webpack_require__(5);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -19735,27 +19741,47 @@ var GalacticSystem = exports.GalacticSystem = function (_React$Component) {
 
         _this.loop = _this.loop.bind(_this);
         _this.clickEvent = _this.clickEvent.bind(_this);
+        _this.popup = _this.popup.bind(_this);
+
+        _this.state = {
+            rewardPop: false,
+            rewardPopStyle: {},
+            rewardPopText: ''
+        };
         return _this;
     }
 
     _createClass(GalacticSystem, [{
+        key: 'popup',
+        value: function popup(text, x, y) {
+            this.setState({
+                rewardPop: true,
+                rewardPopStyle: {
+                    left: x,
+                    top: y
+                },
+                rewardPopText: text
+            });
+        }
+    }, {
         key: 'clickEvent',
         value: function clickEvent(e) {
             var _this2 = this;
 
+            var coords = this.canvas.relMouseCoords(e);
             this.meteors.forEach(function (m) {
-                if (e.pageX >= m.x && e.pageX <= m.x + m.image.width && e.pageY >= m.y && e.pageY >= m.image.height) {
+                if (coords.x >= m.x - m.image.width / 2 && coords.x <= m.x + m.image.width / 2 && coords.y >= m.y - m.image.height / 2 && coords.y <= m.y + m.image.height / 2) {
                     // Time to mine some ore!
                     if (!m.dry) {
                         var res = _resources.resourceList.filter(function (r) {
-                            return r.rarity == _this2.props.base.rarity;
+                            return r.rarity == _this2.props.base.rarity && r.type == _resources.TYPE.METAL;
                         });
                         var mine = res[(0, _helpers.getRandom)(0, res.length - 1)];
-                        console.log('You got a ' + mine + '!');
+                        _this2.popup('You extracted ' + mine.name + '!', coords.x, coords.y);
                         _this2.props.gain(mine);
                         m.dry = true;
                     } else {
-                        console.log("The asteroid is empty!");
+                        _this2.popup('The asteroid is empty...', coords.x, coords.y);
                     }
                 }
             });
@@ -19771,8 +19797,8 @@ var GalacticSystem = exports.GalacticSystem = function (_React$Component) {
                 meteor.src = 'dist/resources/meteors/' + METEOR_IMAGES[(0, _helpers.getRandom)(0, METEOR_IMAGES.length - 1)];
                 this.meteors[i] = {
                     image: meteor,
-                    x: (0, _helpers.getRandom)(0, window.innerWidth),
-                    y: (0, _helpers.getRandom)(0, window.innerHeight),
+                    x: (0, _helpers.getRandom)(30, window.innerWidth - 30),
+                    y: (0, _helpers.getRandom)(30, window.innerHeight - 30),
                     degrees: 0,
                     dry: false
                 };
@@ -19870,13 +19896,44 @@ var GalacticSystem = exports.GalacticSystem = function (_React$Component) {
                     width: '100%',
                     height: '100%',
                     style: { position: "absolute", left: 0, top: 0, zIndex: 1 },
-                    onClick: this.clickEvent })
+                    onClick: this.clickEvent }),
+                React.createElement(
+                    'div',
+                    {
+                        id: 'reward',
+                        className: this.state.rewardPop ? 'on' : null,
+                        style: this.state.rewardPopStyle },
+                    React.createElement(
+                        'p',
+                        null,
+                        this.state.rewardPopText
+                    )
+                )
             );
         }
     }]);
 
     return GalacticSystem;
 }(React.Component);
+
+function relMouseCoords(event) {
+    var totalOffsetX = 0;
+    var totalOffsetY = 0;
+    var canvasX = 0;
+    var canvasY = 0;
+    var currentElement = this;
+
+    do {
+        totalOffsetX += currentElement.offsetLeft - currentElement.scrollLeft;
+        totalOffsetY += currentElement.offsetTop - currentElement.scrollTop;
+    } while (currentElement = currentElement.offsetParent);
+
+    canvasX = event.pageX - totalOffsetX;
+    canvasY = event.pageY - totalOffsetY;
+
+    return { x: canvasX, y: canvasY };
+}
+HTMLCanvasElement.prototype.relMouseCoords = relMouseCoords;
 
 /***/ }),
 /* 41 */

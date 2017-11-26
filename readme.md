@@ -18,12 +18,15 @@ Dev Goals Completed:
 * Build menu UI
 * Upgrade menu UI
 * Resource menu UI
+* Framework for exploring new places in space, or clicking things to get resources
+* Collecting Resources
 
 Dev Goals Ahead:
-* Collecting resources
+* Resources that aren't mining
+* Better Galactic Map
+* Addons from your station help with mining
 * Selling resources
 * Pirate attack Graphics
-* Framework for exploring new places in space, or clicking things to get resources
 * calculating earned resources when logging back in
 * saving state to the window and reloading back
 * Better conditional unlock system than checking per loop

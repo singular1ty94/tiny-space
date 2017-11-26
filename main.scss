@@ -190,3 +190,25 @@ body, html {
       cursor: pointer;
     }
   }
+
+  #reward {
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 0;
+    color: white;
+    background-color: #33C3F0;
+    padding: 10px;
+    border-radius:  5px;
+    text-align: center;
+    cursor: pointer;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    z-index: 99;
+    &.on {
+      width: 160px;
+      height: 40px;
+    }
+  }
